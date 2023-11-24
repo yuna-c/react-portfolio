@@ -14,15 +14,24 @@
 		opacity: 0.7;
 	}
 	.bar {
-		width: 40px;
+		// width: 0px;
 		height: 1px;
 		margin-bottom: 30px;
 		background-color: #111;
-		opacity: 0.7;
+		transition-delay: 1s;
+		transform: translateX(0);
+
+		opacity: 0;
 	}
 
 	&.on {
 		opacity: 1;
 		transform: translateY(0px) /* scale(1) */;
+
+		.bar {
+			width: 40px;
+			// transform: translateX(40px);
+			opacity: 0.7;
+		}
 	}
 }
