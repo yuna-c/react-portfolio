@@ -1,5 +1,5 @@
 import { Route } from 'react-router-dom';
-// import './globalStyles/Reset.scss';
+import './globalStyles/Reset.scss';
 import './globalStyles/Variables.scss';
 import Header from './components/common/header/Header';
 import Footer from './components/common/footer/Footer';
@@ -26,7 +26,7 @@ export default function App() {
 			<Route path='/gallery' component={Gallery} />
 			<Route path='/community' component={Community} />
 			<Route path='/members' component={Members} />
-			<Route path='/members' component={Contant} />
+			<Route path='/contant' component={Contant} />
 			<Footer />
 		</>
 	);

@@ -1,0 +1,23 @@
+.header {
+	width: 70vw;
+	padding: 30px 5px;
+	border-bottom: 1px solid #aaa;
+	display: flex;
+	justify-content: space-between;
+	margin: 0 auto;
+
+	h1 {
+		font-size: var(--titSize1);
+	}
+
+	ul {
+		display: flex;
+		align-items: center;
+		gap: 50px;
+
+		a.on {
+			color: var(--pointColor);
+			font-weight: bold;
+		}
+	}
+}
