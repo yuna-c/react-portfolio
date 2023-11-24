@@ -1,0 +1,19 @@
+.layout {
+	width: 70vw;
+	min-height: 60vh;
+	margin: 100px auto;
+
+	h1 {
+		margin-bottom: 5px;
+		font-size: var(--titSize0);
+		font-weight: 500;
+		opacity: 0.7;
+	}
+	.bar {
+		width: 40px;
+		height: 1px;
+		margin-bottom: 30px;
+		background-color: #111;
+		opacity: 0.7;
+	}
+}

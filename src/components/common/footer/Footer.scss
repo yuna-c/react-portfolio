@@ -6,6 +6,7 @@ footer {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;
+	align-items: center;
 
 	h1 {
 		font-size: var(--titSize2);
@@ -13,8 +14,6 @@ footer {
 	}
 
 	p {
-		display: flex;
-		align-items: center;
 		opacity: 0.6;
 	}
 
