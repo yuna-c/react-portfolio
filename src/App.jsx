@@ -1,3 +1,6 @@
+import { Route } from 'react-router-dom';
+// import './globalStyles/Reset.scss';
+import './globalStyles/Variables.scss';
 import Header from './components/common/header/Header';
 import Footer from './components/common/footer/Footer';
 import MainWrap from './components/main/mainWrap/MainWrap';
@@ -7,7 +10,6 @@ import Department from './components/sub/department/Department';
 import Gallery from './components/sub/gallery/Gallery';
 import Members from './components/sub/members/Members';
 import Youtube from './components/sub/youtube/Youtube';
-import { Route } from 'react-router-dom';
 
 export default function App() {
 	return (
@@ -24,7 +26,7 @@ export default function App() {
 			<Route path='/gallery' component={Gallery} />
 			<Route path='/community' component={Community} />
 			<Route path='/members' component={Members} />
-			<Route path='/contant' component={Contant} />
+			<Route path='/members' component={Contant} />
 			<Footer />
 		</>
 	);

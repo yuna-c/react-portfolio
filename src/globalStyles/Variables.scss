@@ -1,0 +1,16 @@
+@import 'Reset';
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Orbitron&display=swap');
+// font-family : 웹폰트 3개 (본고딕, 나눔고딕, 나눔명조, orbitron, notosans)
+// color
+// font-size
+
+:root {
+	--baseFont: 'Nanum Myeongjo', 'arial', '돋움'; //영,한 순서
+	--pointFont: 'obitron', 'arial';
+	--baseColor: #111;
+	--pointColor: hotpink;
+	--bgColor: #efefef;
+	--titSize1: 2.4rem;
+	--titSize2: 1.5rem;
+	--bodySize: 1rem;
+}
