@@ -2,6 +2,10 @@
 	width: 70vw;
 	min-height: 60vh;
 	margin: 100px auto;
+	opacity: 0;
+	transform-origin: left top;
+	transform: translateY(200px) /* scale(3) */;
+	transition: opacity 1s, transform 1s;
 
 	h1 {
 		margin-bottom: 5px;
@@ -15,5 +19,10 @@
 		margin-bottom: 30px;
 		background-color: #111;
 		opacity: 0.7;
+	}
+
+	&.on {
+		opacity: 1;
+		transform: translateY(0px) /* scale(1) */;
 	}
 }
