@@ -1,5 +1,6 @@
 import './Youtube.scss';
+import Layout from '../../common/layout/Layout';
 
 export default function Youtube() {
-	return <div className='youtube'>Youtube</div>;
+	return <Layout title={'Youtube'}>Youtube</Layout>;
 }
