@@ -1,5 +1,5 @@
 import './Department.scss';
-import Layout from '../../common/layout/Layout';
+import Layout from '../../common/layout/Layout.1';
 
 export default function Department() {
 	return (
