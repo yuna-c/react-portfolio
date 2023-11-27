@@ -1,5 +1,6 @@
 import './MainWrap.scss';
+import Layout from '../../common/layout/Layout';
 
 export default function MainWrap() {
-	return <div className='mainWrap'>MainWrap</div>;
+	return <Layout title={'mainWrap'}>MainWrap</Layout>;
 }

@@ -13,12 +13,12 @@ import Youtube from './components/sub/youtube/Youtube';
 import { useState } from 'react';
 
 export default function App() {
-	const [Dark, setDark] = useState(false); //toggle 은 boolean
+	const [Dark, setDark] = useState(true); //toggle 은 boolean
 
 	return (
 		/* 리액트가 제어할 수 있는 범위 */
 		<div className={Dark ? 'wrap dark' : 'wrap'}>
-			<Header />
+			<Header Dark={Dark} setDark={setDark} />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
 			<Route path='/youtube' component={Youtube} />
