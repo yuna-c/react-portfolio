@@ -3,7 +3,9 @@ import Layout from '../../common/layout/Layout';
 import { useEffect, useState } from 'react';
 
 export default function Department() {
+	console.log('render');
 	const [memberData, setmemberData] = useState([]); //1
+	console.log(memberData);
 	const path = process.env.PUBLIC_URL; //public폴더까지의 경로를 구하는 구문(절대경로로)
 
 	const fetchDepartment = () => {
@@ -11,7 +13,7 @@ export default function Department() {
 		fetch(`${path}/DB/department.json`) //외부 데이터 가지고 옴 web api로
 			.then((data) => data.json())
 			.then((json) => {
-				console.log(json.members);
+				//console.log(json.members);
 				setmemberData(json.members);
 			});
 	};
@@ -26,9 +28,13 @@ export default function Department() {
 			{/* 4 */}
 			{memberData.map((mem, idx) => {
 				return (
-					<div key={mem + idx}>
+					<article key={mem + idx}>
+						<div className='pic'>
+							<img src={`${path}/img/${mem.pic}`} alt={mem.name} />
+						</div>
 						<h2>{mem.name}</h2>
-					</div>
+						<p>{mem.position}</p>
+					</article>
 				);
 			})}
 		</Layout>
