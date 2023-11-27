@@ -4,12 +4,15 @@ import { useSplitText } from '../../../hooks/useSplitText';
 
 export default function Layout({ children, title }) {
 	const refFrame = useRef(null);
-	const refTitle = useRef(null);
+	const refTitle = useRef(null); //h1
 	const splitText = useSplitText();
 
 	useEffect(() => {
-		splitText(refTitle.current, title);
-		refFrame.current.classList.add('on');
+		splitText(refTitle.current, title, 0.7, 0.1);
+		setTimeout(() => {
+			// 지연시간을 통해 scss가 적용될 시간을 줌
+			refFrame.current.classList.add('on');
+		}, 300);
 	}, []);
 
 	return (

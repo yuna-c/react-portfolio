@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import './Layout.scss';
 import { useSplitText } from '../../../hooks/useSplitText';
 
 export default function Layout({ children, title }) {
