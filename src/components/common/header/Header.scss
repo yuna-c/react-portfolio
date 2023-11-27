@@ -7,7 +7,7 @@
 	margin: 0 auto;
 
 	h1 {
-		font-size: var(--titSize1);
+		font-size: var(--titSize2);
 	}
 
 	ul {
@@ -28,7 +28,7 @@
 		border-radius: 18px;
 		cursor: pointer;
 		position: relative;
-		top: 8px;
+		top: 2px;
 		transform: scale(0.7);
 
 		.ball {

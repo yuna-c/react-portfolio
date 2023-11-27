@@ -12,7 +12,7 @@ export function useSplitText() {
 			// span에 모션 처리 숫자값
 			count++;
 		}
-		console.log(tags);
+		// console.log(tags);
 		ref.innerHTML = tags;
 	};
 }
