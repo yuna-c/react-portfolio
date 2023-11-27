@@ -8,7 +8,7 @@ export default function Layout({ children, title }) {
 	const splitText = useSplitText();
 
 	useEffect(() => {
-		splitText(refTitle.current, title, 0.7, 0.1);
+		splitText(refTitle.current, title, 0.7, 0.15);
 		setTimeout(() => {
 			// 지연시간을 통해 scss가 적용될 시간을 줌
 			refFrame.current.classList.add('on');

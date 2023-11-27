@@ -10,17 +10,16 @@ import Department from './components/sub/department/Department';
 import Gallery from './components/sub/gallery/Gallery';
 import Members from './components/sub/members/Members';
 import Youtube from './components/sub/youtube/Youtube';
+import { useState } from 'react';
 
 export default function App() {
+	const [Dark, setDark] = useState(false); //toggle 은 boolean
+
 	return (
-		<>
+		/* 리액트가 제어할 수 있는 범위 */
+		<div className={Dark ? 'wrap dark' : 'wrap'}>
 			<Header />
-			{/* 
-			라우터 : 해당 컴포넌트만 보이게
-			<Route path='/'><MainWrap /></Route> 밑에꺼랑 같은고얌!
-			*/}
 			<Route exact path='/' component={MainWrap} />
-			{/* exact : 슬러시 하나일 때만 보이게 하게따  */}
 			<Route path='/department' component={Department} />
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/gallery' component={Gallery} />
@@ -28,6 +27,6 @@ export default function App() {
 			<Route path='/members' component={Members} />
 			<Route path='/contant' component={Contant} />
 			<Footer />
-		</>
+		</div>
 	);
 }
