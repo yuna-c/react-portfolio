@@ -3,12 +3,15 @@ import Layout from '../../common/layout/Layout';
 import { useEffect, useState } from 'react';
 
 export default function Department() {
+	const test = 'abcdef';
+	// console.log(test.charAt(0)); //a
+	// console.log(test.slice(1, 3)); //bc
+	// console.log(test.toUpperCase()); ABCDEF
 	const [memberTit, setmemberTit] = useState('');
-	const [memberData, setmemberData] = useState([]); //1
+	const [memberData, setmemberData] = useState([]);
 	const path = process.env.PUBLIC_URL;
 
 	const fetchDepartment = () => {
-		//2 마운트 전임
 		fetch(`${path}/DB/department.json`)
 			.then((data) => data.json())
 			.then((json) => {
@@ -24,14 +27,11 @@ export default function Department() {
 	useEffect(() => {
 		fetchDepartment();
 	}, []);
-	//state 담거나 - 멤버데이터
-	//useref담거나
 
 	return (
 		<Layout title={'Deparment'}>
-			<h2>{memberTit}</h2>
+			<h2>{`${memberTit.charAt(0).toUpperCase() + memberTit.slice(1)}`}</h2>
 			<section className='memberBox'>
-				{/* 4 */}
 				{memberData.map((member, idx) => {
 					return (
 						<article key={member + idx}>
@@ -61,4 +61,11 @@ const student = {name : 'David', age : 20 }
 Object.keys(student); ['name', 'age'];
 Object.values(student); ['David', 20];
 
+// 문자열 관련 내장 메서드
+전체문자열.charAt(순서) : 전체 문자열에서 해당 순서의 문자값만 반환 
+전체문자열.slice(순서1, 순서2) : 전체 문자열에서 해당 순서1부터 순서2위치까지 문자를 잘라 반환
+전체문자열.toUpperCase() : 전체 문자열을 대문자로 반환
+전체문자열.toLowerCase() : 전체 문자열을 소문자로 반환
+전체문자열.split(구분자) : 전체 문자열을 구분자를 기준으로 나눠서 배열 반환
+전체문자열.join(구분자) : 각 배열밧을 구분자로 이어 붙이면서 하나의 문자열로 반환
 */
