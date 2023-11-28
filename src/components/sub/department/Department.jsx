@@ -1,7 +1,7 @@
 import './Department.scss';
 import Layout from '../../common/layout/Layout';
 import { useEffect, useRef, useState } from 'react';
-import { useSplitText, useCustomText } from '../../../hooks/useText';
+import { useCustomText } from '../../../hooks/useText';
 
 export default function Department() {
 	const [memberTit, setmemberTit] = useState('');
@@ -10,6 +10,7 @@ export default function Department() {
 	const changeTitle = useCustomText('title'); //useText의 함수를 반환
 	const shortenText = useCustomText('shorten');
 	const combinedTitle = useCustomText('combined');
+
 	const txt1 = 'our-members-score';
 	console.log(combinedTitle(txt1, '-'));
 	// console.log(shortenText(txt1, 4));
