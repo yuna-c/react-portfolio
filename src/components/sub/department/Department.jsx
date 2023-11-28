@@ -1,7 +1,7 @@
 import './Department.scss';
 import Layout from '../../common/layout/Layout';
 import { useEffect, useRef, useState } from 'react';
-import { useCustomText } from '../../../hooks/useText';
+import { useSplitText, useCustomText } from '../../../hooks/useText';
 
 export default function Department() {
 	const [memberTit, setmemberTit] = useState('');
@@ -9,10 +9,18 @@ export default function Department() {
 	const path = useRef(process.env.PUBLIC_URL); //useEffect 의존성 배열 처리위해
 	const changeTitle = useCustomText('title'); //useText의 함수를 반환
 	const shortenText = useCustomText('shorten');
-
-	const txt1 = 'abscdde';
-	console.log(shortenText(txt1, 4));
-
+	const combinedTitle = useCustomText('combined');
+	const txt1 = 'our-members-score';
+	console.log(combinedTitle(txt1, '-'));
+	// console.log(shortenText(txt1, 4));
+	/*
+	// split : 구분자를 기준점으로 나눠서 배열로 반환(인수 두개 받앙!)
+	const [forward, backward] = txt1.split('-').map((txt) => changeTitle(txt)); // 중괄호 리턴 생략하면 바로 반환
+	// console.log(txt1.split('-'));
+	// console.log(forward);
+	// console.log(backward);
+	// console.log(forward + ' ' + backward);
+  */
 	const fetchDepartment = () => {
 		fetch(`${path.current}/DB/department.json`)
 			.then((data) => data.json())

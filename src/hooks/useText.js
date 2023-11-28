@@ -31,10 +31,20 @@ export function useCustomText(type) {
 		return (txt, len = 100) => {
 			if (txt.length > len) {
 				return txt.slice(0, len) + '...';
-				// console.log(txt.slice(0, len) + '...');
 			} else {
 				return txt;
 			}
+		};
+	}
+	if (type === 'combined') {
+		return (txt, spc) => {
+			//txt를 spc 기준으로 나눔
+			const resultText = txt // 원본 텍스트를 가져옴
+				.split(spc) // split으로 두번재 인수로 받은 구분자로 분리해서 배열로 반환
+				//.map((data) => (data += data.charAt(0).toUpperCase() + data.slice(1)))
+				.map((data) => data.charAt(0).toUpperCase() + data.slice(1)) // 배열값을 map으로 반복돌며 첫 글자만 대문자로 변환해서 새로운 배열로 반환
+				.join(' '); //새롭게 반환된 배열을 다시 빈칸을 구분자로 해서 하나의 문자열로 이어 붙여줌
+			return resultText; // 위에서 만들어진 문자값을 최종적으로 반환
 		};
 	}
 }
