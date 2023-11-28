@@ -58,9 +58,8 @@ export function useCustomText(type) {
 			txt.split(spc).map((data) => {
 				// console.log(data);
 				resultText += data.charAt(0).toUpperCase() + data.slice(1);
-				return resultText;
 			});
-			console.log(resultText + ' ');
+			return resultText;
 		};
 	}
 }

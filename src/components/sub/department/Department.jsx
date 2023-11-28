@@ -38,6 +38,10 @@ export default function Department() {
 	return (
 		<Layout title={'Deparment'}>
 			<h2>{changeTitle(memberTit)}</h2>
+			{/* 
+      <h2>{shortenText(memberTit, '3')}</h2>
+			<h2>{combinedTitle(memberTit, '-')}</h2> 
+      */}
 			{/* {}=> 연산 필요할 때 */}
 			<section className='memberBox'>
 				{memberData.map((member, idx) => {
