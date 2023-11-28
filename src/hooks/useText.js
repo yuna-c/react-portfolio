@@ -1,3 +1,4 @@
+// 글자 애니메이션
 export function useSplitText() {
 	return (ref, txt, speed = 0, interval = 0) => {
 		//txt = title
@@ -15,4 +16,13 @@ export function useSplitText() {
 		// console.log(tags);
 		ref.innerHTML = tags;
 	};
+}
+
+// 첫글자 잘라서 대문자
+export function useCustomText(type) {
+	if (type === 'title') {
+		return (txt) => {
+			return txt.charAt(0).toUpperCase() + txt.slice(1);
+		};
+	}
 }
