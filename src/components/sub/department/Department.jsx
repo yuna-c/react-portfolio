@@ -1,18 +1,19 @@
 import './Department.scss';
 import Layout from '../../common/layout/Layout';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Department() {
-	const test = 'abcdef';
+	// const test = 'abcdef';
 	// console.log(test.charAt(0)); //a
 	// console.log(test.slice(1, 3)); //bc
 	// console.log(test.toUpperCase()); ABCDEF
 	const [memberTit, setmemberTit] = useState('');
 	const [memberData, setmemberData] = useState([]);
-	const path = process.env.PUBLIC_URL;
+	const path = useRef(process.env.PUBLIC_URL);
+	/* const path = process.env.PUBLIC_URL; //지역변수(참조객체나, 지역변수로 변환해서 effect안에 넣어라) */
 
 	const fetchDepartment = () => {
-		fetch(`${path}/DB/department.json`)
+		fetch(`${path.current}/DB/department.json`)
 			.then((data) => data.json())
 			.then((json) => {
 				// console.log(json);
@@ -26,7 +27,7 @@ export default function Department() {
 	//3
 	useEffect(() => {
 		fetchDepartment();
-	}, []);
+	}, []); //의존성 배열이 비어있는 useEffect(wep api같은 민감한 데이터만, 어떤 변화가 될만한 값을 넣는다.)
 
 	return (
 		<Layout title={'Deparment'}>
@@ -36,7 +37,7 @@ export default function Department() {
 					return (
 						<article key={member + idx}>
 							<div className='pic'>
-								<img src={`${path}/img/${member.pic}`} alt={member.name} />
+								<img src={`${path.current}/img/${member.pic}`} alt={member.name} />
 							</div>
 							<h2>{member.name}</h2>
 							<p>{member.position}</p>

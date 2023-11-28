@@ -1,6 +1,6 @@
 {
   "members": [
-    {
+    { /* 데이터는 소문자로 들어가는게 대부분 */
       "name": "David",
       "position": "President",
       "pic": "member1.jpg"
