@@ -17,6 +17,15 @@ a {
 	font-weight: inherit;
 	text-decoration: none;
 }
+html {
+	&::-webkit-scrollbar {
+		width: 4px;
+	}
+	&::-webkit-scrollbar-thumb {
+		border-radius: 4px;
+		background-color: var(--pointColor);
+	}
+}
 
 .wrap {
 	color: var(--baseColor);
