@@ -20,6 +20,7 @@ a {
 html {
 	&::-webkit-scrollbar {
 		width: 4px;
+		background-color: var(--bgColor);
 	}
 	&::-webkit-scrollbar-thumb {
 		border-radius: 4px;
