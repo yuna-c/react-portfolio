@@ -28,20 +28,22 @@ export default function Department() {
 	}, []);
 
 	return (
-		<Layout title={'Deparment'}>
-			<h2>{combinedTitle(memberTit)}</h2>
+		<Layout title={'Department'}>
 			<section className='memberBox'>
-				{memberData.map((member, idx) => {
-					return (
-						<article key={member + idx}>
-							<div className='pic'>
-								<img src={`${path.current}/img/${member.pic}`} alt={member.name} />
-							</div>
-							<h2>{member.name}</h2>
-							<p>{member.position}</p>
-						</article>
-					);
-				})}
+				<h2>{combinedTitle(memberTit)}</h2>
+				<div className='con'>
+					{memberData.map((member, idx) => {
+						return (
+							<article key={member + idx}>
+								<div className='pic'>
+									<img src={`${path.current}/img/${member.pic}`} alt={member.name} />
+								</div>
+								<h3>{member.name}</h3>
+								<p>{member.position}</p>
+							</article>
+						);
+					})}
+				</div>
 			</section>
 		</Layout>
 	);
