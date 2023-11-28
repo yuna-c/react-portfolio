@@ -34,13 +34,14 @@ export function useCustomText(type) {
 			}
 		};
 	}
+
 	// 구분(-없이) 첫글자 대문자 처리
 	if (type === 'combined') {
-		//regEx(regular expression : 정규 표현식) 문자열의 패턴별 특정 기능 수행식
+		// regEx(regular expression : 정규 표현식) 문자열의 패턴별 특정 기능 수행식
 		// /정규표현식/
 		return (txt) => {
 			const resultText = txt
-				.split(/-|_|\+/) //if 인수로 들어가는 특수문자가 -,_,+일 때 해당 구분자로 문자를 분리(예약어 문자열은 앞에 \(역슬러시))
+				.split(/-|_|\+/) // if 인수로 들어가는 특수문자가 -,_,+일 때 해당 구분자로 문자를 분리(예약어 문자열은 앞에 \(역슬러시))
 				.map((data) => toUpperText(data))
 				.join(' ');
 			return resultText;
