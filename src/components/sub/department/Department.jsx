@@ -8,7 +8,6 @@ export default function Department() {
 	const [memberData, setmemberData] = useState([]);
 	const path = useRef(process.env.PUBLIC_URL);
 
-	const changeTitle = useCustomText('title');
 	const shortenText = useCustomText('shorten');
 	const combinedTitle = useCustomText('combined');
 
@@ -30,7 +29,7 @@ export default function Department() {
 
 	return (
 		<Layout title={'Deparment'}>
-			<h2>{combinedTitle(memberTit, '-')}</h2>
+			<h2>{combinedTitle(memberTit)}</h2>
 			<section className='memberBox'>
 				{memberData.map((member, idx) => {
 					return (

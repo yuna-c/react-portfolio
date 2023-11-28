@@ -24,7 +24,7 @@ export function useCustomText(type) {
 		return txt.charAt(0).toUpperCase() + txt.slice(1);
 	};
 
-	// 글자 자르기 함수 추가
+	// ...
 	if (type === 'shorten') {
 		return (txt, len = 100) => {
 			if (txt.length > len) {
@@ -34,17 +34,20 @@ export function useCustomText(type) {
 			}
 		};
 	}
-	// 글자 빈칸 추가해서 이어 붙이기
+	// 구분(-없이) 첫글자 대문자 처리
 	if (type === 'combined') {
-		return (txt, spc) => {
+		//regEx(regular expression : 정규 표현식) 문자열의 패턴별 특정 기능 수행식
+		// /정규표현식/
+		return (txt) => {
 			const resultText = txt
-				.split(spc)
+				.split(/-|_|\+/) //if 인수로 들어가는 특수문자가 -,_,+일 때 해당 구분자로 문자를 분리(예약어 문자열은 앞에 \(역슬러시))
 				.map((data) => toUpperText(data))
 				.join(' ');
 			return resultText;
 		};
 	}
-	//글차 빈칸 없이 이어 붙이기
+
+	// 글자 빈칸 없이 이어 붙이기
 	if (type === 'combined2') {
 		return (txt, spc) => {
 			//txt를 spc 기준으로 나눔
