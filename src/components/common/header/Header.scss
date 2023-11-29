@@ -21,6 +21,10 @@
 		}
 	}
 
+	.menuToggle {
+		display: none;
+	}
+
 	.themeBox {
 		min-width: 60px;
 		height: 26px;
@@ -46,5 +50,27 @@
 		.ball {
 			left: 35px;
 		}
+	}
+}
+
+//tablet
+.tablet,
+.mobile {
+	.header {
+		width: 85vw;
+		ul {
+			display: none;
+		}
+
+		.menuToggle {
+			display: block;
+		}
+	}
+}
+
+//mobile
+.mobile {
+	.header {
+		width: 90vw;
 	}
 }
