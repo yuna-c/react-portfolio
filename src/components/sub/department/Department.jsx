@@ -8,7 +8,6 @@ export default function Department() {
 	const [memberData, setmemberData] = useState([]);
 	const [HistoryTit, setHistoryTit] = useState('');
 	const [HistoryData, setHistoryData] = useState([]);
-	const [HistoryLetter, setHistoryLetter] = useState('');
 
 	const path = useRef(process.env.PUBLIC_URL);
 
@@ -55,9 +54,9 @@ export default function Department() {
 						{2020 : [txt1,txt2,txt3]}
 					*/}
 					{HistoryData.map((history, idx) => {
-						console.log(history); //{2016 : [txt1,txt2,txt3]}
-						console.log(Object.keys(history)); // [2016] 0번째 배열값 뽑아서 문자열 '2016'
-						console.log(Object.values(history)); // [[txt1,txt2,txt3]] -> 0번째 배열값 뽑아서 [txt1,txt2,txt3]
+						// console.log(history); //{2016 : [txt1,txt2,txt3]}
+						//console.log(Object.keys(history)); // [2016] 0번째 배열값 뽑아서 문자열 '2016'
+						// console.log(Object.values(history)); // [[txt1,txt2,txt3]] -> 0번째 배열값 뽑아서 [txt1,txt2,txt3]
 						return (
 							<article key={history + idx}>
 								{/* 현재 반복돌고 있는 객체의 key값을 뽑아서 h3로 출력 :2016 */}
