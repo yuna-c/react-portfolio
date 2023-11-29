@@ -18,7 +18,7 @@ export default function App() {
 
 	return (
 		/* 리액트가 제어할 수 있는 범위 */
-		<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
+		<div className={`wrap ${Dark ? 'dark' : ''}${useMedia()}`}>
 			<Header Dark={Dark} setDark={setDark} />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />

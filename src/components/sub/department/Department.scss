@@ -1,4 +1,4 @@
-@import '../../../globalStyles/Variables.scss';
+// @import '../../../globalStyles/Variables.scss';
 
 .Department {
 	.memberBox {
@@ -111,7 +111,9 @@ react style 관련 이슈
 - 그래서 useStyleTheme라는 공통 파일을 적용했다
 */
 
-.tablet {
+//tablet
+.tablet,
+.mobile {
 	.Department {
 		.memberBox {
 			margin-bottom: 100px;
@@ -139,6 +141,33 @@ react style 관련 이슈
 				width: 100%;
 				padding-left: 0;
 				border-left: none;
+			}
+		}
+	}
+}
+
+//mobile
+.mobile {
+	.Department {
+		.memberBox {
+			margin-bottom: 40px;
+
+			h2 {
+				margin-bottom: 30px;
+			}
+
+			.con {
+				article {
+					width: 100%;
+					margin-bottom: 50px;
+				}
+			}
+		}
+
+		.historyBox {
+			margin-bottom: 40px;
+			h2 {
+				margin-bottom: 30px;
 			}
 		}
 	}
