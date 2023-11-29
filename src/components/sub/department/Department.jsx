@@ -33,13 +33,11 @@ export default function Department() {
 			.then((json) => {
 				setHistoryTit(Object.keys(json)[0]);
 				setHistoryData(Object.values(json)[0]);
-				setHistoryLetter(Object.values(json)[0]);
 			});
 	};
 
 	useEffect(() => {
 		fetchDepartment();
-		fetchHistory();
 	}, []);
 
 	return (
