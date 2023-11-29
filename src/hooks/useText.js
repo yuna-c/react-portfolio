@@ -8,7 +8,7 @@ export function useSplitText() {
 
 		for (let letter of txt) {
 			tags += `
-        <span style='transition-duration:${speed}s; transition-delay:${interval * count}s; display:inline-block;'>${letter}</span>
+			<span style='transition-duration:${speed}s;transition-delay:${interval * count}s; display:inline-block;'>${letter}</span>
       `;
 			// span에 모션 처리 숫자값
 			count++;
