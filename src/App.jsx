@@ -12,14 +12,16 @@ import Youtube from './components/sub/youtube/Youtube';
 import MainWrap from './components/main/mainWrap/MainWrap';
 import Community from './components/sub/community/Community';
 import Department from './components/sub/department/Department';
+import Menu from './components/common/menu/Menu';
 
 export default function App() {
 	const [Dark, setDark] = useState(false); //toggle 은 boolean
+	const [Toggle, setToggle] = useState(false);
 
 	return (
 		/* 리액트가 제어할 수 있는 범위 */
-		<div className={`wrap ${Dark ? 'dark' : ''}${useMedia()}`}>
-			<Header Dark={Dark} setDark={setDark} />
+		<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
+			<Header Dark={Dark} setDark={setDark} Toggle={Toggle} setToggle={setToggle} />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
 			<Route path='/youtube' component={Youtube} />
@@ -28,6 +30,7 @@ export default function App() {
 			<Route path='/members' component={Members} />
 			<Route path='/contant' component={Contant} />
 			<Footer />
+			{Toggle && <Menu />}
 		</div>
 	);
 }
