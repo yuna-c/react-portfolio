@@ -4,14 +4,16 @@
 	.memberBox {
 		width: 100%;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 
 		h2 {
 			width: 20%;
-			font-size: 2rem;
+			font-size: var(--titSize1);
 			font-weight: normal;
 			opacity: 0.8;
 		}
+
 		.con {
 			width: 75%;
 			display: flex;
@@ -50,15 +52,17 @@
 	.historyBox {
 		width: 100%;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		margin-bottom: 200px;
 
 		h2 {
 			width: 20%;
-			font-size: 2rem;
+			font-size: var(--titSize1);
 			font-weight: normal;
 			opacity: 0.8;
 		}
+
 		.con {
 			width: 75%;
 			display: flex;
@@ -78,7 +82,7 @@
 					padding-top: 10px;
 
 					li {
-						font-size: 0.9rem;
+						font-size: var(--bodySize);
 						opacity: 1;
 					}
 				}
@@ -107,10 +111,35 @@ react style 관련 이슈
 - 그래서 useStyleTheme라는 공통 파일을 적용했다
 */
 
-@media screen and (max-width: $tablet) {
+.tablet {
 	.Department {
+		.memberBox {
+			margin-bottom: 100px;
+
+			h2 {
+				width: 100%;
+				margin-bottom: 40px;
+			}
+
+			.con {
+				width: 100%;
+				padding-left: 0;
+				border-left: none;
+			}
+		}
 		.historyBox {
-			display: none;
+			margin-bottom: 100px;
+
+			h2 {
+				width: 100%;
+				margin-bottom: 40px;
+			}
+
+			.con {
+				width: 100%;
+				padding-left: 0;
+				border-left: none;
+			}
 		}
 	}
 }

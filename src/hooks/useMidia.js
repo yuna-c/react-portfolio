@@ -19,7 +19,7 @@ export const useMedia = (opt) => {
 		return () => window.removeEventListener('resize', getClientWid);
 	}, []);
 
-	console.log(Type);
+	// console.log(Type);
 	return Type;
 	// jsx 안쪽 명령어 함수 실행 X (가능 : 삼항연산자,변수치환,map,`${함수}`)
 };
