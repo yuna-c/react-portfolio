@@ -30,11 +30,13 @@
 			font-size: 1.5rem;
 			font-weight: normal;
 		}
+
 		.txt {
 			width: 30%;
 			display: flex;
 			flex-wrap: wrap;
 			align-content: space-between;
+
 			p {
 				font: 0.8rem/1.5 'arial';
 				opacity: 0.5;
@@ -54,6 +56,7 @@
 				}
 			}
 		}
+
 		.pic {
 			width: 30%;
 			height: 11vmax;
@@ -77,16 +80,20 @@
 			&:nth-of-type(1) {
 				padding-top: 0;
 			}
+
 			h2 {
 				width: 50%;
 				font-size: 1.7rem;
 			}
+
 			.txt {
 				width: 46%;
+
 				.info {
 					margin-top: 10px;
 				}
 			}
+
 			.pic {
 				width: 100%;
 				height: 20vmax;
@@ -111,6 +118,7 @@
 				font-size: 1.2rem;
 				margin-bottom: 30px;
 			}
+
 			.txt {
 				width: 100%;
 			}

@@ -63,7 +63,7 @@ export default function Youtube() {
 						</div>
 
 						<div className='pic'>
-							<img src={data.snippet.thumbnails.standard.url} alt={data.snippet.title} />
+							<img src={data.snippet.thumbnails.standard ? data.snippet.thumbnails.standard.url : '/img/member1.jpg'} alt={data.snippet.title} />
 						</div>
 					</article>
 				);
