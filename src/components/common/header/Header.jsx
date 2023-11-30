@@ -50,6 +50,7 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 				className='menuToggle'
 				onClick={() => {
 					setToggle(!Toggle);
+					// toggle은 boolean 이구나
 				}}
 			>
 				menu

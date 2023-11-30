@@ -30,7 +30,8 @@ export default function App() {
 			<Route path='/members' component={Members} />
 			<Route path='/contant' component={Contant} />
 			<Footer />
-			{Toggle && <Menu />}
+			{Toggle && <Menu setToggle={setToggle} />}
+			{/* 데스크탑 버전에서도 생김 방지 */}
 		</div>
 	);
 }
