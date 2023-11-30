@@ -39,11 +39,12 @@ export function useCustomText(type) {
 	if (type === 'combined') {
 		// regEx(regular expression : 정규 표현식) 문자열의 패턴별 특정 기능 수행식
 		// /정규표현식/
-		return (txt) => {
+		return (txt, spc = ' ') => {
+			//두번째 인수 안주면 빈 칸 처리고, 아니면 .이나 특수문자 처리
 			const resultText = txt
 				.split(/-|_|\+/) // if 인수로 들어가는 특수문자가 -,_,+일 때 해당 구분자로 문자를 분리(예약어 문자열은 앞에 \(역슬러시))
 				.map((data) => toUpperText(data))
-				.join(' ');
+				.join(spc);
 			return resultText;
 		};
 	}

@@ -1,8 +1,13 @@
+import { useCustomText } from '../../../hooks/useText';
 import Layout from '../../common/layout/Layout';
 import './Youtube.scss';
 import { useState, useEffect } from 'react';
 
 export default function Youtube() {
+	// 커스텀 훅은 윗단에
+	const customText = useCustomText('combined');
+	const shortenText = useCustomText('shorten');
+
 	const [Vids, setVids] = useState([]);
 	console.log(Vids);
 
@@ -38,5 +43,31 @@ export default function Youtube() {
 		fetchYoutube();
 	}, []);
 
-	return <Layout title={'Youtube'}>Youtube</Layout>;
+	return (
+		<Layout title={'Youtube'}>
+			{Vids.map((data, idx) => {
+				const [date, time] = data.snippet.publishedAt.split('T'); //유튜브 업로드 날짜 T를 기점으로 잘라서
+
+				return (
+					<article key={data.id}>
+						<h2>{shortenText(data.snippet.title, 50)}</h2>
+
+						<div className='txt'>
+							<p>{shortenText(data.snippet.description, 250)}</p>
+							<div className='infoBox'>
+								<span>{customText(date, '.')}</span>
+								{/* 하이픈 대신 .으로 바꾼다 */}
+								<em>{time.split('Z')[0]}</em>
+								{/* Z 기준으로 맨 앞에 값 가져온다 */}
+							</div>
+						</div>
+
+						<div className='pic'>
+							<img src={data.snippet.thumbnails.standard.url} alt={data.snippet.title} />
+						</div>
+					</article>
+				);
+			})}
+		</Layout>
+	);
 }
