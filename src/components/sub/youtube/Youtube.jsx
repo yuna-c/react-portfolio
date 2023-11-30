@@ -2,6 +2,7 @@ import { useCustomText } from '../../../hooks/useText';
 import Layout from '../../common/layout/Layout';
 import './Youtube.scss';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Youtube() {
 	// 커스텀 훅은 윗단에
@@ -47,7 +48,7 @@ export default function Youtube() {
 		<Layout title={'Youtube'}>
 			{Vids.map((data, idx) => {
 				const [date, time] = data.snippet.publishedAt.split('T'); //유튜브 업로드 날짜 T를 기점으로 잘라서
-
+				//return <h3 key={idx}>{data.snippet.title}</h3>; 빈 배열은 에러로 안잡아=> 값이 없으면 반복을 안돌리니까
 				return (
 					<article key={data.id}>
 						<h2>{shortenText(data.snippet.title, 50)}</h2>
@@ -63,7 +64,9 @@ export default function Youtube() {
 						</div>
 
 						<div className='pic'>
-							<img src={data.snippet.thumbnails.standard ? data.snippet.thumbnails.standard.url : '/img/member1.jpg'} alt={data.snippet.title} />
+							<Link to={`/detail/${data.id}`}>
+								<img src={data.snippet.thumbnails.standard ? data.snippet.thumbnails.standard.url : '/img/member1.jpg'} alt={data.snippet.title} />
+							</Link>
 						</div>
 					</article>
 				);
