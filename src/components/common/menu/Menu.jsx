@@ -10,6 +10,7 @@ export default function Menu({ setToggle }) {
 		window.addEventListener('resize', closeMenu);
 		return () => window.removeEventListener('resize', closeMenu);
 	}, []);
+
 	return (
 		<aside className='menu'>
 			<h1>mobileMenu</h1>
