@@ -26,13 +26,13 @@
 		}
 
 		h2 {
-			width: 35%;
+			width: 34%;
 			font-size: 1.5rem;
 			font-weight: normal;
 		}
 
 		.txt {
-			width: 30%;
+			width: 32%;
 			display: flex;
 			flex-wrap: wrap;
 			align-content: space-between;
@@ -40,6 +40,10 @@
 			p {
 				font: 0.8rem/1.5 'arial';
 				opacity: 0.5;
+				//word-break : 줄 바꿈시 글자 자르는 기준
+				// normal(각 단어 기준: 한글, 영어는 글자로 잘림) / keep-all(문장 기준) / break-all(영어,한글 모두 단어기준으로 잘림)
+				text-align: justify;
+				word-break: break-all;
 			}
 
 			.infoBox {
