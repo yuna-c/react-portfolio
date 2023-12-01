@@ -16,8 +16,8 @@ export default function Youtube() {
 	// 조건 1 - promise반환 함수를 감싸주는 wrapping 함수 필요(async), 데이터 묶어야 되니까
 	// 조건 2 - await문은 promise then반환 함수(fetch)에만 지정 가능
 	const fetchYoutube = async () => {
-		const api_key = 'AIzaSyBgRldfomRBMNoipsSTKYAmfOarH1iIu8o';
-		const pid = 'PL_gXk6OSOQ5LVWytUDP2MgKhA1-A5h1TJ';
+		const api_key = process.env.REACT_APP_YOUTUBE_API;
+		const pid = process.env.REACT_APP_YOUTUBE_LIST;
 		const num = 10;
 		const baseURL = `https://www.googleapis.com/youtube/v3/playlistItems?key=${api_key}&part=snippet&playlistId=${pid}&maxResults=${num}`;
 		/* 중괄호 리턴을 빼거나 리턴을 넣을려면 중괄호까지 넣거나
