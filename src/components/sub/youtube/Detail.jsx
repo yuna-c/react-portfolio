@@ -19,6 +19,7 @@ export default function Detail() {
 
 	const fetchSingleData = async () => {
 		const api_key = process.env.REACT_APP_YOUTUBE_API;
+		// const api_key = 'AIzaSyBgRldfomRBMNoipsSTKYAmfOarH1iIu8o';
 		const baseURL = `https://www.googleapis.com/youtube/v3/playlistItems?key=${api_key}&part=snippet&id=${id}`;
 		const data = await fetch(baseURL);
 		const json = await data.json();
