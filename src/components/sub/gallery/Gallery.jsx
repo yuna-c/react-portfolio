@@ -10,12 +10,30 @@ export default function Gallery() {
 
 	const [Pics, setPics] = useState([]);
 
+	// 버튼 재클릭 방지
 	const activateBtn = (e) => {
 		const btns = refNav.current.querySelectorAll('button');
 		btns.forEach((btn) => btn.classList.remove('on'));
-		e.target.classList.add('on');
+		e && e.target.classList.add('on'); //e 객체 있을 때만 처리 되게
 	};
 
+	// 이벤트 빼기
+	const handleInterest = (e) => {
+		if (e.target.classList.contains('on')) return;
+		activateBtn(e);
+		fetchFlickr({ type: 'interest' });
+	};
+
+	const handleMine = (e) => {
+		if (e.target.classList.contains('on')) return;
+		activateBtn(e);
+		fetchFlickr({ type: 'user', id: myID.current });
+	};
+
+	const handleUser = (e) => {
+		activateBtn();
+		fetchFlickr({ type: 'user', id: e.target.innerText });
+	};
 	const fetchFlickr = async (opt) => {
 		const num = 50;
 
@@ -41,23 +59,8 @@ export default function Gallery() {
 		<Layout title={'Gallery'}>
 			<article className='controls'>
 				<nav className='btnSet' ref={refNav}>
-					<button
-						onClick={(e) => {
-							if (e.target.classList.contain('on')) return;
-							activateBtn(e);
-							fetchFlickr({ type: 'interest' });
-						}}
-					>
-						Interest Gallery
-					</button>
-					<button
-						className='on'
-						onClick={(e) => {
-							if (e.target.classList.contain('on')) return;
-							activateBtn(e);
-							fetchFlickr({ type: 'user', id: myID.current });
-						}}
-					>
+					<button onClick={handleInterest}>Interest Gallery</button>
+					<button className='on' onClick={handleMine}>
 						My Gallery
 					</button>
 				</nav>
@@ -75,7 +78,7 @@ export default function Gallery() {
 
 								<div className='profile'>
 									<img src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`} alt='사용자 프로필 이미지' onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')} />
-									<span onClick={() => fetchFlickr({ type: 'user', id: pic.owner })}>{pic.owner}</span>
+									<span onClick={handleUser}>{pic.owner}</span>
 								</div>
 							</article>
 						);
