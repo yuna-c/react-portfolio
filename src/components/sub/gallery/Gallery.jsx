@@ -48,7 +48,7 @@ export default function Gallery() {
 	const handleUser = (e) => {
 		//isUSer값이 비어있기만 하면 중지
 		if (isUser.current) return;
-		isUser.current = true;
+		isUser.current = e.target.innerText;
 		activateBtn();
 		fetchFlickr({ type: 'user', id: e.target.innerText });
 	};
