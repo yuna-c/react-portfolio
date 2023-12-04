@@ -13,7 +13,8 @@ import './Gallery.scss';
 export default function Gallery() {
 	console.log('re-render');
 	const myID = useRef('199645532@N06');
-	const isUser = useRef(true); //핸들 함수 제어 키
+	// isUser의 초기 값을 내 아이디 문자값으로 등록
+	const isUser = useRef(myID.current);
 
 	const refNav = useRef(null);
 
@@ -29,20 +30,23 @@ export default function Gallery() {
 	// 이벤트 빼기
 	const handleInterest = (e) => {
 		if (e.target.classList.contains('on')) return;
-		isUser.current = false;
+		// interest 함수 호출시 is User값을 빈 문자열로 초기화 (false로 인식되는 값)
+		isUser.current = ''; //false 강제로
 		activateBtn(e);
 		fetchFlickr({ type: 'interest' });
 	};
 
 	const handleMine = (e) => {
-		if (e.target.classList.contains('on') || isUser.current) return;
-		isUser.current = true;
+		// 콕 찍어서 isUser의 값과 myId 값이 동일할 때만 함수 중지
+		if (e.target.classList.contains('on') || isUser.current === myID.current) return; //해당 값이랑 내 아이디 값이 똑같이하면
+		isUser.current = myID.current;
 		activateBtn(e);
 		fetchFlickr({ type: 'user', id: myID.current });
 	};
 
 	// user타입 갤러리는 fetching 호출 안되게(리턴 끊기) 전제조건? 뭐로 구할껀데?(불린값으로 참조객체로)
 	const handleUser = (e) => {
+		//isUSer값이 비어있기만 하면 중지
 		if (isUser.current) return;
 		isUser.current = true;
 		activateBtn();
