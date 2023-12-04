@@ -2,6 +2,45 @@
 	--gap: 20px;
 	--num: 4;
 
+	.controls {
+		margin-bottom: 20px;
+		.btnSet {
+			display: flex;
+			gap: 20px;
+
+			button {
+				background: transparent;
+				border: none;
+				cursor: pointer;
+				padding: 7px 0px;
+				//border-bottom: 1px solid rgba(var(--baseColor-code), 0.3);
+				font-size: 1rem;
+				color: rgba(var(--baseColor-code), 0.4);
+				position: relative;
+				transition: 0.5s;
+
+				&::after {
+					content: '';
+					display: block;
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					width: 0%;
+					height: 1px;
+					background: var(--baseColor);
+					transition: 0.5s;
+				}
+
+				&.on {
+					color: rgba(var(--baseColor-code), 1);
+					&::after {
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+
 	.frame {
 		width: 100%;
 		display: flex;
@@ -10,9 +49,6 @@
 		justify-content: flex-start;
 
 		article {
-			//사이간격 고정값 쓰는 경우
-			//각 박스 넓이값 : 전체 넓이값에서 사이간격의 총 넓이를 빼주고 다시 컬럼수만큼 나누기
-			//calc((부모넓이값 - 사이간격 * 사이간격 수) /)
 			width: calc((100% - var(--gap) * (var(--num) - 1)) / var(--num));
 			margin-bottom: 70px;
 			border-bottom: 1px solid rgba(var(--baseColor-code), 0.5);

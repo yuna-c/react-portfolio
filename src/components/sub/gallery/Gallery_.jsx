@@ -2,12 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 import Masonry from 'react-masonry-component';
 import Layout from '../../common/layout/Layout';
 import './Gallery.scss';
+// https://www.flickr.com/photos/199645532@N06/ 사진 업로드하기
+// https://www.flickr.com/services/api/ 개발자 사이트
+// URL로 데이터 호출 : Qurey string : url에 문자열로 옵션 요청을 전달하는 형태
+// 기존요청 URL?옵션이름=옵션값
+// http://www.abc.com/?name=${김또깡}&
+// 이거 어카지
 
 export default function Gallery() {
-	console.log('re-render');
-	const myID = useRef('197119297@N02');
+	console.log('relander');
+	const myID = useRef('199645532@N06');
+	// 1 참조객체에 내 아이디값 등록
+	// const myID = '199645532@N06';
 	const refNav = useRef(null);
-
 	const [Pics, setPics] = useState([]);
 
 	const activateBtn = (e) => {
@@ -43,7 +50,6 @@ export default function Gallery() {
 				<nav className='btnSet' ref={refNav}>
 					<button
 						onClick={(e) => {
-							if (e.target.classList.contain('on')) return;
 							activateBtn(e);
 							fetchFlickr({ type: 'interest' });
 						}}
@@ -53,7 +59,6 @@ export default function Gallery() {
 					<button
 						className='on'
 						onClick={(e) => {
-							if (e.target.classList.contain('on')) return;
 							activateBtn(e);
 							fetchFlickr({ type: 'user', id: myID.current });
 						}}
