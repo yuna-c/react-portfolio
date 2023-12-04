@@ -11,7 +11,7 @@ import './Gallery.scss';
 // 출력 되는 클릭 핸들러 함수가 만약 갤러리 타입이 user.type일때는 이벤트 호출 안되게 해야됌 이건 어카지?
 
 export default function Gallery() {
-	console.log('re-render');
+	// console.log('re-render');
 	const myID = useRef('199645532@N06');
 	// isUser의 초기 값을 내 아이디 문자값으로 등록
 	const isUser = useRef(myID.current);
@@ -62,19 +62,26 @@ export default function Gallery() {
 		const baseURL = `https://www.flickr.com/services/rest/?&api_key=${flickr_api}&per_page=${num}&format=json&nojsoncallback=1&method=`;
 		const method_interest = 'flickr.interestingness.getList';
 		const method_user = 'flickr.people.getPhotos';
+		const method_search = 'flickr.photos.search';
 		const interestURL = `${baseURL}${method_interest}`;
 		const userURL = `${baseURL}${method_user}&user_id=${opt.id}`;
+		const searchURL = `${baseURL}${method_search}&tags=${opt.keyword}`;
 
 		let url = '';
 		opt.type === 'user' && (url = userURL);
 		opt.type === 'interest' && (url = interestURL);
+		opt.type === 'search' && (url = searchURL);
 		const data = await fetch(url);
 		const json = await data.json();
 		setPics(json.photos.photo);
 	};
 
+	// https://www.flickr.com/services/api/flickr.photos.search.html
+	// tags(optional)
+
 	useEffect(() => {
-		fetchFlickr({ type: 'user', id: myID.current });
+		// fetchFlickr({ type: 'user', id: myID.current });
+		fetchFlickr({ type: 'search', keyword: 'landscpe' });
 	}, []);
 
 	return (
@@ -90,7 +97,7 @@ export default function Gallery() {
 
 			<section>
 				<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: 20 }}>
-					{Pics.map((pic, idx) => {
+					{Pics.map((pic) => {
 						return (
 							<article key={pic.id}>
 								<div className='pic'>
