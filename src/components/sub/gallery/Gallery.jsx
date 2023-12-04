@@ -38,6 +38,8 @@ export default function Gallery() {
 
 	const handleMine = (e) => {
 		// 콕 찍어서 isUser의 값과 myId 값이 동일할 때만 함수 중지
+		//마이갤러리 함수 호출시에는 isUser의 문자값이 담겨있다고 하더라도 내아이디와 똑같지 않으면 핸들러함수를 실행하게 처리
+		//다른 사용자 갤러리를 갔다가 다시 myGallery호출시 이미 다른 사용자 유저id가 담겨있기 때문에 내 갤러리가 호출되지 않는 문제를 해결하기 위함
 		if (e.target.classList.contains('on') || isUser.current === myID.current) return; //해당 값이랑 내 아이디 값이 똑같이하면
 		isUser.current = myID.current;
 		activateBtn(e);
