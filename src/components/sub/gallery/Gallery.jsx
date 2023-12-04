@@ -7,6 +7,7 @@ import './Gallery.scss';
 // URL로 데이터 호출 : Qurey string : url에 문자열로 옵션 요청을 전달하는 형태
 // 기존요청 URL?옵션이름=옵션값
 // http://www.abc.com/?name=${김또깡}&
+// 이거 어카지
 
 export default function Gallery() {
 	console.log('relander');
