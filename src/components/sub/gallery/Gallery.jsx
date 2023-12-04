@@ -2,10 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 import Masonry from 'react-masonry-component';
 import Layout from '../../common/layout/Layout';
 import './Gallery.scss';
+// https://www.flickr.com/photos/199645532@N06/ 사진 업로드하기
+// https://www.flickr.com/services/api/ 개발자 사이트
+// URL로 데이터 호출 : Qurey string : url에 문자열로 옵션 요청을 전달하는 형태
+// 기존요청 URL?옵션이름=옵션값
+// http://www.abc.com/?name=${김또깡}&
+// 이거 어카지
+// 출력 되는 클릭 핸들러 함수가 만약 갤러리 타입이 user.type일때는 이벤트 호출 안되게 해야됌 이건 어카지?
 
 export default function Gallery() {
 	console.log('re-render');
-	const myID = useRef('197119297@N02');
+	const myID = useRef('199645532@N06');
+	const isUser = useRef(true); //핸들 함수 제어 키
+
 	const refNav = useRef(null);
 
 	const [Pics, setPics] = useState([]);
@@ -20,20 +29,26 @@ export default function Gallery() {
 	// 이벤트 빼기
 	const handleInterest = (e) => {
 		if (e.target.classList.contains('on')) return;
+		isUser.current = false;
 		activateBtn(e);
 		fetchFlickr({ type: 'interest' });
 	};
 
 	const handleMine = (e) => {
-		if (e.target.classList.contains('on')) return;
+		if (e.target.classList.contains('on') || isUser.current) return;
+		isUser.current = true;
 		activateBtn(e);
 		fetchFlickr({ type: 'user', id: myID.current });
 	};
 
+	// user타입 갤러리는 fetching 호출 안되게(리턴 끊기) 전제조건? 뭐로 구할껀데?(불린값으로 참조객체로)
 	const handleUser = (e) => {
+		if (isUser.current) return;
+		isUser.current = true;
 		activateBtn();
 		fetchFlickr({ type: 'user', id: e.target.innerText });
 	};
+
 	const fetchFlickr = async (opt) => {
 		const num = 50;
 
@@ -43,6 +58,7 @@ export default function Gallery() {
 		const method_user = 'flickr.people.getPhotos';
 		const interestURL = `${baseURL}${method_interest}`;
 		const userURL = `${baseURL}${method_user}&user_id=${opt.id}`;
+
 		let url = '';
 		opt.type === 'user' && (url = userURL);
 		opt.type === 'interest' && (url = interestURL);
