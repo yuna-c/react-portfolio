@@ -5,13 +5,16 @@ import './Gallery.scss';
 import { LuSearch } from 'react-icons/lu';
 import Modal from '../../common/modal/Modal';
 
-// https://www.flickr.com/photos/199645532@N06/ 사진 업로드하기
-// https://www.flickr.com/services/api/ 개발자 사이트
-// URL로 데이터 호출 : Qurey string : url에 문자열로 옵션 요청을 전달하는 형태
-// 기존요청 URL?옵션이름=옵션값
-// http://www.abc.com/?name=${김또깡}&
-// 이거 어카지
-// 출력 되는 클릭 핸들러 함수가 만약 갤러리 타입이 user.type일때는 이벤트 호출 안되게 해야됌 이건 어카지?
+/* flickr
+	https://www.flickr.com/photos/199645532@N06/ 사진 업로드하기
+	https://www.flickr.com/services/api/ 개발자 사이트
+	URL로 데이터 호출 : Qurey string : url에 문자열로 옵션 요청을 전달하는 형태
+	기존요청 URL?옵션이름=옵션값
+	http://www.abc.com/?name=${김또깡}&
+	이거 어카지
+	출력 되는 클릭 핸들러 함수가 만약 갤러리 타입이 user.type일때는 이벤트 호출 안되게 해야됌 이건 어카지?
+
+*/
 
 export default function Gallery() {
 	// console.log('re-render');
