@@ -166,6 +166,11 @@ export default function Gallery() {
 				</section>
 			</Layout>
 			{Open && <Modal setOpen={setOpen} />}
+			{/* 
+				이미지 출력 방법 두가지 (범용적으로 쓸수 있는거는 어떤걸까?) 
+				1. prop
+				2. children
+			 */}
 		</>
 	);
 }
