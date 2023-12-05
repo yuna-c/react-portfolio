@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import Masonry from 'react-masonry-component';
 import Layout from '../../common/layout/Layout';
 import './Gallery.scss';
+import { LuSearch } from 'react-icons/lu';
+
 // https://www.flickr.com/photos/199645532@N06/ 사진 업로드하기
 // https://www.flickr.com/services/api/ 개발자 사이트
 // URL로 데이터 호출 : Qurey string : url에 문자열로 옵션 요청을 전달하는 형태
@@ -44,33 +46,34 @@ export default function Gallery() {
 		isUser.current = myID.current;
 		activateBtn(e);
 		fetchFlickr({ type: 'user', id: myID.current });
-	};
+	}; // 마이갤러리눌렀을 때 재 호출 방지고 이벤트를 끊어주게
 
 	// user타입 갤러리는 fetching 호출 안되게(리턴 끊기) 전제조건? 뭐로 구할껀데?(불린값으로 참조객체로)
 	const handleUser = (e) => {
 		//isUSer값이 비어있기만 하면 중지
 		if (isUser.current) return;
 		isUser.current = e.target.innerText;
-		activateBtn();
+		activateBtn(); // 사용자 아이디 클릭해서 활성화 되면 안됌
 		fetchFlickr({ type: 'user', id: e.target.innerText });
 	};
 
 	const fetchFlickr = async (opt) => {
+		//opt 객체 타입이 바뀌면 await 방식으로 동기화해서
 		const num = 50;
-
 		const flickr_api = process.env.REACT_APP_FLICKR_API;
 		const baseURL = `https://www.flickr.com/services/rest/?&api_key=${flickr_api}&per_page=${num}&format=json&nojsoncallback=1&method=`;
 		const method_interest = 'flickr.interestingness.getList';
 		const method_user = 'flickr.people.getPhotos';
-		const method_search = 'flickr.photos.search';
+		const method_search = 'flickr.photos.search'; // method_search 추가
 		const interestURL = `${baseURL}${method_interest}`;
 		const userURL = `${baseURL}${method_user}&user_id=${opt.id}`;
-		const searchURL = `${baseURL}${method_search}&tags=${opt.keyword}`;
+		const searchURL = `${baseURL}${method_search}&tags=${opt.keyword}`; // searchURL 추가
 
 		let url = '';
 		opt.type === 'user' && (url = userURL);
 		opt.type === 'interest' && (url = interestURL);
 		opt.type === 'search' && (url = searchURL);
+		// 제이슨으로 파싱
 		const data = await fetch(url);
 		const json = await data.json();
 		setPics(json.photos.photo);
@@ -81,7 +84,7 @@ export default function Gallery() {
 
 	useEffect(() => {
 		// fetchFlickr({ type: 'user', id: myID.current });
-		fetchFlickr({ type: 'search', keyword: 'landscpe' });
+		fetchFlickr({ type: 'search', keyword: 'landscpe' }); // landscpe키워드로 검색타입 갤러리 호출
 	}, []);
 
 	return (
@@ -94,7 +97,11 @@ export default function Gallery() {
 					</button>
 				</nav>
 			</article>
-
+			<form>
+				<input type='text' placeholder='search' />
+				<LuSearch className='btnsearch' /> {/*fontSize={20} */}
+				{/* https://react-icons.github.io/react-icons/ */}
+			</form>
 			<section>
 				<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: 20 }}>
 					{Pics.map((pic) => {
