@@ -93,11 +93,12 @@ export default function Gallery() {
 		opt.type === 'search' && (url = searchURL);
 		const data = await fetch(url);
 		const json = await data.json();
-
+		/*
 		//검색어 없으면 어떠케? 패칭함수로가서 처리해! 값있는지 없는지 확인부터
 		if (json.photos.photo.length === 0) {
 			return alert('해당 검색어의 결과값이 없습니다');
 		}
+		*/
 		setPics(json.photos.photo); //photo 배열
 	};
 
@@ -132,8 +133,13 @@ export default function Gallery() {
 
 			<section>
 				<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: 20 }}>
-					{
-						// if(Pics.length === 0 )return  <h2></h2>;
+					{/*
+					삼항 연산자로 배열에 받아지는 값이 없으면 경고문구 출력 
+					주의점 : 삼항연산자 JSX분기 처리시 괄호로 묶어줌bla === value ? () : ()
+					 */}
+					{Pics.length === 0 ? (
+						<h2>해당 키워드에 대한 검색결과가 없습니다.</h2>
+					) : (
 						Pics.map((pic) => {
 							return (
 								<article key={pic.id}>
@@ -150,7 +156,7 @@ export default function Gallery() {
 								</article>
 							);
 						})
-					}
+					)}
 				</Masonry>
 			</section>
 		</Layout>
