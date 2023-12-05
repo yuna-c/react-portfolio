@@ -19,6 +19,7 @@ export default function Gallery() {
 	const isUser = useRef(myID.current);
 	const refNav = useRef(null);
 	const [Pics, setPics] = useState([]);
+	const path = useRef(process.env.PUBLIC_URL);
 
 	// 버튼 재클릭 방지
 	const activateBtn = (e) => {
@@ -55,6 +56,22 @@ export default function Gallery() {
 		fetchFlickr({ type: 'user', id: e.target.innerText });
 	};
 
+	//btn search input.value
+	const handleSearch = (e) => {
+		//이벤트 객체 전달하는 이유가모야?
+		// fetchFlickr({ type: 'search', keyword: 'landscpe' });
+		// fetchFlickr({ type: 'search', keyword: refKey.current });
+		// 기본 submit 이벤트는 전송기능이기 때문에 무조건 화면이 새로고침 됌
+		// 전송을 할 것이 아니라 리액트로 추가 로직구현을 할 것 이므로 기본 전송기능 막음
+		e.preventDefault();
+		isUser.current = '';
+		activateBtn(); // 비활성화
+		console.log(e);
+		const keyword = e.target.children[0].value; //가공화 할 일 있으면 지역ㅂㄴ서
+		console.log(keyword);
+		fetchFlickr({ type: 'search', keyword: keyword });
+	};
+
 	const fetchFlickr = async (opt) => {
 		//opt 객체 타입이 바뀌면 await 방식으로 동기화해서
 		const num = 50;
@@ -62,16 +79,14 @@ export default function Gallery() {
 		const baseURL = `https://www.flickr.com/services/rest/?&api_key=${flickr_api}&per_page=${num}&format=json&nojsoncallback=1&method=`;
 		const method_interest = 'flickr.interestingness.getList';
 		const method_user = 'flickr.people.getPhotos';
-		const method_search = 'flickr.photos.search'; // method_search 추가
+		const method_search = 'flickr.photos.search'; //search method 추가
 		const interestURL = `${baseURL}${method_interest}`;
 		const userURL = `${baseURL}${method_user}&user_id=${opt.id}`;
-		const searchURL = `${baseURL}${method_search}&tags=${opt.keyword}`; // searchURL 추가
-
+		const searchURL = `${baseURL}${method_search}&tags=${opt.keyword}`; //search url 추가
 		let url = '';
 		opt.type === 'user' && (url = userURL);
 		opt.type === 'interest' && (url = interestURL);
 		opt.type === 'search' && (url = searchURL);
-		// 제이슨으로 파싱
 		const data = await fetch(url);
 		const json = await data.json();
 		setPics(json.photos.photo);
@@ -81,8 +96,8 @@ export default function Gallery() {
 	// tags(optional)
 
 	useEffect(() => {
-		// fetchFlickr({ type: 'user', id: myID.current });
-		fetchFlickr({ type: 'search', keyword: 'landscpe' }); // landscpe키워드로 검색타입 갤러리 호출
+		fetchFlickr({ type: 'user', id: myID.current });
+		// fetchFlickr({ type: 'search', keyword: 'landscpe' }); // landscpe키워드로 검색타입 갤러리 호출
 	}, []);
 
 	return (
@@ -95,9 +110,13 @@ export default function Gallery() {
 					</button>
 				</nav>
 
-				<form>
+				<form onSubmit={handleSearch}>
+					{/* 엔터 버튼클릭 이벤트 다돼 onSubmit={} */}
 					<input type='text' placeholder='search' />
-					<LuSearch className='btnSearch' /> {/*fontSize={20} */}
+					<button className='btnSearch'>
+						{/*fontSize={20} 무조건 버튼으로 감싸야 동작이 돼 */}
+						<LuSearch />
+					</button>
 					{/* https://react-icons.github.io/react-icons/ */}
 				</form>
 			</article>
@@ -114,6 +133,7 @@ export default function Gallery() {
 
 								<div className='profile'>
 									<img src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`} alt='사용자 프로필 이미지' onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')} />
+									{/* && `${path}/img/buddyicon.gif` */}
 									<span onClick={handleUser}>{pic.owner}</span>
 								</div>
 							</article>
