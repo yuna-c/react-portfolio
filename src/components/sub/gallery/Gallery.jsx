@@ -67,12 +67,15 @@ export default function Gallery() {
 		isUser.current = '';
 		activateBtn(); // 비활성화
 		console.log(e);
-		const keyword = e.target.children[0].value; //가공화 할 일 있으면 지역ㅂㄴ서
+		const keyword = e.target.children[0].value; //가공화 할 일 있으면 지역변수화
+		if (!keyword.trim()) return; //문자값 기준 양옆 빈 문자 값(스페이스바) 있으면 .trim() 이거로 다듬어
 		console.log(keyword);
+		e.target.children[0].value = ''; //일일이 키워드 지워야되는데 어케?
 		fetchFlickr({ type: 'search', keyword: keyword });
 	};
 
 	const fetchFlickr = async (opt) => {
+		console.log('fetching again');
 		//opt 객체 타입이 바뀌면 await 방식으로 동기화해서
 		const num = 50;
 		const flickr_api = process.env.REACT_APP_FLICKR_API;
