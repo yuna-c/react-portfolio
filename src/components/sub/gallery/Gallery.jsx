@@ -21,6 +21,7 @@ export default function Gallery() {
 	const refNav = useRef(null);
 	const [Pics, setPics] = useState([]);
 	// const path = useRef(process.env.PUBLIC_URL);
+	const [Index, setIndex] = useState(0); //순서 구해야할때 이거써
 
 	// 모달
 	const [Open, setOpen] = useState(false);
@@ -108,6 +109,12 @@ export default function Gallery() {
 
 	// https://www.flickr.com/services/api/flickr.photos.search.html
 	// tags(optional)
+	// promise 에러는 패칭 문제야
+
+	// 모달 이미지 전달하는 핸들러 함수
+	const openModal = (e) => {
+		setOpen(true);
+	};
 
 	useEffect(() => {
 		fetchFlickr({ type: 'user', id: myID.current });
@@ -145,11 +152,18 @@ export default function Gallery() {
 						{Pics.length === 0 ? (
 							<h2>해당 키워드에 대한 검색결과가 없습니다.</h2>
 						) : (
-							Pics.map((pic) => {
+							Pics.map((pic, idx) => {
 								return (
 									<article key={pic.id}>
-										<div className='pic' onClick={() => setOpen(true)}>
-											<img src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`} alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`} />
+										<div
+											className='pic'
+											onClick={() => {
+												setOpen(true);
+												setIndex(idx);
+											}}
+										>
+											<img src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`} alt={Pics.title} />
+											{/* alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`}  */}
 										</div>
 										<h2>{pic.title}</h2>
 
@@ -165,12 +179,17 @@ export default function Gallery() {
 					</Masonry>
 				</section>
 			</Layout>
-			{Open && <Modal setOpen={setOpen} />}
+
+			<Modal Open={Open} setOpen={setOpen}>
+				{Pics.length !== 0 && <img src={`https://live.staticflickr.com/${Pics[Index].server}/${Pics[Index].id}_${Pics[Index].secret}_b.jpg`} alt={Pics[Index].title} />}
+			</Modal>
+
 			{/* 
 				이미지 출력 방법 두가지 (범용적으로 쓸수 있는거는 어떤걸까?) 
 				1. prop
 				2. children
 			 */}
+			{/* <img src={특정값} alt={특정값} /> 클릭시 순서값 받아서 index로 바뀌게 해줄꺼야 */}
 		</>
 	);
 }
