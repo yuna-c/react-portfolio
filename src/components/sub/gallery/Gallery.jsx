@@ -3,6 +3,7 @@ import Masonry from 'react-masonry-component';
 import Layout from '../../common/layout/Layout';
 import './Gallery.scss';
 import { LuSearch } from 'react-icons/lu';
+import Modal from '../../common/modal/Modal';
 
 // https://www.flickr.com/photos/199645532@N06/ 사진 업로드하기
 // https://www.flickr.com/services/api/ 개발자 사이트
@@ -19,7 +20,7 @@ export default function Gallery() {
 	const isUser = useRef(myID.current);
 	const refNav = useRef(null);
 	const [Pics, setPics] = useState([]);
-	const path = useRef(process.env.PUBLIC_URL);
+	// const path = useRef(process.env.PUBLIC_URL);
 
 	// 버튼 재클릭 방지
 	const activateBtn = (e) => {
@@ -111,54 +112,57 @@ export default function Gallery() {
 	}, []);
 
 	return (
-		<Layout title={'Gallery'}>
-			<article className='controls'>
-				<nav className='btnSet' ref={refNav}>
-					<button onClick={handleInterest}>Interest Gallery</button>
-					<button className='on' onClick={handleMine}>
-						My Gallery
-					</button>
-				</nav>
+		<>
+			<Layout title={'Gallery'}>
+				<article className='controls'>
+					<nav className='btnSet' ref={refNav}>
+						<button onClick={handleInterest}>Interest Gallery</button>
+						<button className='on' onClick={handleMine}>
+							My Gallery
+						</button>
+					</nav>
 
-				<form onSubmit={handleSearch}>
-					{/* 엔터 버튼클릭 이벤트 다돼 onSubmit={} */}
-					<input type='text' placeholder='search' />
-					<button className='btnSearch'>
-						{/*fontSize={20} 무조건 버튼으로 감싸야 동작이 돼 */}
-						<LuSearch />
-					</button>
-					{/* https://react-icons.github.io/react-icons/ */}
-				</form>
-			</article>
+					<form onSubmit={handleSearch}>
+						{/* 엔터 버튼클릭 이벤트 다돼 onSubmit={} */}
+						<input type='text' placeholder='search' />
+						<button className='btnSearch'>
+							{/*fontSize={20} 무조건 버튼으로 감싸야 동작이 돼 */}
+							<LuSearch />
+						</button>
+						{/* https://react-icons.github.io/react-icons/ */}
+					</form>
+				</article>
 
-			<section>
-				<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: 20 }}>
-					{/*
-					삼항 연산자로 배열에 받아지는 값이 없으면 경고문구 출력 
-					주의점 : 삼항연산자 JSX분기 처리시 괄호로 묶어줌bla === value ? () : ()
-					 */}
-					{Pics.length === 0 ? (
-						<h2>해당 키워드에 대한 검색결과가 없습니다.</h2>
-					) : (
-						Pics.map((pic) => {
-							return (
-								<article key={pic.id}>
-									<div className='pic'>
-										<img src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`} alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`} />
-									</div>
-									<h2>{pic.title}</h2>
+				<section>
+					<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: 20 }}>
+						{/*
+						삼항 연산자로 배열에 받아지는 값이 없으면 경고문구 출력 
+						주의점 : 삼항연산자 JSX분기 처리시 괄호로 묶어줌bla === value ? () : ()
+						 */}
+						{Pics.length === 0 ? (
+							<h2>해당 키워드에 대한 검색결과가 없습니다.</h2>
+						) : (
+							Pics.map((pic) => {
+								return (
+									<article key={pic.id}>
+										<div className='pic'>
+											<img src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`} alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`} />
+										</div>
+										<h2>{pic.title}</h2>
 
-									<div className='profile'>
-										<img src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`} alt='사용자 프로필 이미지' onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')} />
-										{/* && `${path}/img/buddyicon.gif` */}
-										<span onClick={handleUser}>{pic.owner}</span>
-									</div>
-								</article>
-							);
-						})
-					)}
-				</Masonry>
-			</section>
-		</Layout>
+										<div className='profile'>
+											<img src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`} alt='사용자 프로필 이미지' onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')} />
+											{/* && `${path}/img/buddyicon.gif` */}
+											<span onClick={handleUser}>{pic.owner}</span>
+										</div>
+									</article>
+								);
+							})
+						)}
+					</Masonry>
+				</section>
+			</Layout>
+			<Modal />
+		</>
 	);
 }
