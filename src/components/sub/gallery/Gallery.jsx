@@ -22,6 +22,9 @@ export default function Gallery() {
 	const [Pics, setPics] = useState([]);
 	// const path = useRef(process.env.PUBLIC_URL);
 
+	// 모달
+	const [Open, setOpen] = useState(false);
+
 	// 버튼 재클릭 방지
 	const activateBtn = (e) => {
 		const btns = refNav.current.querySelectorAll('button');
@@ -145,7 +148,7 @@ export default function Gallery() {
 							Pics.map((pic) => {
 								return (
 									<article key={pic.id}>
-										<div className='pic'>
+										<div className='pic' onClick={() => setOpen(true)}>
 											<img src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`} alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`} />
 										</div>
 										<h2>{pic.title}</h2>
@@ -162,7 +165,7 @@ export default function Gallery() {
 					</Masonry>
 				</section>
 			</Layout>
-			<Modal />
+			{Open && <Modal setOpen={setOpen} />}
 		</>
 	);
 }
