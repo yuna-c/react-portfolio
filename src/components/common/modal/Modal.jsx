@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 // 기존이랑 다른점
 // : 부모 컴퍼넌트 기준에서 Modal 컴포넌트는 계속 마운트되어 있는 상태이지만 state값에 따라서 Dom 출력 유무만 변경
 
-/* framer
+/* framer : 간단한 모션만 가능ㅎ..
 	framer react : https://www.framer.com/motion/
 	https://www.npmjs.com/package/framer-motion
 	npm i framer-motion@4
