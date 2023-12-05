@@ -17,9 +17,7 @@ export default function Gallery() {
 	const myID = useRef('199645532@N06');
 	// isUser의 초기 값을 내 아이디 문자값으로 등록
 	const isUser = useRef(myID.current);
-
 	const refNav = useRef(null);
-
 	const [Pics, setPics] = useState([]);
 
 	// 버튼 재클릭 방지
@@ -96,12 +94,14 @@ export default function Gallery() {
 						My Gallery
 					</button>
 				</nav>
+
+				<form>
+					<input type='text' placeholder='search' />
+					<LuSearch className='btnSearch' /> {/*fontSize={20} */}
+					{/* https://react-icons.github.io/react-icons/ */}
+				</form>
 			</article>
-			<form>
-				<input type='text' placeholder='search' />
-				<LuSearch className='btnsearch' /> {/*fontSize={20} */}
-				{/* https://react-icons.github.io/react-icons/ */}
-			</form>
+
 			<section>
 				<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: 20 }}>
 					{Pics.map((pic) => {
