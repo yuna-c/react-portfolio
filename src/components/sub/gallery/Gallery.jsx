@@ -112,6 +112,14 @@ export default function Gallery() {
 	// promise 에러는 패칭 문제야
 
 	// 모달 이미지 전달하는 핸들러 함수
+	// 그럼 이건 안쓰나?
+	/* 아니 모션 없이 간단한 처리할 대는 써도대
+	{Open && (
+				<Modal setOpen={setOpen}>
+					<img src={`https://live.staticflickr.com/${Pics[Index].server}/${Pics[Index].id}_${Pics[Index].secret}_b.jpg`} alt={Pics[Index].title} />
+				</Modal>
+			)}
+	*/
 	const openModal = (e) => {
 		setOpen(true);
 	};
@@ -189,7 +197,6 @@ export default function Gallery() {
 				1. prop
 				2. children
 			 */}
-			{/* <img src={특정값} alt={특정값} /> 클릭시 순서값 받아서 index로 바뀌게 해줄꺼야 */}
 		</>
 	);
 }
