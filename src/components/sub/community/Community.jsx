@@ -2,19 +2,22 @@ import './Community.scss';
 import Layout from '../../common/layout/Layout';
 import { ImCancelCircle } from 'react-icons/im';
 import { TfiWrite } from 'react-icons/tfi';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Community() {
+	//1
 	const [Post, setPost] = useState([]);
+	//2
 	const refTit = useRef(null);
 	const refCon = useRef(null);
 	console.log(Post);
-
+	//4
 	const resetPost = () => {
 		refTit.current.value = '';
 		refCon.current.value = '';
 	};
 
+	//3
 	const createPost = () => {
 		// 해당 값 없거나 || 해당 값 없거나
 		if (!refTit.current.value.trim() || !refCon.current.value.trim()) {
@@ -26,6 +29,11 @@ export default function Community() {
 		setPost([{ title: refTit.current.value, content: refCon.current.value }, ...Post]);
 		resetPost();
 	};
+
+	useEffect(() => {
+		localStorage.setItem('post', JSON.stringify(Post));
+		//  JSON.stringify(Post) 강제로 값을 문자화 시키는 구문(빈배열이 문자화 하여)
+	}, [Post]);
 
 	return (
 		<Layout title={'Community'}>
@@ -84,6 +92,7 @@ Localstorage : 모든 브라우저가 내장하고있는 경량의 저장소
 -- 문자값만 저장가능 (5MB)
 -- 로컬저장소에 문자열 이외의 값을 저장할 때에는 강제로 문자화 시켜서 저장
 -- 로컬저장소의 값을 JS로 가져올 때는 문자값을 반대로 객체화 시켜서 호출 (parcing)	
+-- application => Localstorage
 
 Localstorage객체에 활용 가능한 메서드
 - setItem('키' , '문자화된 데이터') : 해당 키값의 데이터를 담아 저장
