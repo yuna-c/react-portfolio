@@ -39,6 +39,9 @@
 		}
 
 		.showBox {
+			--num: 3;
+			--boxGap: 20px;
+
 			width: 70%;
 			padding-left: 50px;
 			border-left: 1px solid rgba(var(--baseColor-code), 0.5);
@@ -46,13 +49,14 @@
 			flex-wrap: wrap;
 			justify-content: space-between;
 			align-content: flex-start;
+			gap: var(--boxGap);
 
 			article {
-				width: 32%;
-				height: 25vh;
+				// (전체 넓이값 - 총 gap 넓이값 )/개수
+				width: calc((100% - var(--boxGap) * (var(--num) - 1)) / var(--num));
+				height: 30vh;
 				background-color: rgba(var(--baseColor-code), 0.1);
 				padding: 20px;
-				margin-bottom: 20px;
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: space-between;
