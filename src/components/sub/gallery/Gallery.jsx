@@ -28,7 +28,7 @@ export default function Gallery() {
 	// const path = useRef(process.env.PUBLIC_URL);
 	const [Index, setIndex] = useState(0); //순서 구해야할때 이거써
 	// gutter값 변수화
-	const gap = useRef(20);
+	const gap = useRef(30); //값은 여기서 변경해
 	// 모달
 	const [Open, setOpen] = useState(false);
 
@@ -131,6 +131,8 @@ export default function Gallery() {
 	};
 
 	useEffect(() => {
+		//마운트 되면
+		refFrameWrap.current.style.setProperty('--gap', gap.current + 'px');
 		fetchFlickr({ type: 'user', id: myID.current });
 		// fetchFlickr({ type: 'search', keyword: 'landscpe' }); // landscpe키워드로 검색타입 갤러리 호출
 	}, []);
