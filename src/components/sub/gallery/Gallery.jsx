@@ -228,4 +228,8 @@ export default function Gallery() {
 2. 정적인 JSX가 요소가 일단 브라우저에 랜더링 완료되었기 때문에 useEffect 실행 가능해짐
 3. useEffect 안쪽에서 미리 참조객체에 연결해 놓은 refFrameWrap에 접근 가능 (이때 refFrameWrap에 --gap변수에 20이라는 값을 강제 적용, 이때부터는 sass파일에 --gap이란 변수가 없더라도 리액트에서 동적으로 gap이라는 변수값을 넣었기 때문에 활용 가능)
 4. 리액트에서 동적으로 변수값을 적용해서 돔을 생성하고 나면 그후에 scss가 해당 변수값을 읽어서 화면 스타일링
+
+순서 1 - gap 이라는 참조 객체 값을 해석
+순서 2 - 두번째 랜더링 타임에 userEffcet가 실행되면서 참조 객체에 담겨있는 section 요소에 강제로 gap 변수값을 적용
+순서 3 - 세번째 랜더링 타임에 fectching data에 의한 동적 요소가 출력 되면서 그 떄 비로서 변수값이 적용된 sass styling 적용(paint)
 */
