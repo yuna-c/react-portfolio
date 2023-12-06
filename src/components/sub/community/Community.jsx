@@ -2,21 +2,32 @@ import './Community.scss';
 import Layout from '../../common/layout/Layout';
 import { ImCancelCircle } from 'react-icons/im';
 import { TfiWrite } from 'react-icons/tfi';
+import { useRef, useState } from 'react';
 
 export default function Community() {
+	const [Post, setPost] = useState([]);
+	const refTit = useRef(null);
+	const refCon = useRef(null);
+	console.log(Post);
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setPost([...Post, { title: refTit.current.value, content: refCon.current.value }]); //기존 배열을 통채로 복사할꺼얌(스프레드연산자)
+	};
+
 	return (
 		<Layout title={'Community'}>
 			<div className='wrap'>
 				<div className='inputBox'>
-					<form action='/' method='get'>
-						<input type='text' placeholder='Title' name='tit' />
-						<textarea cols='30' rows='3' placeholder='Content' name='con'></textarea>
+					<form onSubmit={handleSubmit}>
+						<input type='text' placeholder='Title' name='tit' ref={refTit} />
+						<textarea cols='30' rows='3' placeholder='Content' name='con' ref={refCon}></textarea>
 
 						<nav>
-							<button>
+							<button type='reset'>
 								<ImCancelCircle />
 							</button>
-							<button>
+							<button type='submit'>
 								<TfiWrite />
 							</button>
 						</nav>
