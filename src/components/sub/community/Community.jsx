@@ -5,8 +5,15 @@ import { TfiWrite } from 'react-icons/tfi';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Community() {
-	//1
-	const [Post, setPost] = useState([]);
+	const getLocalData = () => {
+		const data = localStorage.getItem('post');
+		// 로컬저장소 post 키값에 값이 있으면 parsing해서 리턴
+		if (data) return JSON.parse(data);
+		// 없으면 빈 배열 리턴(해당 컴포넌트 제일 처음 호출될 때 한 번)
+		else return [];
+	};
+	//1 여기다가 호출
+	const [Post, setPost] = useState(getLocalData()); //함수를 호출해야 하니까 ()
 	//2
 	const refTit = useRef(null);
 	const refCon = useRef(null);
@@ -32,7 +39,8 @@ export default function Community() {
 
 	useEffect(() => {
 		localStorage.setItem('post', JSON.stringify(Post));
-		//  JSON.stringify(Post) 강제로 값을 문자화 시키는 구문(빈배열이 문자화 하여)
+		// JSON.stringify(Post) 강제로 값을 문자화 시키는 구문(빈배열이 문자화 하여)
+		// state변경되기전에 빈 배열값을 저장하기 때문에 초기화되어 값이 사라짐
 	}, [Post]);
 
 	return (
