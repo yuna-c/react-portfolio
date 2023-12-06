@@ -22,10 +22,13 @@ export default function Gallery() {
 	// isUser의 초기 값을 내 아이디 문자값으로 등록
 	const isUser = useRef(myID.current);
 	const refNav = useRef(null);
+	const refFrameWrap = useRef(null);
+
 	const [Pics, setPics] = useState([]);
 	// const path = useRef(process.env.PUBLIC_URL);
 	const [Index, setIndex] = useState(0); //순서 구해야할때 이거써
-
+	// gutter값 변수화
+	const gap = useRef(20);
 	// 모달
 	const [Open, setOpen] = useState(false);
 
@@ -154,8 +157,8 @@ export default function Gallery() {
 					</form>
 				</article>
 
-				<section>
-					<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: 20 }}>
+				<section className='frameWrap' ref={refFrameWrap}>
+					<Masonry className={'frame'} options={{ transitionDuration: '0.5s', gutter: gap.current }}>
 						{/*
 						삼항 연산자로 배열에 받아지는 값이 없으면 경고문구 출력 
 						주의점 : 삼항연산자 JSX분기 처리시 괄호로 묶어줌bla === value ? () : ()
@@ -173,13 +176,22 @@ export default function Gallery() {
 												setIndex(idx);
 											}}
 										>
-											<img src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`} alt={Pics.title} />
+											<img
+												src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`}
+												alt={Pics.title}
+											/>
 											{/* alt={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_b.jpg`}  */}
 										</div>
 										<h2>{pic.title}</h2>
 
 										<div className='profile'>
-											<img src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`} alt='사용자 프로필 이미지' onError={(e) => e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')} />
+											<img
+												src={`http://farm${pic.farm}.staticflickr.com/${pic.server}/buddyicons/${pic.owner}.jpg`}
+												alt='사용자 프로필 이미지'
+												onError={(e) =>
+													e.target.setAttribute('src', 'https://www.flickr.com/images/buddyicon.gif')
+												}
+											/>
 											{/* && `${path}/img/buddyicon.gif` */}
 											<span onClick={handleUser}>{pic.owner}</span>
 										</div>
@@ -192,7 +204,12 @@ export default function Gallery() {
 			</Layout>
 
 			<Modal Open={Open} setOpen={setOpen}>
-				{Pics.length !== 0 && <img src={`https://live.staticflickr.com/${Pics[Index].server}/${Pics[Index].id}_${Pics[Index].secret}_b.jpg`} alt={Pics[Index].title} />}
+				{Pics.length !== 0 && (
+					<img
+						src={`https://live.staticflickr.com/${Pics[Index].server}/${Pics[Index].id}_${Pics[Index].secret}_b.jpg`}
+						alt={Pics[Index].title}
+					/>
+				)}
 			</Modal>
 
 			{/* 
