@@ -16,9 +16,15 @@ export default function Community() {
 	};
 
 	const createPost = () => {
+		// 해당 값 없거나 || 해당 값 없거나
+		if (!refTit.current.value.trim() || !refCon.current.value.trim()) {
+			resetPost();
+			return alert('제목과 본문을 모두 일벽해 보세요');
+		}
 		// 기존 배열을 통채로 복사할꺼얌(스프레드연산자)
 		// 쓴 순서대로 하려면 객체가 스프레드 연산자보다 먼저와야 해
 		setPost([{ title: refTit.current.value, content: refCon.current.value }, ...Post]);
+		resetPost();
 	};
 
 	return (
