@@ -6,24 +6,25 @@ import { TfiWrite } from 'react-icons/tfi';
 export default function Community() {
 	return (
 		<Layout title={'Community'}>
-			<div className='inputBox'>
-				{/* get 쿼리스트링 노출, post 쿼리스트링 비노출 */}
-				<form action='/' method='get'>
-					<input type='text' placeholder='Title' name='tit' />
-					<textarea cols='30' rows='3' placeholder='Content' name='con'></textarea>
+			<div className='wrap'>
+				<div className='inputBox'>
+					<form action='/' method='get'>
+						<input type='text' placeholder='Title' name='tit' />
+						<textarea cols='30' rows='3' placeholder='Content' name='con'></textarea>
 
-					<nav>
-						<button>
-							<ImCancelCircle />
-						</button>
-						<button>
-							<TfiWrite />
-						</button>
-					</nav>
-				</form>
+						<nav>
+							<button>
+								<ImCancelCircle />
+							</button>
+							<button>
+								<TfiWrite />
+							</button>
+						</nav>
+					</form>
+				</div>
+
+				<div className='showBox'></div>
 			</div>
-
-			<div className='showBox'></div>
 		</Layout>
 	);
 }
