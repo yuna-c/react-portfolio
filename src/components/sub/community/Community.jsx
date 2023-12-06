@@ -5,6 +5,7 @@ import { TfiWrite } from 'react-icons/tfi';
 import { useEffect, useRef, useState } from 'react';
 
 export default function Community() {
+	//6
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
 		// 로컬저장소 post 키값에 값이 있으면 parsing해서 리턴
@@ -36,7 +37,7 @@ export default function Community() {
 		setPost([{ title: refTit.current.value, content: refCon.current.value }, ...Post]);
 		resetPost();
 	};
-
+	//5
 	useEffect(() => {
 		localStorage.setItem('post', JSON.stringify(Post));
 		// JSON.stringify(Post) 강제로 값을 문자화 시키는 구문(빈배열이 문자화 하여)
