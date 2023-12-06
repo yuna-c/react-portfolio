@@ -14,8 +14,11 @@ export default function Community() {
 		refTit.current.value = '';
 		refCon.current.value = '';
 	};
+
 	const createPost = () => {
-		setPost([...Post, { title: refTit.current.value, content: refCon.current.value }]); //기존 배열을 통채로 복사할꺼얌(스프레드연산자)
+		// 기존 배열을 통채로 복사할꺼얌(스프레드연산자)
+		// 쓴 순서대로 하려면 객체가 스프레드 연산자보다 먼저와야 해
+		setPost([{ title: refTit.current.value, content: refCon.current.value }, ...Post]);
 	};
 
 	return (
@@ -35,7 +38,23 @@ export default function Community() {
 					</nav>
 				</div>
 
-				<div className='showBox'></div>
+				<div className='showBox'>
+					{Post.map((el, idx) => {
+						return (
+							<article key={el + idx}>
+								<div className='txt'>
+									<h2>{el.title}</h2>
+									<p>{el.content}</p>
+								</div>
+
+								<nav>
+									<button>Edit</button>
+									<button>Delete</button>
+								</nav>
+							</article>
+						);
+					})}
+				</div>
 			</div>
 		</Layout>
 	);
