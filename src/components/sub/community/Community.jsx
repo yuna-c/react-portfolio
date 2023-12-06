@@ -10,8 +10,11 @@ export default function Community() {
 	const refCon = useRef(null);
 	console.log(Post);
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
+	const resetPost = () => {
+		refTit.current.value = '';
+		refCon.current.value = '';
+	};
+	const createPost = () => {
 		setPost([...Post, { title: refTit.current.value, content: refCon.current.value }]); //기존 배열을 통채로 복사할꺼얌(스프레드연산자)
 	};
 
@@ -19,19 +22,17 @@ export default function Community() {
 		<Layout title={'Community'}>
 			<div className='wrap'>
 				<div className='inputBox'>
-					<form onSubmit={handleSubmit}>
-						<input type='text' placeholder='Title' name='tit' ref={refTit} />
-						<textarea cols='30' rows='3' placeholder='Content' name='con' ref={refCon}></textarea>
+					<input type='text' placeholder='Title' name='tit' ref={refTit} />
+					<textarea cols='30' rows='3' placeholder='Content' name='con' ref={refCon}></textarea>
 
-						<nav>
-							<button type='reset'>
-								<ImCancelCircle />
-							</button>
-							<button type='submit'>
-								<TfiWrite />
-							</button>
-						</nav>
-					</form>
+					<nav>
+						<button onClick={resetPost}>
+							<ImCancelCircle />
+						</button>
+						<button onClick={createPost}>
+							<TfiWrite />
+						</button>
+					</nav>
 				</div>
 
 				<div className='showBox'></div>
