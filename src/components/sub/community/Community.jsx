@@ -3,8 +3,11 @@ import Layout from '../../common/layout/Layout';
 import { ImCancelCircle } from 'react-icons/im';
 import { TfiWrite } from 'react-icons/tfi';
 import { useEffect, useRef, useState } from 'react';
+import { useCustomText } from '../../../hooks/useText';
 
 export default function Community() {
+	const changeText = useCustomText('combined');
+
 	//6
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
@@ -19,7 +22,7 @@ export default function Community() {
 	//2
 	const refTit = useRef(null);
 	const refCon = useRef(null);
-	console.log(Post);
+	// console.log(Post);
 
 	//4 input 초기화 함수
 	const resetPost = () => {
@@ -32,11 +35,21 @@ export default function Community() {
 		// 해당 값 없거나 || 해당 값 없거나
 		if (!refTit.current.value.trim() || !refCon.current.value.trim()) {
 			resetPost();
-			return alert('제목과 본문을 모두 일벽해 보세요');
+			return alert('제목과 본문을 모두 입력해 보세요');
 		}
+		// 시간값 받기
+		console.log(new Date());
+
+		const korTime = new Date().getTime() + 1000 * 60 * 60 * 9;
 		// 기존 배열을 통채로 복사할꺼얌(스프레드연산자)
 		// 쓴 순서대로 하려면 객체가 스프레드 연산자보다 먼저와야 해
-		setPost([{ title: refTit.current.value, content: refCon.current.value }, ...Post]);
+		setPost([
+			{ title: refTit.current.value, content: refCon.current.value, date: new Date(korTime).toDateString() },
+			...Post,
+		]);
+		// date: new Date(KorTime) 인스턴스 객체값 근데 에러뜸(리액트 자식노드에 객체로 출력 안된다고 뜨는거 ) 문자가 아닌 객체로 풀린값이 뜨기떄문에 에러가 난다
+		// 그래서 강제로 JSON.stringify(값) 문자화
+		// new Date().toLocaleString()
 		resetPost();
 	};
 
@@ -53,6 +66,14 @@ export default function Community() {
 		// 2
 		// const result = Post.filter((el, idx) => delIndex !== idx);
 		setPost(Post.filter((_, idx) => delIndex !== idx));
+	};
+
+	//8 검색기능(본문이나 제목에 특정 단어가 있으면 콘솔 뜨게)
+	const filtering = (txt) => {
+		//txt 인수로 받을꺼야
+		const abc = Post.filter((el) => el.title.indexOf(txt) >= 0 || el.content.indexOf(txt) >= 0);
+		console.log(abc);
+		alert(abc);
 	};
 
 	//5
@@ -81,15 +102,27 @@ export default function Community() {
 
 				<div className='showBox'>
 					{Post.map((el, idx) => {
+						const date = JSON.stringify(el.date);
+						// console.log(date);
+						const strDate = changeText(date.split('T')[0].slice(1), '.');
+						console.log(strDate);
 						return (
 							<article key={el + idx}>
 								<div className='txt'>
 									<h2>{el.title}</h2>
 									<p>{el.content}</p>
+									<span>
+										{strDate}
+										{/* {strDate && el.date} */}
+										{/* {el.date && el.date} */}
+										{/* JSON.stringify(el.date) */}
+									</span>
 								</div>
 
 								<nav>
-									<button>Edit</button>
+									<button className='gubun' onClick={() => filtering('777777777777')}>
+										Edit
+									</button>
 									<button onClick={() => deletePost(idx)}>Delete</button>
 								</nav>
 							</article>
@@ -124,4 +157,7 @@ Localstorage : 모든 브라우저가 내장하고있는 경량의 저장소
 Localstorage객체에 활용 가능한 메서드
 - setItem('키' , '문자화된 데이터') : 해당 키값의 데이터를 담아 저장
 - getItem('키') : 해당 키값에 매칭이 되는 데이터를 가져옴
+
+filter() 기능의 원래 쓰임?
+게시글 검색기능
 */
