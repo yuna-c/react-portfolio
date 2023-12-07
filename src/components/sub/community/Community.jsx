@@ -21,13 +21,13 @@ export default function Community() {
 	const refCon = useRef(null);
 	console.log(Post);
 
-	//4
+	//4 input 초기화 함수
 	const resetPost = () => {
 		refTit.current.value = '';
 		refCon.current.value = '';
 	};
 
-	//3
+	//3 글 저장 함수
 	const createPost = () => {
 		// 해당 값 없거나 || 해당 값 없거나
 		if (!refTit.current.value.trim() || !refCon.current.value.trim()) {
@@ -52,7 +52,7 @@ export default function Community() {
 		// console.log(result);
 		// 2
 		// const result = Post.filter((el, idx) => delIndex !== idx);
-		setPost(Post.filter((el, idx) => delIndex !== idx));
+		setPost(Post.filter((_, idx) => delIndex !== idx));
 	};
 
 	//5
