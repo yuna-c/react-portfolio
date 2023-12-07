@@ -5,6 +5,9 @@ import { TfiWrite } from 'react-icons/tfi';
 import { useEffect, useRef, useState } from 'react';
 import { useCustomText } from '../../../hooks/useText';
 
+// moment.js로 포맷.. 해서 쓸수도 있긴해
+// https://momentjs.com/
+
 export default function Community() {
 	//--추후에 가져올 시간값에서 -을 .으로 변경하기 위해 combined타입의 텍스트 변환 함수를 텍스트관련 훅으로부터 활성화
 	const changeText = useCustomText('combined');
