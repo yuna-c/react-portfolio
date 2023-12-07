@@ -21,6 +21,7 @@ export default function Community() {
 	const refCon = useRef(null);
 	const refEditTit = useRef(null);
 	const refEditCon = useRef(null);
+	const editMode = useRef(false);
 
 	// 인풋 초기화
 	const resetPost = () => {
@@ -45,14 +46,17 @@ export default function Community() {
 
 	// 글 수정 함수
 	const updatePost = (updateIndex) => {
-		if (!refEditTit.current.value.triM() || !refEditCon.current.value.trim()) {
-			return alert('수정할 글의 내용과 본문 모두 입력하세요');
+		if (!refEditTit.current.value.trim() || !refEditCon.current.value.trim()) {
+			return alert('수정할 글의 제목과  본문을 모두 입력하세요.');
 		}
+
+		editMode.current = false;
+
 		setPost(
 			Post.map((el, idx) => {
 				if (updateIndex === idx) {
 					el.title = refEditTit.current.value;
-					el.contnent = refEditCon.current.value;
+					el.content = refEditCon.current.value;
 					el.enableUpdate = false;
 				}
 				return el;
@@ -79,6 +83,8 @@ export default function Community() {
 
 	// 수정모드 변경함수
 	const enableUpdate = (editIndex) => {
+		if (editMode.current) return;
+		editMode.current = true;
 		//1번 작업
 		/* 
 		const result = Post.map((el, idx) => {
@@ -146,6 +152,7 @@ export default function Community() {
 						const date = JSON.stringify(el.date);
 						const strDate = changeText(date.split('T')[0].slice(1), '.');
 						console.log(strDate);
+						console.log(date);
 
 						if (el.enableUpdate) {
 							// enableUpdate true
@@ -188,7 +195,7 @@ export default function Community() {
 											className='gubun'
 											onClick={() => {
 												enableUpdate(idx);
-												filtering('가나다');
+												// filtering('가나다');
 											}}
 										>
 											{/* idx 어떤거 할껀지 순서값 */}
