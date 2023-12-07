@@ -127,6 +127,8 @@ export default function Community() {
 	};
 
 	useEffect(() => {
+		// Post 데이터 변경시 수정모드 강제 닫기(false) 하면서 로컬 저장소에 저장하고 컴포넌트 재실행
+		Post.map((el) => (el.enableUpdate = false));
 		localStorage.setItem('post', JSON.stringify(Post));
 	}, [Post]);
 
