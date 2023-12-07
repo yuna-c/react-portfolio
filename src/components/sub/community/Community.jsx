@@ -19,6 +19,8 @@ export default function Community() {
 	const [Post, setPost] = useState(getLocalData()); //함수를 호출해야 하니까 ()
 	const refTit = useRef(null);
 	const refCon = useRef(null);
+	const refEditTit = useRef(null);
+	const refEditCon = useRef(null);
 
 	// 인풋 초기화
 	const resetPost = () => {
@@ -39,6 +41,23 @@ export default function Community() {
 			...Post,
 		]);
 		resetPost();
+	};
+
+	// 글 수정 함수
+	const updatePost = (updateIndex) => {
+		if (!refEditTit.current.value.triM() || !refEditCon.current.value.trim()) {
+			return alert('수정할 글의 내용과 본문 모두 입력하세요');
+		}
+		setPost(
+			Post.map((el, idx) => {
+				if (updateIndex === idx) {
+					el.title = refEditTit.current.value;
+					el.contnent = refEditCon.current.value;
+					el.enableUpdate = false;
+				}
+				return el;
+			})
+		);
 	};
 
 	// 글 삭제 함수
@@ -93,6 +112,7 @@ export default function Community() {
 		);
 	};
 
+	// 필터링 함수
 	const filtering = (txt) => {
 		//txt 인수로 받을꺼야
 		const abc = Post.filter((el) => el.title.indexOf(txt) >= 0 || el.content.indexOf(txt) >= 0);
@@ -133,15 +153,22 @@ export default function Community() {
 							return (
 								<article key={el + idx}>
 									<div className='txt'>
-										<input type='text' defaultValue={el.title} />
-										<textarea name='' id='' cols='30' rows='10' defaultValue={el.content}></textarea>
+										<input type='text' defaultValue={el.title} ref={refEditTit} />
+										<textarea
+											name=''
+											id=''
+											cols='30'
+											rows='10'
+											defaultValue={el.content}
+											ref={refEditCon}
+										></textarea>
 										<span>{strDate}</span>
 									</div>
 
 									<nav>
 										{/* 수정모드일 대 해당버튼 클릭 시 다시 출력모드 변경 */}
 										<button onClick={() => disableUpdate(idx)}>Cancle</button>
-										<button>Update</button>
+										<button onClick={() => updatePost(idx)}>Update</button>
 									</nav>
 								</article>
 							);
@@ -157,7 +184,13 @@ export default function Community() {
 									</div>
 
 									<nav>
-										<button className='gubun' onClick={() => enableUpdate(idx)}>
+										<button
+											className='gubun'
+											onClick={() => {
+												enableUpdate(idx);
+												filtering('가나다');
+											}}
+										>
 											{/* idx 어떤거 할껀지 순서값 */}
 											Edit
 										</button>
@@ -169,27 +202,27 @@ export default function Community() {
 								</article>
 							);
 						}
-						// 출력모드
-						return (
-							<article key={el + idx}>
-								<div className='txt'>
-									<h2>{el.title}</h2>
-									<p>{el.content}</p>
-									<span>{strDate}</span>
-								</div>
+						// // 출력모드
+						// return (
+						// 	<article key={el + idx}>
+						// 		<div className='txt'>
+						// 			<h2>{el.title}</h2>
+						// 			<p>{el.content}</p>
+						// 			<span>{strDate}</span>
+						// 		</div>
 
-								<nav>
-									<button className='gubun' onClick={() => enableUpdate(idx)}>
-										{/* idx 어떤거 할껀지 순서값 */}
-										Edit
-									</button>
-									{/* <button className='gubun' onClick={() => filtering('777777777777')}>
-										Edit
-									</button> */}
-									<button onClick={() => deletePost(idx)}>Delete</button>
-								</nav>
-							</article>
-						);
+						// 		<nav>
+						// 			<button className='gubun' onClick={() => enableUpdate(idx)}>
+						// 				{/* idx 어떤거 할껀지 순서값 */}
+						// 				Edit
+						// 			</button>
+						// 			{/* <button className='gubun' onClick={() => filtering('777777777777')}>
+						// 				Edit
+						// 			</button> */}
+						// 			<button onClick={() => deletePost(idx)}>Delete</button>
+						// 		</nav>
+						// 	</article>
+						// );
 					})}
 				</div>
 			</div>
