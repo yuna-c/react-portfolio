@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useCustomText } from '../../../hooks/useText';
 
 export default function Community() {
+	//--추후에 가져올 시간값에서 -을 .으로 변경하기 위해 combined타입의 텍스트 변환 함수를 텍스트관련 훅으로부터 활성화
 	const changeText = useCustomText('combined');
 
 	//6
@@ -40,7 +41,10 @@ export default function Community() {
 		// 시간값 받기
 		console.log(new Date());
 
+		//--기존 시간 인스턴스 값을 한국시에 맞게 변경
+		//--new Date().toLocaleString() : 해당 지역시의 표준시로 변환 (단점 : 시간값이 원하지 않는 방향으로 가공됨 '0'사라짐1)
 		const korTime = new Date().getTime() + 1000 * 60 * 60 * 9;
+		//--한국시로 변환된 시간 객체값을 date 키값에 추가로 등록해서 state에 저장
 		// 기존 배열을 통채로 복사할꺼얌(스프레드연산자)
 		// 쓴 순서대로 하려면 객체가 스프레드 연산자보다 먼저와야 해
 		setPost([
@@ -102,8 +106,12 @@ export default function Community() {
 
 				<div className='showBox'>
 					{Post.map((el, idx) => {
+						//-- 시간값을 getLocalDate 함수를 통해 시간 인스턴스 객체값을 객체상태 그대로 JSX안쪽에 중괄호{}에 넣을 수 없으므로
+						//-- 변환된 시간 객체값을 다시 강제로 문자화
 						const date = JSON.stringify(el.date);
 						// console.log(date);
+						//-- 문자화 시킨 값에서 먼저 T를 기점으로 앞의 시간문자를 찾고 다시 앞의 "를 제외한 나머지 문자 반환(년-월-일)
+						//-- 반환된 문자값을 다시 changeText에 인수로 전달해서 (년.월.일)로 변환
 						const strDate = changeText(date.split('T')[0].slice(1), '.');
 						console.log(strDate);
 						return (
@@ -112,6 +120,7 @@ export default function Community() {
 									<h2>{el.title}</h2>
 									<p>{el.content}</p>
 									<span>
+										{/* --변환된 날자값 최종 출력 */}
 										{strDate}
 										{/* {strDate && el.date} */}
 										{/* {el.date && el.date} */}
