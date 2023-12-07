@@ -23,7 +23,8 @@ export default function Gallery() {
 	const isUser = useRef(myID.current);
 	const refNav = useRef(null);
 	const refFrameWrap = useRef(null);
-
+	//검색함수가 실행됬는지 확인하기 위한 참조객체
+	const searched = useRef(false);
 	const [Pics, setPics] = useState([]);
 	// const path = useRef(process.env.PUBLIC_URL);
 	const [Index, setIndex] = useState(0); //순서 구해야할때 이거써
@@ -84,6 +85,9 @@ export default function Gallery() {
 		e.target.children[0].value = ''; //일일이 키워드 지워야되는데 어케?
 		fetchFlickr({ type: 'search', keyword: keyword });
 		//검색어 없으면 어떠케? 패칭함수로가서 처리해! 값있는지 없는지 확인부터
+
+		// 검색함수가 한번이라도 실행되면 영구적으로 초기값을 트루로 변경(참조객체의)
+		searched.current = true;
 	};
 
 	const fetchFlickr = async (opt) => {
@@ -165,7 +169,8 @@ export default function Gallery() {
 						삼항 연산자로 배열에 받아지는 값이 없으면 경고문구 출력 
 						주의점 : 삼항연산자 JSX분기 처리시 괄호로 묶어줌bla === value ? () : ()
 						 */}
-						{Pics.length === 0 ? (
+						{/* searched값이 true고 검색결과가 없는 2가지 조건이 동시에 만족해야지만 에러 출력 */}
+						{searched.current && Pics.length === 0 ? (
 							<h2>해당 키워드에 대한 검색결과가 없습니다.</h2>
 						) : (
 							Pics.map((pic, idx) => {
