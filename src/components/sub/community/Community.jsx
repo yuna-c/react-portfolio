@@ -58,7 +58,7 @@ export default function Community() {
 		setPost(Post.filter((_, idx) => delIndex !== idx));
 	};
 
-	//수정모드 변경함수
+	// 수정모드 변경함수
 	const enableUpdate = (editIndex) => {
 		//1번 작업
 		/* 
@@ -78,6 +78,16 @@ export default function Community() {
 		setPost(
 			Post.map((el, idx) => {
 				if (editIndex === idx) el.enableUpdate = true;
+				return el;
+			})
+		);
+	};
+
+	// 출력모드 변경함수
+	const disableUpdate = (editIndex) => {
+		setPost(
+			Post.map((el, idx) => {
+				if (editIndex === idx) el.enableUpdate = false;
 				return el;
 			})
 		);
@@ -117,6 +127,49 @@ export default function Community() {
 						const strDate = changeText(date.split('T')[0].slice(1), '.');
 						console.log(strDate);
 
+						if (el.enableUpdate) {
+							// enableUpdate true
+							// 수정모드
+							return (
+								<article key={el + idx}>
+									<div className='txt'>
+										<input type='text' defaultValue={el.title} />
+										<textarea name='' id='' cols='30' rows='10' defaultValue={el.content}></textarea>
+										<span>{strDate}</span>
+									</div>
+
+									<nav>
+										{/* 수정모드일 대 해당버튼 클릭 시 다시 출력모드 변경 */}
+										<button onClick={() => disableUpdate(idx)}>Cancle</button>
+										<button>Update</button>
+									</nav>
+								</article>
+							);
+						} else {
+							// enableUpdate 없을때
+							// 출력모드
+							return (
+								<article key={el + idx}>
+									<div className='txt'>
+										<h2>{el.title}</h2>
+										<p>{el.content}</p>
+										<span>{strDate}</span>
+									</div>
+
+									<nav>
+										<button className='gubun' onClick={() => enableUpdate(idx)}>
+											{/* idx 어떤거 할껀지 순서값 */}
+											Edit
+										</button>
+										{/* <button className='gubun' onClick={() => filtering('777777777777')}>
+										Edit
+									</button> */}
+										<button onClick={() => deletePost(idx)}>Delete</button>
+									</nav>
+								</article>
+							);
+						}
+						// 출력모드
 						return (
 							<article key={el + idx}>
 								<div className='txt'>
