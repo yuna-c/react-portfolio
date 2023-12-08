@@ -30,6 +30,11 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 					</NavLink>
 				</li>
 				<li>
+					<NavLink to='/num' activeClassName={'on'}>
+						num
+					</NavLink>
+				</li>
+				<li>
 					<NavLink to='/members' activeClassName={'on'}>
 						Members
 					</NavLink>
