@@ -13,21 +13,28 @@ new() 인스턴스 생성자 객체 함수를 통해 복사본 객체를 만든�
 */
 
 export default function Contant() {
-	//5028992d611e7153922e7a04d3d292cb
-	const { kakao } = window;
 	const mapFrame = useRef(null);
+	const { kakao } = window;
+	console.log(kakao);
+
 	const mapOption = useRef({
 		center: new kakao.maps.LatLng(33.450701, 126.570667),
 		level: 3,
 	});
 
 	useEffect(() => {
-		new kakao.maps.Map(mapFrame.current, mapOption.current);
+		const mapInstance = new kakao.maps.Map(mapFrame.current, mapOption.current);
+		const posInstance = new kakao.maps.LatLng(33.450701, 126.570667);
+		const markerInstance = new kakao.maps.Marker({
+			position: posInstance,
+		});
+
+		markerInstance.setMap(mapInstance);
 	}, []);
 
 	return (
-		<Layout title={'Contant'}>
-			<article id='map' ref={mapFrame}></article>
+		<Layout title={'Contact'}>
+			<article className='mapBox' ref={mapFrame}></article>
 		</Layout>
 	);
 }
