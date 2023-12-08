@@ -5,7 +5,10 @@ import { ImCancelCircle } from 'react-icons/im';
 import { TfiWrite } from 'react-icons/tfi';
 import { useCustomText } from '../../../hooks/useText';
 
+// 새로고침하면 버튼 없어지는데? 랜더링 타임 때문이라는데?
+
 export default function Community() {
+	console.log('community');
 	const changeText = useCustomText('combined');
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
@@ -14,6 +17,7 @@ export default function Community() {
 	};
 	const [Post, setPost] = useState(getLocalData());
 	const [CurNum, setCurNum] = useState(0); //페이징 버튼 클릭시 현재 보일 페이지 번호가 담길 state
+	const [PageNum, setPageNum] = useState(0); //전체 PageNum이 담길 state
 
 	const refTit = useRef(null);
 	const refCon = useRef(null);
@@ -105,6 +109,7 @@ export default function Community() {
 		Post.map((el) => (el.enableUpdate = false));
 		localStorage.setItem('post', JSON.stringify(Post));
 		//전체 Post갯수 구함
+		// len.current = Post.length;
 		len.current = Post.length;
 
 		//전체 페이지버튼 갯수 구하는 공식
@@ -116,17 +121,23 @@ export default function Community() {
 				? len.current / perNum.current
 				: parseInt(len.current / perNum.current) + 1;
 		console.log(pageNum.current);
+
+		//새로고침했을때 페이징 버튼이 안뜨는 문제
+		//원인 : 현재 로직이 Post값자체게 변경되면 pageNum.current값이 변경되게 하고 있는데..
+		//pageNum.current가 변경되고 state가 아니기 때문에 화면을 자동 재랜더링하지 않는 문제 발생
+		//해결방법 : 만들어진 참조객체값을 state PageNum에 옮겨담음
+		setPageNum(pageNum.current);
 	}, [Post]);
 
 	return (
 		<Layout title={'Community'}>
 			{/* 위에서 만든 pageNum값을 활용해 자동으로 페이지버튼 생성 */}
 			<nav className='pagination'>
-				{Array(pageNum.current)
+				{Array(PageNum)
 					.fill()
 					.map((_, idx) => {
 						return (
-							<button key={idx} onClick={() => setCurNum(idx)}>
+							<button key={idx} onClick={() => setCurNum(idx)} className={idx === CurNum ? 'on' : ''}>
 								{idx + 1}
 							</button>
 						);

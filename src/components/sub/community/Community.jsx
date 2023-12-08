@@ -10,6 +10,7 @@ import { useCustomText } from '../../../hooks/useText';
 
 export default function Community() {
 	const changeText = useCustomText('combined');
+
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
 		if (data) return JSON.parse(data);
@@ -136,7 +137,7 @@ export default function Community() {
 		<Layout title={'Community'}>
 			<div className='wrap'>
 				<div className='inputBox'>
-					<input type='text' placeholder='Title' name='tit' ref={refTit} />
+					<input type='text' placeholder='Title' ref={refTit} />
 					<textarea cols='30' rows='3' placeholder='Content' name='con' ref={refCon}></textarea>
 
 					<nav>
