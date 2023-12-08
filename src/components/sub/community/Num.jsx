@@ -148,7 +148,7 @@ export default function Community() {
 					})}
 			</nav>
 
-			<div className='wrap'>
+			<div className='comunityWrap'>
 				<div className='inputBox'>
 					<input type='text' placeholder='title' ref={refTit} />
 					<textarea cols='30' rows='3' placeholder='content' ref={refCon}></textarea>
