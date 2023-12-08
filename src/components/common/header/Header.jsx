@@ -29,11 +29,11 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 						Community
 					</NavLink>
 				</li>
-				<li>
+				{/* <li>
 					<NavLink to='/num' activeClassName={'on'}>
 						num
 					</NavLink>
-				</li>
+				</li> */}
 				<li>
 					<NavLink to='/members' activeClassName={'on'}>
 						Members

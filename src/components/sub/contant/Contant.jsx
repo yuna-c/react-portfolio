@@ -1,34 +1,55 @@
 import './Contant.scss';
 import Layout from '../../common/layout/Layout';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/
 // 위치값 정밀하게 보정 하는 법
 // 기존 구굴지도 위치값 복사한 뒤, 카카오 예제의 클릭한 위치 마커표시 직접해보기에서 해당 코드 붙여넣고, 원하는 지점찍으면 소숫점 12자리뜨는데 그거 붙여넣으면 됨
 export default function Contant() {
+	const [Index, setIndex] = useState(2);
+
 	const { kakao } = window;
 	const mapFrame = useRef(null);
-	console.log(kakao);
+	//지점마다 출력할 정보를 개별적인 객체로 묶어서 배열로 그룹화
+	const mapInfo = useRef([
+		{
+			title: '삼성역 코엑스',
+			latlng: new kakao.maps.LatLng(37.51100661425726, 127.06162026853143),
+			imgSrc: `${process.env.PUBLIC_URL}/img/marker1.png`,
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 99) },
+		},
+		{
+			title: '넥슨 본사',
+			latlng: new kakao.maps.LatLng(37.40211707077346, 127.10344953763003),
+			imgSrc: `${process.env.PUBLIC_URL}/img/marker2.png`,
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 99) },
+		},
+		{
+			title: '서울 시청',
+			latlng: new kakao.maps.LatLng(37.5662952, 126.9779451),
+			imgSrc: `${process.env.PUBLIC_URL}/img/marker3.png`,
+			imgSize: new kakao.maps.Size(232, 99),
+			imgPos: { offset: new kakao.maps.Point(116, 99) },
+		},
+	]);
 
-	const mapOption = useRef({
-		center: new kakao.maps.LatLng(37.526724138870556, 126.87504233742969),
-		level: 3,
+	//마커 인스턴스 생성
+	const markerInstance = new kakao.maps.Marker({
+		position: mapInfo.current[Index].latlng,
+		image: new kakao.maps.MarkerImage(
+			mapInfo.current[Index].imgSrc,
+			mapInfo.current[Index].imgSize,
+			mapInfo.current[Index].imgOpt
+		),
 	});
 
-	const imgSrc = process.env.PUBLIC_URL + `/img/marker1.png`;
-	const imgSize = new kakao.maps.Size(232, 99);
-	const imgOpt = { offset: new kakao.maps.Point(116, 99) }; //+ 왼쪽 이동,
-
 	useEffect(() => {
-		const mapInstance = new kakao.maps.Map(mapFrame.current, mapOption.current);
-		// const posInstance = new kakao.maps.LatLng(33.450701, 126.570667);
-		const markerImageInstance = new kakao.maps.MarkerImage(imgSrc, imgSize, imgOpt);
-
-		const markerInstance = new kakao.maps.Marker({
-			position: mapOption.current.center,
-			image: markerImageInstance,
+		const mapInstance = new kakao.maps.Map(mapFrame.current, {
+			center: mapInfo.current[Index].latlng,
+			level: 3,
 		});
-
 		markerInstance.setMap(mapInstance);
 	}, []);
 
