@@ -28,6 +28,11 @@ a {
 	transition: color 1s, background-color 1s;
 	overflow-y: auto;
 
+	* {
+		height: auto;
+		overflow: hidden;
+	}
+
 	&::-webkit-scrollbar {
 		// scrollbar 디자인 변경은 리액트에서 테마변경 이벤트가 발생했을 때 변경 이벤트도 일어나기 때문에 react에서 관리하지 못하는 html요소의 scrollbar가 아닌 wrap요소에 스크롤바 생성
 		width: 4px;
