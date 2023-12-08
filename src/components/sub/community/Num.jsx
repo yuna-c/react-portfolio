@@ -26,7 +26,7 @@ export default function Community() {
 	const editMode = useRef(false);
 	const len = useRef(0); //전체 Post갯수를 담을 참조 객체
 	const pageNum = useRef(0); //전체 페이지 갯수를 추후에 연산해서 담을 참조객체
-	const perNum = useRef(3); //한 페이지당 보일 포스트 갯수
+	const perNum = useRef(6); //한 페이지당 보일 포스트 갯수
 
 	//input 초기화 함수
 	const resetPost = () => {
@@ -137,7 +137,11 @@ export default function Community() {
 					.fill()
 					.map((_, idx) => {
 						return (
-							<button key={idx} onClick={() => setCurNum(idx)} className={idx === CurNum ? 'on' : ''}>
+							<button
+								key={idx}
+								onClick={() => idx !== CurNum && setCurNum(idx)}
+								className={idx === CurNum ? 'on' : ''}
+							>
 								{idx + 1}
 							</button>
 						);
