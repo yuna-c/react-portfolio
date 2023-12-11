@@ -92,6 +92,8 @@ export default function Contant() {
 			new kakao.current.maps.ZoomControl(),
 			kakao.current.maps.ControlPosition.RIGHT
 		);
+		// 휠의 맴 줌 기능 비활성화
+		mapInstance.current.setZoomable(false);
 
 		window.addEventListener('resize', setCenter);
 		return () => window.removeEventListener('resize', setCenter);
