@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 // 기존 구굴지도 위치값 복사한 뒤, 카카오 예제의 클릭한 위치 마커표시 직접해보기에서 해당 코드 붙여넣고, 원하는 지점찍으면 소숫점 12자리뜨는데 그거 붙여넣으면 됨
 // 1초 동안 60번 이벤트 발생해(리사이즈, 스크롤, 휠)
 // https://apis.map.kakao.com/web/sample/addTrafficOverlay/ 교통정보
+// toggle useEffect(state 값만 바뀌게 )
 
 export default function Contant() {
 	// const { kakao } = window;
@@ -14,6 +15,9 @@ export default function Contant() {
 
 	//화면에 출력될 지도정보 배열의 순번이 담길 state
 	const [Index, setIndex] = useState(0);
+	// 트래픽 토글
+	const [Traffic, setTraffic] = useState(false);
+
 	// 변하지 않는 값은 의존성 배열에 두지 않는 것이 좋다
 	const mapFrame = useRef(null);
 	// 마커 ???
@@ -67,9 +71,18 @@ export default function Contant() {
 			level: 3,
 		});
 		marker.current.setMap(mapInstance.current);
+		// 다른 버튼 누르면 교통정보 자동으로 안보이고 교통정보 보이기로 버튼 바꾸기
+		setTraffic(false);
+
 		window.addEventListener('resize', setCenter);
 		return () => window.removeEventListener('resize', setCenter);
 	}, [Index]);
+
+	useEffect(() => {
+		Traffic
+			? mapInstance.current.addOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC)
+			: mapInstance.current.removeOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC);
+	}, [Traffic]);
 
 	return (
 		<Layout title={'Contant'}>
@@ -88,10 +101,10 @@ export default function Contant() {
 				<div className='info'>
 					<button
 						onClick={() => {
-							mapInstance.current.addOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC);
+							setTraffic(!Traffic); //반전처리
 						}}
 					>
-						교통정보
+						{Traffic ? '교통정보 안보이기' : '교통정보 보이기'}
 					</button>
 				</div>
 			</div>
@@ -99,3 +112,11 @@ export default function Contant() {
 		</Layout>
 	);
 }
+
+/*
+1. cdn으로 불러온 window를 외부 객체 값으로 가져와서 인스턴스 생성
+2. 인스턴스 값을 참조 객체에 담는 이유 (의존성 배열에 불필요하게 등록하지 않기 위해서)
+3. 화면 변경점이 발생해야 할 때 state값에 따라서 변경되게 로직화, 이벤트 발생시 state를 변경하여 화면 재랜더링 유도 (간접적)
+
+데이터 기반으로 짜야 유지보수 하기 쉬워졍~
+*/
