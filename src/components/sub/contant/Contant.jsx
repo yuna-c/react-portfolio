@@ -73,6 +73,26 @@ export default function Contant() {
 		// 다른 버튼 누르면 교통정보 자동으로 안보이고 교통정보 보이기로 버튼 바꾸기
 		setTraffic(false);
 
+		// 지도 타입 컨트롤러 추가
+		mapInstance.current.addControl(
+			new kakao.current.maps.MapTypeControl(),
+			kakao.current.maps.ControlPosition.TOPRIGHT //TOPLEFT
+			/*
+				// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+				var mapTypeControl = new kakao.maps.MapTypeControl();
+
+				// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+				// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+				map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+			*/
+		);
+
+		// 지도 줌 컨트롤러 추가
+		mapInstance.current.addControl(
+			new kakao.current.maps.ZoomControl(),
+			kakao.current.maps.ControlPosition.RIGHT
+		);
+
 		window.addEventListener('resize', setCenter);
 		return () => window.removeEventListener('resize', setCenter);
 	}, [Index]);
