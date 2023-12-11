@@ -19,6 +19,9 @@ export default function Contant() {
 
 	// 변하지 않는 값은 의존성 배열에 두지 않는 것이 좋다
 	const mapFrame = useRef(null);
+	// 로드뷰
+	const viewFrame = useRef(null);
+
 	// 마커 ???
 	const marker = useRef(null);
 	// 지도 중간에 두기 위해 참조
@@ -73,6 +76,12 @@ export default function Contant() {
 		// 다른 버튼 누르면 교통정보 자동으로 안보이고 교통정보 보이기로 버튼 바꾸기
 		setTraffic(false);
 
+		//로드뷰 인스턴스
+		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, (panoId) => {
+			// 50 : radius 마커를 찍은 위치에서 건물을 보여주는 최소 범위
+			new kakao.current.maps.Roadview(viewFrame.current).setPanoId(panoId, mapInfo.current[Index].latlng); //panoId와 중심좌표를 통해 로드뷰 실행
+		});
+
 		// 지도 타입 컨트롤러 추가
 		mapInstance.current.addControl(
 			new kakao.current.maps.MapTypeControl(),
@@ -92,6 +101,7 @@ export default function Contant() {
 			new kakao.current.maps.ZoomControl(),
 			kakao.current.maps.ControlPosition.RIGHT
 		);
+
 		// 휠의 맴 줌 기능 비활성화
 		mapInstance.current.setZoomable(false);
 
@@ -132,6 +142,7 @@ export default function Contant() {
 				</div>
 			</div>
 			<article className='mapBox' ref={mapFrame}></article>
+			<article className='viewBox' ref={viewFrame}></article>
 		</Layout>
 	);
 }
