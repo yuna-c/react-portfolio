@@ -64,8 +64,17 @@ export default function Contant() {
 		),
 	});
 
+	const roadview = () => {
+		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, (panoId) => {
+			new kakao.current.maps.Roadview(viewFrame.current).setPanoId(panoId, mapInfo.current[Index].latlng);
+		});
+	};
+
 	// 지도 중심 좌표 (지도 이동시키기)
-	const setCenter = () => mapInstance.current.setCenter(mapInfo.current[Index].latlng);
+	const setCenter = () => {
+		mapInstance.current.setCenter(mapInfo.current[Index].latlng);
+		roadview();
+	};
 
 	useEffect(() => {
 		// 지도 복제 기능 막아사 효율 올리기
@@ -78,6 +87,7 @@ export default function Contant() {
 		// 다른 버튼 누르면 교통정보 자동으로 안보이고 교통정보 보이기로 버튼 바꾸기
 		setTraffic(false);
 
+		roadview();
 		//로드뷰 인스턴스
 		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, (panoId) => {
 			// 50 : radius 마커를 찍은 위치에서 건물을 보여주는 최소 범위
@@ -133,21 +143,18 @@ export default function Contant() {
 					))}
 				</nav>
 
-				<div className='info'>
-					<button
-						onClick={() => {
-							setTraffic(!Traffic); //반전처리
-						}}
-					>
+				<nav className='info'>
+					<button onClick={() => setTraffic(!Traffic)}>
 						{Traffic ? '교통정보 안보이기' : '교통정보 보이기'}
 					</button>
 					<button onClick={() => setView(!View)}>{View ? 'map' : 'road view'}</button>
-				</div>
+					<button onClick={setCenter}>위치 초기화</button>
+				</nav>
 			</div>
-			<div className='tab'>
-				<article className={`mapBox &{View ? '' : 'on'}`} ref={mapFrame}></article>
-				<article className={`viewBox &{View ? 'on' : ''}`} ref={viewFrame}></article>
-			</div>
+			<section className='tab'>
+				<article className={`mapBox ${View ? '' : 'on'}`} ref={mapFrame}></article>
+				<article className={`viewBox ${View ? 'on' : ''}`} ref={viewFrame}></article>
+			</section>
 		</Layout>
 	);
 }
