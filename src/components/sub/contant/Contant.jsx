@@ -6,10 +6,12 @@ import { useEffect, useRef, useState } from 'react';
 // 위치값 정밀하게 보정 하는 법
 // 기존 구굴지도 위치값 복사한 뒤, 카카오 예제의 클릭한 위치 마커표시 직접해보기에서 해당 코드 붙여넣고, 원하는 지점찍으면 소숫점 12자리뜨는데 그거 붙여넣으면 됨
 export default function Contant() {
-	const [Index, setIndex] = useState(2);
+	const [Index, setIndex] = useState(0);
 
 	const { kakao } = window;
 	const mapFrame = useRef(null);
+	const marker = useRef(null);
+
 	//지점마다 출력할 정보를 개별적인 객체로 묶어서 배열로 그룹화
 	const mapInfo = useRef([
 		{
@@ -36,7 +38,7 @@ export default function Contant() {
 	]);
 
 	//마커 인스턴스 생성
-	const markerInstance = new kakao.maps.Marker({
+	marker.current = new kakao.maps.Marker({
 		position: mapInfo.current[Index].latlng,
 		image: new kakao.maps.MarkerImage(
 			mapInfo.current[Index].imgSrc,
@@ -50,11 +52,24 @@ export default function Contant() {
 			center: mapInfo.current[Index].latlng,
 			level: 3,
 		});
-		markerInstance.setMap(mapInstance);
-	}, []);
+		marker.current.setMap(mapInstance);
+	}, [Index, kakao]);
 
 	return (
 		<Layout title={'Contant'}>
+			<ul className='branch'>
+				{/* <li onClick={() => setIndex(0)}>삼성동 코엑스</li>
+				<li onClick={() => setIndex(1)}>넥슨 본사</li>
+				<li onClick={() => setIndex(2)}>서울 시청</li> */}
+
+				{mapInfo.current.map((el, idx) => (
+					<li>
+						<button key={idx} onClick={() => setIndex(idx)} className={idx === Index ? 'on' : ''}>
+							{el.title}
+						</button>
+					</li>
+				))}
+			</ul>
 			<article className='mapBox' ref={mapFrame}></article>
 		</Layout>
 	);
