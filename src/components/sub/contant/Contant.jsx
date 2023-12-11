@@ -5,9 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 // https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/
 // 위치값 정밀하게 보정 하는 법
 // 기존 구굴지도 위치값 복사한 뒤, 카카오 예제의 클릭한 위치 마커표시 직접해보기에서 해당 코드 붙여넣고, 원하는 지점찍으면 소숫점 12자리뜨는데 그거 붙여넣으면 됨
-// 1초 동안 60번 이벤트 발생해(리사이즈, 스크롤, 휠)
+// 1초 동안 60번 이벤트 발생해(리사이즈, 스크롤, 휠) => 이런 것 들 때문에 용량이 커지는걸 막기 위해서 의존성 배열을 통해 데이터를 간소화 시켜야 해
 // https://apis.map.kakao.com/web/sample/addTrafficOverlay/ 교통정보
-// toggle useEffect(state 값만 바뀌게 )
 
 export default function Contant() {
 	// const { kakao } = window;
@@ -15,7 +14,7 @@ export default function Contant() {
 
 	//화면에 출력될 지도정보 배열의 순번이 담길 state
 	const [Index, setIndex] = useState(0);
-	// 트래픽 토글
+	// 트래픽 토글, toggle useEffect(state 값만 바뀌게)
 	const [Traffic, setTraffic] = useState(false);
 
 	// 변하지 않는 값은 의존성 배열에 두지 않는 것이 좋다
@@ -79,9 +78,11 @@ export default function Contant() {
 	}, [Index]);
 
 	useEffect(() => {
+		// 지도에 교통정보를 표시하도록 지도타입을 추가합니다
+		// map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
 		Traffic
-			? mapInstance.current.addOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC)
-			: mapInstance.current.removeOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC);
+			? mapInstance.current.addOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC) //true
+			: mapInstance.current.removeOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC); //false
 	}, [Traffic]);
 
 	return (
