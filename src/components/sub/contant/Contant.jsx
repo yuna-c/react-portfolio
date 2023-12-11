@@ -16,6 +16,8 @@ export default function Contant() {
 	const [Index, setIndex] = useState(0);
 	// 트래픽 토글, toggle useEffect(state 값만 바뀌게)
 	const [Traffic, setTraffic] = useState(false);
+	// 지도 로드뷰 / 그림 토글 기능
+	const [View, setView] = useState(false);
 
 	// 변하지 않는 값은 의존성 배열에 두지 않는 것이 좋다
 	const mapFrame = useRef(null);
@@ -139,10 +141,13 @@ export default function Contant() {
 					>
 						{Traffic ? '교통정보 안보이기' : '교통정보 보이기'}
 					</button>
+					<button onClick={() => setView(!View)}>{View ? 'map' : 'road view'}</button>
 				</div>
 			</div>
-			<article className='mapBox' ref={mapFrame}></article>
-			<article className='viewBox' ref={viewFrame}></article>
+			<div className='tab'>
+				<article className={`mapBox &{View ? '' : 'on'}`} ref={mapFrame}></article>
+				<article className={`viewBox &{View ? 'on' : ''}`} ref={viewFrame}></article>
+			</div>
 		</Layout>
 	);
 }
