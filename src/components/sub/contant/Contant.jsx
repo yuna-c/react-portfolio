@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 // 위치값 정밀하게 보정 하는 법
 // 기존 구굴지도 위치값 복사한 뒤, 카카오 예제의 클릭한 위치 마커표시 직접해보기에서 해당 코드 붙여넣고, 원하는 지점찍으면 소숫점 12자리뜨는데 그거 붙여넣으면 됨
 // 1초 동안 60번 이벤트 발생해(리사이즈, 스크롤, 휠)
+// https://apis.map.kakao.com/web/sample/addTrafficOverlay/ 교통정보
 
 export default function Contant() {
 	// const { kakao } = window;
@@ -59,6 +60,8 @@ export default function Contant() {
 	const setCenter = () => mapInstance.current.setCenter(mapInfo.current[Index].latlng);
 
 	useEffect(() => {
+		// 지도 복제 기능 막아사 효율 올리기
+		mapFrame.current.innerHTML = '';
 		mapInstance.current = new kakao.current.maps.Map(mapFrame.current, {
 			center: mapInfo.current[Index].latlng,
 			level: 3,
@@ -70,18 +73,28 @@ export default function Contant() {
 
 	return (
 		<Layout title={'Contant'}>
-			<ul className='branch'>
-				{/* <li onClick={() => setIndex(0)}>삼성동 코엑스</li>
+			<div className='controlBox'>
+				<nav className='branch'>
+					{/* <li onClick={() => setIndex(0)}>삼성동 코엑스</li>
 				<li onClick={() => setIndex(1)}>넥슨 본사</li>
 				<li onClick={() => setIndex(2)}>서울 시청</li> */}
-				{mapInfo.current.map((el, idx) => (
-					<li key={idx}>
-						<button onClick={() => setIndex(idx)} className={idx === Index ? 'on' : ''}>
+					{mapInfo.current.map((el, idx) => (
+						<button key={idx} onClick={() => setIndex(idx)} className={idx === Index ? 'on' : ''}>
 							{el.title}
 						</button>
-					</li>
-				))}
-			</ul>
+					))}
+				</nav>
+
+				<div className='info'>
+					<button
+						onClick={() => {
+							mapInstance.current.addOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC);
+						}}
+					>
+						교통정보
+					</button>
+				</div>
+			</div>
 			<article className='mapBox' ref={mapFrame}></article>
 		</Layout>
 	);
