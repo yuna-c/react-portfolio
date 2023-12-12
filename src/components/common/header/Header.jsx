@@ -40,7 +40,7 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 					</NavLink>
 				</li>
 				<li>
-					<NavLink to='/contant' activeClassName={'on'}>
+					<NavLink to='/contact' activeClassName={'on'}>
 						Contant
 					</NavLink>
 				</li>
@@ -56,8 +56,7 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 				onClick={() => {
 					setToggle(!Toggle);
 					// toggle은 boolean 이구나
-				}}
-			>
+				}}>
 				menu
 			</button>
 		</header>

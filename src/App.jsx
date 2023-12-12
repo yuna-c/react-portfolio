@@ -5,7 +5,7 @@ import { Route } from 'react-router-dom';
 import { useMedia } from './hooks/useMidia';
 import Header from './components/common/header/Header';
 import Footer from './components/common/footer/Footer';
-import Contant from './components/sub/contant/Contant';
+import Contact from './components/sub/contact/Contact';
 import Gallery from './components/sub/gallery/Gallery';
 import Members from './components/sub/members/Members';
 import Youtube from './components/sub/youtube/Youtube';
@@ -29,7 +29,7 @@ export default function App() {
 			<Route path='/gallery' component={Gallery} />
 			<Route path='/community' component={Community} />
 			<Route path='/members' component={Members} />
-			<Route path='/contant' component={Contant} />
+			<Route path='/contact' component={Contact} />
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/detail/:id' component={Detail} />
 			{/* <Num path='/community' component={Youtube} /> */}

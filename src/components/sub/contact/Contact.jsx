@@ -1,4 +1,4 @@
-import './Contant.scss';
+import './Contact.scss';
 import Layout from '../../common/layout/Layout';
 import { useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
@@ -11,7 +11,7 @@ import emailjs from '@emailjs/browser';
 // npm install @emailjs/browser --save
 // add new 서빗 3개까지 https://www.emailjs.com/docs/sdk/send-form/
 
-export default function Contant() {
+export default function Contact() {
 	const form = useRef();
 
 	// 그룹 형식의 돔을 탐색할때 반환되는 두가지 형태의 유사배열
@@ -155,7 +155,7 @@ export default function Contant() {
 	}, [Traffic]);
 
 	return (
-		<Layout title={'Contant'}>
+		<Layout title={'Contact'}>
 			<div id='mailSection'>
 				<form ref={form} onSubmit={sendEmail}>
 					<label>Name</label>
