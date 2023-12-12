@@ -4,12 +4,19 @@ import { ImCancelCircle } from 'react-icons/im';
 import { TfiWrite } from 'react-icons/tfi';
 import { useEffect, useRef, useState } from 'react';
 import { useCustomText } from '../../../hooks/useText';
+import postData from './dummyPosts.json';
 
 // moment.js로 포맷.. 해서 쓸수도 있긴해
 // https://momentjs.com/
 
 export default function Community() {
 	const changeText = useCustomText('combined');
+
+	const getLocalData = () => {
+		const data = localStorage.getItem('post');
+		if (data) return JSON.parse(data);
+		else return postData.dummyPosts;
+	};
 
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
@@ -38,15 +45,12 @@ export default function Community() {
 		}
 		console.log(new Date());
 		const korTime = new Date().getTime() + 1000 * 60 * 60 * 9;
-		setPost([
-			{ title: refTit.current.value, content: refCon.current.value, date: new Date(korTime) },
-			...Post,
-		]);
+		setPost([{ title: refTit.current.value, content: refCon.current.value, date: new Date(korTime) }, ...Post]);
 		resetPost();
 	};
 
 	// 글 수정 함수
-	const updatePost = (updateIndex) => {
+	const updatePost = updateIndex => {
 		if (!refEditTit.current.value.trim() || !refEditCon.current.value.trim()) {
 			return alert('수정할 글의 제목과  본문을 모두 입력하세요.');
 		}
@@ -66,7 +70,7 @@ export default function Community() {
 	};
 
 	// 글 삭제 함수
-	const deletePost = (delIndex) => {
+	const deletePost = delIndex => {
 		console.log(delIndex);
 		// 기존의 map과 마찬가지로 기존 배열값을 deep copy해서 새오운 배열 반환
 		// 이때 안쪽의 조건문을 처리해서 특정 조건에 부합되는 값만 필터링해서 리턴
@@ -83,7 +87,7 @@ export default function Community() {
 	};
 
 	// 수정모드 변경함수
-	const enableUpdate = (editIndex) => {
+	const enableUpdate = editIndex => {
 		if (editMode.current) return;
 		editMode.current = true;
 		//1번 작업
@@ -110,7 +114,7 @@ export default function Community() {
 	};
 
 	// 출력모드 변경함수
-	const disableUpdate = (editIndex) => {
+	const disableUpdate = editIndex => {
 		setPost(
 			Post.map((el, idx) => {
 				if (editIndex === idx) el.enableUpdate = false;
@@ -120,16 +124,16 @@ export default function Community() {
 	};
 
 	// 필터링 함수
-	const filtering = (txt) => {
+	const filtering = txt => {
 		//txt 인수로 받을꺼야
-		const abc = Post.filter((el) => el.title.indexOf(txt) >= 0 || el.content.indexOf(txt) >= 0);
+		const abc = Post.filter(el => el.title.indexOf(txt) >= 0 || el.content.indexOf(txt) >= 0);
 		console.log(abc);
 		alert(abc);
 	};
 
 	useEffect(() => {
 		// Post 데이터 변경시 수정모드 강제 닫기(false) 하면서 로컬 저장소에 저장하고 컴포넌트 재실행
-		Post.map((el) => (el.enableUpdate = false));
+		Post.map(el => (el.enableUpdate = false));
 		localStorage.setItem('post', JSON.stringify(Post));
 	}, [Post]);
 
@@ -164,14 +168,7 @@ export default function Community() {
 								<article key={el + idx}>
 									<div className='txt'>
 										<input type='text' defaultValue={el.title} ref={refEditTit} />
-										<textarea
-											name=''
-											id=''
-											cols='30'
-											rows='10'
-											defaultValue={el.content}
-											ref={refEditCon}
-										></textarea>
+										<textarea name='' id='' cols='30' rows='10' defaultValue={el.content} ref={refEditCon}></textarea>
 										<span>{strDate}</span>
 									</div>
 
@@ -199,8 +196,7 @@ export default function Community() {
 											onClick={() => {
 												enableUpdate(idx);
 												// filtering('가나다');
-											}}
-										>
+											}}>
 											{/* idx 어떤거 할껀지 순서값 */}
 											Edit
 										</button>
