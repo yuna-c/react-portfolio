@@ -1,7 +1,25 @@
+import { useRef, useState } from 'react';
 import Layout from '../../common/layout/Layout';
 import './Members.scss';
 
 export default function Members() {
+	// id값 참조객체에 담음
+	const initVal = useRef({
+		userid: ''
+	});
+	//초기 state 값
+	const [Val, setVal] = useState(initVal.current);
+
+	const handleChange = e => {
+		console.log('name', e.target.name);
+		console.log('value', e.target.value);
+		const key = e.target.name; // userid
+		const value = e.target.value; //현재 입력하고 있는 인풋값
+		setVal({ ...Val, [key]: value });
+		// 동작 안되는 이유 .. ? key는 문자가 아니어야 하는데 문자로 할당되니까 변수치환 못하니까.. 대괄호[]로 감싸면 돼
+		// 이거는 많이 쓰일 것 같아
+	};
+
 	return (
 		<Layout title={'Members'}>
 			<div className='wrap'>
@@ -19,8 +37,9 @@ export default function Members() {
 									{/* userid, email */}
 									<tr>
 										<td>
-											<input type='text' name='userid' placeholder='User ID' />
+											<input type='text' name='userid' placeholder='User ID' value={Val.userid} onChange={handleChange} />
 											{/* name : 서버 전송하는 값, 리액트는 실시간으로 state의 돔의 프로퍼티로 활용할 값 */}
+											{/* 값 안찍히는 이유 : 이벤트 발생할 때 스테이트 값이 변경이 안되기 때문에 value에 state 값이 출력되게 해놔서 안나옴 */}
 										</td>
 										<td>
 											<input type='text' name='email' placeholder='Email' />
