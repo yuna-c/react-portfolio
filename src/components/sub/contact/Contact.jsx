@@ -30,6 +30,11 @@ export default function Contact() {
 	const sendEmail = e => {
 		e.preventDefault();
 
+		const [user, email] = form.current.querySelectorAll('input');
+		const txtArea = form.current.querySelectorAll('textarea');
+
+		if (!user.value || !email.value || !txtArea.value) return alert('이름, 답장을 ㅏㄷ을 이메일 주소 문의 내용을 모두 입력하세요');
+
 		emailjs.sendForm('service_nytqr3g', 'template_50r2xta', form.current, 'EkR0AJGqHyR3vJV0U').then(
 			result => {
 				alert('문의 내용이 성공적으로 전송되었습니다.');
