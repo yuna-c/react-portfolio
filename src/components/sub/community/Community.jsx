@@ -18,12 +18,6 @@ export default function Community() {
 		else return postData.dummyPosts;
 	};
 
-	const getLocalData = () => {
-		const data = localStorage.getItem('post');
-		if (data) return JSON.parse(data);
-		else return [];
-	};
-
 	const [Post, setPost] = useState(getLocalData()); //함수를 호출해야 하니까 ()
 	const refTit = useRef(null);
 	const refCon = useRef(null);
