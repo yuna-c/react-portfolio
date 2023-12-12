@@ -1,24 +1,28 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Layout from '../../common/layout/Layout';
 import './Members.scss';
 
 export default function Members() {
 	// id값 참조객체에 담음
-	const initVal = useRef({
-		userid: ''
-	});
+	const initVal = useRef({ userid: '', email: '', comments: '', pwd1: '', pwd2: '', edu: '', gender: '' });
+
 	//초기 state 값
 	const [Val, setVal] = useState(initVal.current);
 
 	const handleChange = e => {
-		console.log('name', e.target.name);
-		console.log('value', e.target.value);
-		const key = e.target.name; // userid
-		const value = e.target.value; //현재 입력하고 있는 인풋값
-		setVal({ ...Val, [key]: value });
+		// console.log('name', e.target.name);
+		// console.log('value', e.target.value);
+		// const key = e.target.name; // userid
+		// const value = e.target.value; //현재 입력하고 있는 인풋값
+		const { name, value } = e.target;
+		setVal({ ...Val, [name]: value });
 		// 동작 안되는 이유 .. ? key는 문자가 아니어야 하는데 문자로 할당되니까 변수치환 못하니까.. 대괄호[]로 감싸면 돼
 		// 이거는 많이 쓰일 것 같아
 	};
+
+	useEffect(() => {
+		console.log(Val);
+	}, [Val]);
 
 	return (
 		<Layout title={'Members'}>
@@ -42,24 +46,24 @@ export default function Members() {
 											{/* 값 안찍히는 이유 : 이벤트 발생할 때 스테이트 값이 변경이 안되기 때문에 value에 state 값이 출력되게 해놔서 안나옴 */}
 										</td>
 										<td>
-											<input type='text' name='email' placeholder='Email' />
+											<input type='text' name='email' placeholder='Email' value={Val.email} onChange={handleChange} />
 										</td>
 									</tr>
 
 									{/* pwd1, pwd2 */}
 									<tr>
 										<td>
-											<input type='password' name='pwd1' placeholder='Password' />
+											<input type='password' name='pwd1' placeholder='Password' value={Val.pwd1} onChange={handleChange} />
 										</td>
 										<td>
-											<input type='password' name='pwd2' placeholder='Re-Password' />
+											<input type='password' name='pwd2' placeholder='Re-Password' value={Val.pwd2} onChange={handleChange} />
 										</td>
 									</tr>
 
 									{/* edu */}
 									<tr>
 										<td colSpan='2'>
-											<select name='edu'>
+											<select name='edu' value={Val.pwd1} onChange={handleChange}>
 												<option value=''>Education</option>
 												{/* value 값이 넘어감 */}
 												<option value='elementary-school'>초등학교 졸업</option>
@@ -73,11 +77,11 @@ export default function Members() {
 									{/* gender */}
 									<tr>
 										<td colSpan='2'>
-											<input type='radio' defaultValue='female' id='female' name='gender' />
+											<input type='radio' defaultValue='female' id='female' name='gender' onChange={handleChange} />
 											<label htmlFor='female'>Female</label>
 											{/* 스크린 리더기는 label을 읽음 */}
 
-											<input type='radio' defaultValue='male' id='male' name='gender' />
+											<input type='radio' defaultValue='male' id='male' name='gender' onChange={handleChange} />
 											<label htmlFor='male'>Male</label>
 										</td>
 									</tr>
@@ -102,7 +106,13 @@ export default function Members() {
 									{/* comments  */}
 									<tr>
 										<td colSpan='2'>
-											<textarea name='comments' cols='30' rows='5' placeholder='Leave a comment'></textarea>
+											<textarea
+												name='comments'
+												cols='30'
+												rows='5'
+												placeholder='Leave a comment'
+												vlaue={Val.comments}
+												onChange={handleChange}></textarea>
 										</td>
 									</tr>
 
