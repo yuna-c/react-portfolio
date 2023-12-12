@@ -1,0 +1,41 @@
+{
+  "editor.wordWrap": "on",
+  "editor.fontFamily": "'Fira Code','Fantasque Sans Mono','d2coding','NanumGothicCoding'",
+  "editor.fontLigatures": true,
+  "editor.mouseWheelZoom": true,
+  "editor.lineNumbers": "on",
+  "editor.minimap.enabled": false,
+  "editor.colorDecorators": true,
+  "editor.codeLens": false,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "workbench.iconTheme": "vscode-icons",
+  "vsicons.dontShowNewVersionMessage": true,
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.donotVerifyTags": true,
+  "editor.tabSize": 2,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "workbench.colorTheme": "Default Dark+",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {},
+  "editor.formatOnSave": true,
+  "workbench.startupEditor": "none",
+  "powermode.enabled": false,
+  "powermode.shake.enabled": false,
+  "powermode.explosions.size": 15,
+  "powermode.combo.location": "off"
+}
