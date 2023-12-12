@@ -15,7 +15,7 @@ export default function Contant() {
 	const form = useRef();
 
 	// 그룹 형식의 돔을 탐색할때 반환되는 두가지 형태의 유사배열
-	// parentDom.children : HTML(유사배열 : forEach, map 모두 반복불가, Live DOM : 상태 변경이 실시간)
+	// parentDom.children : HTMLCollection(유사배열 : forEach, map 모두 반복불가, Live DOM : 상태 변경이 실시간)
 	// parentDom.querySelectorAll : NodeList(유사배열 : forEach로 반복 가능. Static DOM : 탐색된 시점의 정적 DOM)
 
 	const resetForm = () => {
