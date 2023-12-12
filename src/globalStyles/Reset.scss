@@ -42,13 +42,19 @@ a {
 	}
 	input,
 	button {
-		outline: 0;
+		outline: 0; //접근성 필요한 페이지는 1
 	}
 	fieldset {
-		border: none;
+		border: none; //폼 감싸는 태그
 	}
 	input,
-	textarea {
+	textarea,
+	select,
+	option {
+		background-color: transparent;
+		font-size: 1rem;
+		color: rgba(var(--baseColor-code), 0.5);
+		font-family: var(--baseFont);
 		&::placeholder {
 			background-color: transparent;
 			font-size: 1rem;
@@ -56,11 +62,6 @@ a {
 			font-family: var(--baseFont);
 		}
 	}
-	select {
-		font-size: 1rem;
-		color: rgba(var(--baseColor-code), 0.5);
-	}
-
 	&::-webkit-scrollbar {
 		width: 8px;
 		background-color: transparent;
