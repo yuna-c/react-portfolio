@@ -4,7 +4,6 @@ import { ImCancelCircle } from 'react-icons/im';
 import { TfiWrite } from 'react-icons/tfi';
 import { useEffect, useRef, useState } from 'react';
 import { useCustomText } from '../../../hooks/useText';
-import postData from './dummyPosts.json';
 
 // moment.js로 포맷.. 해서 쓸수도 있긴해
 // https://momentjs.com/
@@ -14,8 +13,7 @@ export default function Community() {
 
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
-		if (data) return JSON.parse(data);
-		else return postData.dummyPosts;
+		return JSON.parse(data);
 	};
 
 	const [Post, setPost] = useState(getLocalData()); //함수를 호출해야 하니까 ()
@@ -117,16 +115,8 @@ export default function Community() {
 		);
 	};
 
-	// 필터링 함수
-	const filtering = txt => {
-		//txt 인수로 받을꺼야
-		const abc = Post.filter(el => el.title.indexOf(txt) >= 0 || el.content.indexOf(txt) >= 0);
-		console.log(abc);
-		alert(abc);
-	};
-
 	useEffect(() => {
-		// Post 데이터 변경시 수정모드 강제 닫기(false) 하면서 로컬 저장소에 저장하고 컴포넌트 재실행
+		//Post데이터가 변경되면 수정모드를 강제로 false처리하면서 로컬저장소에 저장하고 컴포넌트 재실행
 		Post.map(el => (el.enableUpdate = false));
 		localStorage.setItem('post', JSON.stringify(Post));
 	}, [Post]);
