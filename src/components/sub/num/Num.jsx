@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import Layout from '../../common/layout/Layout';
-import './Community.scss';
+import './Num.scss';
 import { ImCancelCircle } from 'react-icons/im';
 import { TfiWrite } from 'react-icons/tfi';
 import { useCustomText } from '../../../hooks/useText';
 
 // 새로고침하면 버튼 없어지는데? 랜더링 타임 때문이라는데?
 
-export default function Community() {
-	console.log('community');
+export default function Num() {
+	console.log('Num');
 	const changeText = useCustomText('combined');
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
@@ -41,15 +41,12 @@ export default function Community() {
 			return alert('제목과 본문을 모두 입력하세요.');
 		}
 		const korTime = new Date().getTime() + 1000 * 60 * 60 * 9;
-		setPost([
-			{ title: refTit.current.value, content: refCon.current.value, date: new Date(korTime) },
-			...Post,
-		]);
+		setPost([{ title: refTit.current.value, content: refCon.current.value, date: new Date(korTime) }, ...Post]);
 		resetPost();
 	};
 
 	//글 수정 함수
-	const updatePost = (updateIndex) => {
+	const updatePost = updateIndex => {
 		if (!refEditTit.current.value.trim() || !refEditCon.current.value.trim()) {
 			return alert('수정할 글의 제목과  본문을 모두 입력하세요.');
 		}
@@ -68,7 +65,7 @@ export default function Community() {
 	};
 
 	//글 삭제 함수
-	const deletePost = (delIndex) => {
+	const deletePost = delIndex => {
 		//console.log(delIndex);
 		//기존 map과 마찬가지로 기존 배열값을 deep copy해서 새로운배열 반환
 		//이때 안쪽에 조건문을 처리해서 특정 조건에 부합되는 값만 filtering해서 리턴
@@ -77,7 +74,7 @@ export default function Community() {
 	};
 
 	//수정모드 변경함수
-	const enableUpdate = (editIndex) => {
+	const enableUpdate = editIndex => {
 		if (editMode.current) return;
 		editMode.current = true;
 		setPost(
@@ -89,7 +86,7 @@ export default function Community() {
 	};
 
 	//출력모드 변경함수
-	const disableUpdate = (editIndex) => {
+	const disableUpdate = editIndex => {
 		editMode.current = false;
 		setPost(
 			Post.map((el, idx) => {
@@ -99,14 +96,14 @@ export default function Community() {
 		);
 	};
 
-	const filtering = (txt) => {
-		const abc = Post.filter((el) => el.title.indexOf(txt) >= 0 || el.content.indexOf(txt) >= 0);
+	const filtering = txt => {
+		const abc = Post.filter(el => el.title.indexOf(txt) >= 0 || el.content.indexOf(txt) >= 0);
 		console.log(abc);
 	};
 
 	useEffect(() => {
 		//Post데이터가 변경되면 수정모드를 강제로 false처리하면서 로컬저장소에 저장하고 컴포넌트 재실행
-		Post.map((el) => (el.enableUpdate = false));
+		Post.map(el => (el.enableUpdate = false));
 		localStorage.setItem('post', JSON.stringify(Post));
 		//전체 Post갯수 구함
 		// len.current = Post.length;
@@ -116,10 +113,7 @@ export default function Community() {
 		//전체 데이터갯수 / 한 페이지당 보일 포스트 갯수 (딱 나눠떨어지면 나눈 몫을 바로 담음)
 		//전체 데이터갯수 / 한 페이지당 보일 포스트 갯수 (만약 나머지가 1,2개 남으면 나눈 몫의 1을 더한값)
 
-		pageNum.current =
-			len.current % perNum.current === 0
-				? len.current / perNum.current
-				: parseInt(len.current / perNum.current) + 1;
+		pageNum.current = len.current % perNum.current === 0 ? len.current / perNum.current : parseInt(len.current / perNum.current) + 1;
 		console.log(pageNum.current);
 
 		//새로고침했을때 페이징 버튼이 안뜨는 문제
@@ -130,18 +124,14 @@ export default function Community() {
 	}, [Post]);
 
 	return (
-		<Layout title={'Community'}>
+		<Layout title={'Num'}>
 			{/* 위에서 만든 pageNum값을 활용해 자동으로 페이지버튼 생성 */}
 			<nav className='pagination'>
 				{Array(PageNum)
 					.fill()
 					.map((_, idx) => {
 						return (
-							<button
-								key={idx}
-								onClick={() => idx !== CurNum && setCurNum(idx)}
-								className={idx === CurNum ? 'on' : ''}
-							>
+							<button key={idx} onClick={() => idx !== CurNum && setCurNum(idx)} className={idx === CurNum ? 'on' : ''}>
 								{idx + 1}
 							</button>
 						);

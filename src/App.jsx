@@ -14,7 +14,7 @@ import Community from './components/sub/community/Community';
 import Department from './components/sub/department/Department';
 import Menu from './components/common/menu/Menu';
 import Detail from './components/sub/youtube/Detail';
-// import Num from './components/sub/community/Num';
+import Num from './components/sub/num/Num';
 
 export default function App() {
 	const [Dark, setDark] = useState(false); //toggle 은 boolean
@@ -32,7 +32,8 @@ export default function App() {
 			<Route path='/contact' component={Contact} />
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/detail/:id' component={Detail} />
-			{/* <Num path='/community' component={Youtube} /> */}
+			<Route path='/youtube' component={Youtube} />
+			<Route path='/num' component={Num} />
 			{/* Params = id라는 변수로 받아짐 http://localhost:3000/detail/abc 이케 하면 console data로 id/프로퍼티로 받아져! */}
 			<Footer />
 			{Toggle && <Menu setToggle={setToggle} />}
