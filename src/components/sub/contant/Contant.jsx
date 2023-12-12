@@ -1,6 +1,6 @@
-import './Contant.scss';
-import Layout from '../../common/layout/Layout';
-import { useEffect, useRef, useState } from 'react';
+import "./Contant.scss";
+import Layout from "../../common/layout/Layout";
+import { useEffect, useRef, useState } from "react";
 
 // https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/
 // 위치값 정밀하게 보정 하는 법
@@ -9,96 +9,116 @@ import { useEffect, useRef, useState } from 'react';
 // https://apis.map.kakao.com/web/sample/addTrafficOverlay/ 교통정보
 
 export default function Contant() {
-	// const { kakao } = window;
-	const kakao = useRef(window.kakao);
+  // const { kakao } = window;
+  const kakao = useRef(window.kakao);
 
-	//화면에 출력될 지도정보 배열의 순번이 담길 state
-	const [Index, setIndex] = useState(0);
-	// 트래픽 토글, toggle useEffect(state 값만 바뀌게)
-	const [Traffic, setTraffic] = useState(false);
-	// 지도 로드뷰 / 그림 토글 기능
-	const [View, setView] = useState(false);
+  //화면에 출력될 지도정보 배열의 순번이 담길 state
+  const [Index, setIndex] = useState(0);
+  // 트래픽 토글, toggle useEffect(state 값만 바뀌게)
+  const [Traffic, setTraffic] = useState(false);
+  // 지도 로드뷰 / 그림 토글 기능
+  const [View, setView] = useState(false);
 
-	// 변하지 않는 값은 의존성 배열에 두지 않는 것이 좋다
-	const mapFrame = useRef(null);
-	// 로드뷰
-	const viewFrame = useRef(null);
+  // 변하지 않는 값은 의존성 배열에 두지 않는 것이 좋다
+  const mapFrame = useRef(null);
+  // 로드뷰
+  const viewFrame = useRef(null);
 
-	// 마커 ???
-	const marker = useRef(null);
-	// 지도 중간에 두기 위해 참조
-	const mapInstance = useRef(null);
+  // 마커 ???
+  const marker = useRef(null);
+  // 지도 중간에 두기 위해 참조
+  const mapInstance = useRef(null);
 
-	//지점마다 출력할 정보를 개별적인 객체로 묶어서 배열로 그룹화
-	const mapInfo = useRef([
-		{
-			title: '삼성역 코엑스',
-			latlng: new kakao.current.maps.LatLng(37.51100661425726, 127.06162026853143),
-			imgSrc: `${process.env.PUBLIC_URL}/img/marker1.png`,
-			imgSize: new kakao.current.maps.Size(232, 99),
-			imgPos: { offset: new kakao.current.maps.Point(116, 99) },
-		},
-		{
-			title: '넥슨 본사',
-			latlng: new kakao.current.maps.LatLng(37.40211707077346, 127.10344953763003),
-			imgSrc: `${process.env.PUBLIC_URL}/img/marker2.png`,
-			imgSize: new kakao.current.maps.Size(232, 99),
-			imgPos: { offset: new kakao.current.maps.Point(116, 99) },
-		},
-		{
-			title: '서울 시청',
-			latlng: new kakao.current.maps.LatLng(37.5662952, 126.9779451),
-			imgSrc: `${process.env.PUBLIC_URL}/img/marker3.png`,
-			imgSize: new kakao.current.maps.Size(232, 99),
-			imgPos: { offset: new kakao.current.maps.Point(116, 99) },
-		},
-	]);
+  //지점마다 출력할 정보를 개별적인 객체로 묶어서 배열로 그룹화
+  const mapInfo = useRef([
+    {
+      title: "삼성역 코엑스",
+      latlng: new kakao.current.maps.LatLng(
+        37.51100661425726,
+        127.06162026853143
+      ),
+      imgSrc: `${process.env.PUBLIC_URL}/img/marker1.png`,
+      imgSize: new kakao.current.maps.Size(232, 99),
+      imgPos: { offset: new kakao.current.maps.Point(116, 99) },
+    },
+    {
+      title: "넥슨 본사",
+      latlng: new kakao.current.maps.LatLng(
+        37.40211707077346,
+        127.10344953763003
+      ),
+      imgSrc: `${process.env.PUBLIC_URL}/img/marker2.png`,
+      imgSize: new kakao.current.maps.Size(232, 99),
+      imgPos: { offset: new kakao.current.maps.Point(116, 99) },
+    },
+    {
+      title: "서울 시청",
+      latlng: new kakao.current.maps.LatLng(37.5662952, 126.9779451),
+      imgSrc: `${process.env.PUBLIC_URL}/img/marker3.png`,
+      imgSize: new kakao.current.maps.Size(232, 99),
+      imgPos: { offset: new kakao.current.maps.Point(116, 99) },
+    },
+  ]);
 
-	//마커 인스턴스 생성
-	marker.current = new kakao.current.maps.Marker({
-		position: mapInfo.current[Index].latlng,
-		image: new kakao.current.maps.MarkerImage(
-			mapInfo.current[Index].imgSrc,
-			mapInfo.current[Index].imgSize,
-			mapInfo.current[Index].imgOpt
-		),
-	});
+  //마커 인스턴스 생성
+  marker.current = new kakao.current.maps.Marker({
+    position: mapInfo.current[Index].latlng,
+    image: new kakao.current.maps.MarkerImage(
+      mapInfo.current[Index].imgSrc,
+      mapInfo.current[Index].imgSize,
+      mapInfo.current[Index].imgOpt
+    ),
+  });
 
-	const roadview = () => {
-		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, (panoId) => {
-			new kakao.current.maps.Roadview(viewFrame.current).setPanoId(panoId, mapInfo.current[Index].latlng);
-		});
-	};
+  const roadview = () => {
+    new kakao.current.maps.RoadviewClient().getNearestPanoId(
+      mapInfo.current[Index].latlng,
+      50,
+      (panoId) => {
+        new kakao.current.maps.Roadview(viewFrame.current).setPanoId(
+          panoId,
+          mapInfo.current[Index].latlng
+        );
+      }
+    );
+  };
 
-	// 지도 중심 좌표 (지도 이동시키기)
-	const setCenter = () => {
-		mapInstance.current.setCenter(mapInfo.current[Index].latlng);
-		roadview();
-	};
+  // 지도 중심 좌표 (지도 이동시키기)
+  const setCenter = () => {
+    mapInstance.current.setCenter(mapInfo.current[Index].latlng);
+    roadview();
+  };
 
-	useEffect(() => {
-		// 지도 복제 기능 막아사 효율 올리기
-		mapFrame.current.innerHTML = '';
-		mapInstance.current = new kakao.current.maps.Map(mapFrame.current, {
-			center: mapInfo.current[Index].latlng,
-			level: 3,
-		});
-		marker.current.setMap(mapInstance.current);
-		// 다른 버튼 누르면 교통정보 자동으로 안보이고 교통정보 보이기로 버튼 바꾸기
-		setTraffic(false);
+  useEffect(() => {
+    // 지도 복제 기능 막아사 효율 올리기
+    mapFrame.current.innerHTML = "";
+    mapInstance.current = new kakao.current.maps.Map(mapFrame.current, {
+      center: mapInfo.current[Index].latlng,
+      level: 3,
+    });
+    marker.current.setMap(mapInstance.current);
+    // 다른 버튼 누르면 교통정보 자동으로 안보이고 교통정보 보이기로 버튼 바꾸기
+    setTraffic(false);
 
-		roadview();
-		//로드뷰 인스턴스
-		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, (panoId) => {
-			// 50 : radius 마커를 찍은 위치에서 건물을 보여주는 최소 범위
-			new kakao.current.maps.Roadview(viewFrame.current).setPanoId(panoId, mapInfo.current[Index].latlng); //panoId와 중심좌표를 통해 로드뷰 실행
-		});
+    roadview();
+    //로드뷰 인스턴스
+    new kakao.current.maps.RoadviewClient().getNearestPanoId(
+      mapInfo.current[Index].latlng,
+      50,
+      (panoId) => {
+        // 50 : radius 마커를 찍은 위치에서 건물을 보여주는 최소 범위
+        new kakao.current.maps.Roadview(viewFrame.current).setPanoId(
+          panoId,
+          mapInfo.current[Index].latlng
+        ); //panoId와 중심좌표를 통해 로드뷰 실행
+      }
+    );
 
-		// 지도 타입 컨트롤러 추가
-		mapInstance.current.addControl(
-			new kakao.current.maps.MapTypeControl(),
-			kakao.current.maps.ControlPosition.TOPRIGHT //TOPLEFT
-			/*
+    // 지도 타입 컨트롤러 추가
+    mapInstance.current.addControl(
+      new kakao.current.maps.MapTypeControl(),
+      kakao.current.maps.ControlPosition.TOPRIGHT //TOPLEFT
+      /*
 				// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
 				var mapTypeControl = new kakao.maps.MapTypeControl();
 
@@ -106,57 +126,75 @@ export default function Contant() {
 				// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
 				map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
 			*/
-		);
+    );
 
-		// 지도 줌 컨트롤러 추가
-		mapInstance.current.addControl(
-			new kakao.current.maps.ZoomControl(),
-			kakao.current.maps.ControlPosition.RIGHT
-		);
+    // 지도 줌 컨트롤러 추가
+    mapInstance.current.addControl(
+      new kakao.current.maps.ZoomControl(),
+      kakao.current.maps.ControlPosition.RIGHT
+    );
 
-		// 휠의 맴 줌 기능 비활성화
-		mapInstance.current.setZoomable(false);
+    // 휠의 맴 줌 기능 비활성화
+    mapInstance.current.setZoomable(false);
 
-		window.addEventListener('resize', setCenter);
-		return () => window.removeEventListener('resize', setCenter);
-	}, [Index]);
+    window.addEventListener("resize", setCenter);
+    return () => window.removeEventListener("resize", setCenter);
+  }, [Index]);
 
-	useEffect(() => {
-		// 지도에 교통정보를 표시하도록 지도타입을 추가합니다
-		// map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
-		Traffic
-			? mapInstance.current.addOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC) //true
-			: mapInstance.current.removeOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC); //false
-	}, [Traffic]);
+  useEffect(() => {
+    // 지도에 교통정보를 표시하도록 지도타입을 추가합니다
+    // map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+    Traffic
+      ? mapInstance.current.addOverlayMapTypeId(
+          kakao.current.maps.MapTypeId.TRAFFIC
+        ) //true
+      : mapInstance.current.removeOverlayMapTypeId(
+          kakao.current.maps.MapTypeId.TRAFFIC
+        ); //false
+  }, [Traffic]);
 
-	return (
-		<Layout title={'Contant'}>
-			<div className='controlBox'>
-				<nav className='branch'>
-					{/* <li onClick={() => setIndex(0)}>삼성동 코엑스</li>
+  return (
+    <Layout title={"Contant"}>
+      <div className="controlBox">
+        <nav className="branch">
+          {/* <li onClick={() => setIndex(0)}>삼성동 코엑스</li>
 				<li onClick={() => setIndex(1)}>넥슨 본사</li>
 				<li onClick={() => setIndex(2)}>서울 시청</li> */}
-					{mapInfo.current.map((el, idx) => (
-						<button key={idx} onClick={() => setIndex(idx)} className={idx === Index ? 'on' : ''}>
-							{el.title}
-						</button>
-					))}
-				</nav>
 
-				<nav className='info'>
-					<button onClick={() => setTraffic(!Traffic)}>
-						{Traffic ? '교통정보 안보이기' : '교통정보 보이기'}
-					</button>
-					<button onClick={() => setView(!View)}>{View ? 'map' : 'road view'}</button>
-					<button onClick={setCenter}>위치 초기화</button>
-				</nav>
-			</div>
-			<section className='tab'>
-				<article className={`mapBox ${View ? '' : 'on'}`} ref={mapFrame}></article>
-				<article className={`viewBox ${View ? 'on' : ''}`} ref={viewFrame}></article>
-			</section>
-		</Layout>
-	);
+          {mapInfo.current.map((el, idx) => (
+            //prettier-ignore 프리티어 규칙에서 해당 코드만 제외시킴
+            <button
+              key={idx}
+              onClick={() => setIndex(idx)}
+              className={idx === Index ? "on" : ""}
+            >
+              {el.title}
+            </button>
+          ))}
+        </nav>
+
+        <nav className="info">
+          <button onClick={() => setTraffic(!Traffic)}>
+            {Traffic ? "교통정보 안보이기" : "교통정보 보이기"}
+          </button>
+          <button onClick={() => setView(!View)}>
+            {View ? "map" : "road view"}
+          </button>
+          <button onClick={setCenter}>위치 초기화</button>
+        </nav>
+      </div>
+      <section className="tab">
+        <article
+          className={`mapBox ${View ? "" : "on"}`}
+          ref={mapFrame}
+        ></article>
+        <article
+          className={`viewBox ${View ? "on" : ""}`}
+          ref={viewFrame}
+        ></article>
+      </section>
+    </Layout>
+  );
 }
 
 /*
