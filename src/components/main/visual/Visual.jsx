@@ -1,5 +1,5 @@
 import './Visual.scss';
 
 export default function Visual() {
-	return <figure className='Visual'>Visual</figure>;
+	return <figure className='Visual'></figure>;
 }

@@ -11,6 +11,10 @@ import emailjs from '@emailjs/browser';
 // npm install @emailjs/browser --save
 // add new 서빗 3개까지 https://www.emailjs.com/docs/sdk/send-form/
 
+// useMemo 는 특정 결과값을 재사용 할 때 사용하는 반면, useCallback 은 특정 함수를 새로 만들지 않고 재사용하고 싶을때 사용
+// 패칭 함수 한번 컴포넌트 랜더링 되는데 자식이 짜잘하게 디바운싱 안되면 재랜덜링시 문제 생김(패칭함수 다시 호출되니까) 프롭서 전달 안되면 재호출이 되긴하는데 메모리에 등록된 값을 가져와서 갠차나 or 함수에 유즈메모를 통해 받아오는 반환값을 메모라이징해옴 (useCallback or useMemo or memo)
+// 등가교환 : 메모리 늘려서 강제로 가비지 컬렉터에 제외시키니까 좀 용량 커질 수 이께찌?
+
 export default function Contact() {
 	const form = useRef();
 
@@ -46,7 +50,6 @@ export default function Contact() {
 			}
 		);
 	};
-
 	// const { kakao } = window;
 	const kakao = useRef(window.kakao);
 
@@ -61,7 +64,6 @@ export default function Contact() {
 	const mapFrame = useRef(null);
 	// 로드뷰
 	const viewFrame = useRef(null);
-
 	// 마커 ???
 	const marker = useRef(null);
 	// 지도 중간에 두기 위해 참조
@@ -108,7 +110,8 @@ export default function Contact() {
 	// 지도 중심 좌표 (지도 이동시키기)
 	// setCenter는 윈도우 객체라 useCallback로 해야대 (중요한 건 유즈콜백으로)
 	const setCenter = useCallback(() => {
-		mapInstance.current.setCenter(mapInfo.current[Index].latlng); //의존성 배열 안넣으면 값 고정됨
+		mapInstance.current.setCenter(mapInfo.current[Index].latlng);
+		//의존성 배열 안넣으면 값 고정됨
 		roadview.current();
 	}, [Index]);
 
@@ -122,27 +125,26 @@ export default function Contact() {
 		marker.current.setMap(mapInstance.current);
 		// 다른 버튼 누르면 교통정보 자동으로 안보이고 교통정보 보이기로 버튼 바꾸기
 		setTraffic(false);
+		setView(false);
 
 		roadview.current();
+		/*
 		//로드뷰 인스턴스
 		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, panoId => {
 			// 50 : radius 마커를 찍은 위치에서 건물을 보여주는 최소 범위
 			new kakao.current.maps.Roadview(viewFrame.current).setPanoId(panoId, mapInfo.current[Index].latlng); //panoId와 중심좌표를 통해 로드뷰 실행
 		});
-
+		*/
 		// 지도 타입 컨트롤러 추가
-		mapInstance.current.addControl(
-			new kakao.current.maps.MapTypeControl(),
-			kakao.current.maps.ControlPosition.TOPRIGHT //TOPLEFT
-			/*
-				// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-				var mapTypeControl = new kakao.maps.MapTypeControl();
+		mapInstance.current.addControl(new kakao.current.maps.MapTypeControl(), kakao.current.maps.ControlPosition.TOPRIGHT);
+		/*
+			// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+			var mapTypeControl = new kakao.maps.MapTypeControl();
 
-				// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-				// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-				map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
-			*/
-		);
+			// 지도에 컨트롤을 추가해야 지도위에 표시됩니다
+			// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+			map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+		*/
 
 		// 지도 줌 컨트롤러 추가
 		mapInstance.current.addControl(new kakao.current.maps.ZoomControl(), kakao.current.maps.ControlPosition.RIGHT);
@@ -150,7 +152,8 @@ export default function Contact() {
 		// 휠의 맴 줌 기능 비활성화
 		mapInstance.current.setZoomable(false);
 
-		window.addEventListener('resize', setCenter); //클린업 함수는 usecallback
+		window.addEventListener('resize', setCenter);
+		//클린업 함수는 usecallback
 		return () => window.removeEventListener('resize', setCenter);
 	}, [Index, setCenter]);
 
@@ -178,23 +181,18 @@ export default function Contact() {
 					<input type='submit' value='Send' />
 				</form>
 			</div>
+
 			<div id='mapSection'>
 				<div className='controlBox'>
 					<nav className='branch'>
-						{/* <li onClick={() => setIndex(0)}>삼성동 코엑스</li>
-				<li onClick={() => setIndex(1)}>넥슨 본사</li>
-				<li onClick={() => setIndex(2)}>서울 시청</li> */}
-
-						{mapInfo.current.map((el, idx) => (
-							//prettier-ignore 프리티어 규칙에서 해당 코드만 제외시킴
-							<button key={idx} onClick={() => setIndex(idx)} className={idx === Index ? 'on' : ''}>
-								{el.title}
-							</button>
-						))}
+						{mapInfo.current.map((el, idx) =>
+							//prettier-ignore
+							<button key={idx} onClick={() => setIndex(idx)} className={idx === Index ? 'on' : ''}>{el.title}</button>
+						)}
 					</nav>
 
 					<nav className='info'>
-						<button onClick={() => setTraffic(!Traffic)}>{Traffic ? '교통정보 안보이기' : '교통정보 보이기'}</button>
+						<button onClick={() => setTraffic(!Traffic)}>{Traffic ? 'Traffic OFF' : 'Traffic ON'}</button>
 						<button onClick={() => setView(!View)}>{View ? 'map' : 'road view'}</button>
 						<button onClick={setCenter}>위치 초기화</button>
 					</nav>

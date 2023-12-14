@@ -5,7 +5,7 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 	return (
 		<header className='header'>
 			<h1>
-				<Link to='/'>LOGO</Link>
+				<Link to='/'>퍼펙트</Link>
 			</h1>
 
 			<ul>
