@@ -1,7 +1,8 @@
-import { useState } from 'react';
 import './globalStyles/Reset.scss';
 import './globalStyles/Variables.scss';
 import { Route } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { useMedia } from './hooks/useMedia';
 import Header from './components/common/header/Header';
 import Footer from './components/common/footer/Footer';
@@ -18,8 +19,21 @@ import Detail from './components/sub/youtube/Detail';
 import Num from './components/sub/num/Num';
 
 export default function App() {
-	const [Dark, setDark] = useState(false); //toggle 은 boolean
+	const dispatch = useDispatch();
+	const path = useRef(process.env.PUBLIC_URL);
+	const [Dark, setDark] = useState(false);
 	const [Toggle, setToggle] = useState(false);
+
+	const fetchDepartment = () => {
+		fetch(`${path.current}/DB/department.json`)
+			.then(data => data.json())
+			.then(json => {
+				console.log(json.members);
+				dispatch({ type: 'SET_MEMBERS', payload: json.members });
+			});
+	};
+
+	useEffect(() => fetchDepartment(), []);
 
 	return (
 		/* 리액트가 제어할 수 있는 범위 */

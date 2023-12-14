@@ -5,14 +5,14 @@ import { useSelector } from 'react-redux';
 //https://react-icons.github.io/react-icons/
 
 export default function Footer() {
-	const { name, position } = useSelector(store => store.memberReducer.members[0]);
+	const MemberData = useSelector(store => store.memberReducer.members);
+	console.log(MemberData);
+
 	return (
 		<footer className='footer'>
 			<h1>LOGO</h1>
 			<p>2023 Dcodelab &copy; All Rights Reserved.</p>
-			<p>
-				{position}:{name}
-			</p>
+			<p>{MemberData && `${MemberData[0].position}:${MemberData[0].name}`}</p>
 			<ul>
 				<li>
 					<FaFacebookF
