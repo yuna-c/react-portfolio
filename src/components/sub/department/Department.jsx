@@ -5,10 +5,9 @@ import { useCustomText } from '../../../hooks/useText';
 import { useSelector } from 'react-redux';
 
 export default function Department() {
-	useSelector(
-		store => store.memberReducer.memebers
-		//console.log(store)
-	);
+	const MemberData = useSelector(store => store.memberReducer.members);
+	//console.log(store)
+
 	// const [memberTit, setmemberTit] = useState('');
 	// const [memberData, setmemberData] = useState([]);
 	const [HistoryTit, setHistoryTit] = useState('');
@@ -66,8 +65,8 @@ export default function Department() {
 			<section className='memberBox'>
 				<h2>{combinedTitle('Members')}</h2>
 
-				{/* <div className='con'>
-					{memberData.map((member, idx) => {
+				<div className='con'>
+					{MemberData.map((member, idx) => {
 						return (
 							<article key={member + idx}>
 								<div className='pic'>
@@ -78,7 +77,7 @@ export default function Department() {
 							</article>
 						);
 					})}
-				</div> */}
+				</div>
 			</section>
 		</Layout>
 	);
