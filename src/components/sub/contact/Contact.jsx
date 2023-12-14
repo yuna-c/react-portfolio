@@ -1,6 +1,6 @@
 import './Contact.scss';
 import Layout from '../../common/layout/Layout';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
 
 // https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/
@@ -97,17 +97,19 @@ export default function Contact() {
 		image: new kakao.current.maps.MarkerImage(mapInfo.current[Index].imgSrc, mapInfo.current[Index].imgSize, mapInfo.current[Index].imgOpt)
 	});
 
-	const roadview = () => {
+	// useRef로 값 담아놓음 재랜더링 제외만 시킴
+	const roadview = useRef(() => {
 		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, panoId => {
 			new kakao.current.maps.Roadview(viewFrame.current).setPanoId(panoId, mapInfo.current[Index].latlng);
 		});
-	};
+	});
 
 	// 지도 중심 좌표 (지도 이동시키기)
-	const setCenter = () => {
-		mapInstance.current.setCenter(mapInfo.current[Index].latlng);
-		roadview();
-	};
+	// setCenter는 윈도우 객체라 useCallback로 해야대 (중요한 건 유즈콜백으로)
+	const setCenter = useCallback(() => {
+		mapInstance.current.setCenter(mapInfo.current[Index].latlng); //의존성 배열 안넣으면 값 고정됨
+		roadview.current();
+	}, [Index]);
 
 	useEffect(() => {
 		// 지도 복제 기능 막아사 효율 올리기
@@ -120,7 +122,7 @@ export default function Contact() {
 		// 다른 버튼 누르면 교통정보 자동으로 안보이고 교통정보 보이기로 버튼 바꾸기
 		setTraffic(false);
 
-		roadview();
+		roadview.current();
 		//로드뷰 인스턴스
 		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, panoId => {
 			// 50 : radius 마커를 찍은 위치에서 건물을 보여주는 최소 범위
@@ -147,9 +149,9 @@ export default function Contact() {
 		// 휠의 맴 줌 기능 비활성화
 		mapInstance.current.setZoomable(false);
 
-		window.addEventListener('resize', setCenter);
+		window.addEventListener('resize', setCenter); //클린업 함수는 usecallback
 		return () => window.removeEventListener('resize', setCenter);
-	}, [Index]);
+	}, [Index, setCenter]);
 
 	useEffect(() => {
 		// 지도에 교통정보를 표시하도록 지도타입을 추가합니다

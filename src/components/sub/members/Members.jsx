@@ -5,6 +5,10 @@ import { useRef, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 // useHistory를 사용하면, 페이지 방문 기록을 쉽게 관리할 수 있으며 여러가지 내장 함수를 사용해 뒤로가기, 특정 페이지로 이동하기 등을 구현
 
+// useMemo 는 특정 결과값을 재사용 할 때 사용하는 반면, useCallback 은 특정 함수를 새로 만들지 않고 재사용하고 싶을때 사용
+// 패칭 함수 한번 컴포넌트 랜더링 되는데 자식이 짜잘하게 디바운싱 안되면 재랜덜링시 문제 생김(패칭함수 다시 호출되니까) 프롭서 전달 안되면 재호출이 되긴하는데 메모리에 등록된 값을 가져와서 갠차나 or 함수에 유즈메모를 통해 받아오는 반환값을 메모라이징해옴 (useCallback or useMemo or memo)
+// 등가교환 : 메모리 늘려서 강제로 가비지 컬렉터에 제외시키니까 좀 용량 커질 수 이께찌?
+
 export default function Members() {
 	const history = useHistory();
 	const initVal = useRef({ userid: '', pwd1: '', pwd2: '', email: '', comments: '', edu: '', gender: '', interest: [] });

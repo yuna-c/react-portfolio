@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Layout from '../../common/layout/Layout';
 import './Detail.scss';
 import { useParams } from 'react-router-dom';
@@ -17,20 +17,21 @@ export default function Detail() {
 	const [youtubeData, setYoutubeData] = useState(null);
 	console.log(youtubeData);
 
-	const fetchSingleData = async () => {
+	// 중요한 데이터 : useCallback : 화면에 출력할 것을 뿌리는
+	const fetchSingleData = useCallback(async () => {
 		const api_key = process.env.REACT_APP_YOUTUBE_API;
 		// const api_key = 'AIzaSyBgRldfomRBMNoipsSTKYAmfOarH1iIu8o';
 		const baseURL = `https://www.googleapis.com/youtube/v3/playlistItems?key=${api_key}&part=snippet&id=${id}`;
 		const data = await fetch(baseURL);
 		const json = await data.json();
 		setYoutubeData(json.items[0].snippet);
-	};
+	}, [id]); // id 값 들어올때만 메모이제이션 풀기
 
 	useEffect(() => {
 		fetchSingleData();
 		console.log(useEffect);
 		//useEffect가 언제 실행되는지
-	}, []);
+	}, [fetchSingleData]);
 
 	return (
 		<Layout title={'Detail'}>
