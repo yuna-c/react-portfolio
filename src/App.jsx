@@ -19,11 +19,14 @@ import Detail from './components/sub/youtube/Detail';
 import Num from './components/sub/num/Num';
 
 export default function App() {
+	//순서2 - dispatch함수를 활성화 (추후 fetching된 데이터를 액션에 담아서 리듀서에게 전달하기 위함)
+
 	const dispatch = useDispatch();
 	const path = useRef(process.env.PUBLIC_URL);
 	const [Dark, setDark] = useState(false);
 	const [Toggle, setToggle] = useState(false);
 
+	//순서3 - fectching된 데이터값을 받아서 액션객체에 담은뒤 dispatch로 리듀서에 전달하는 함수를 정의
 	const fetchDepartment = () => {
 		fetch(`${path.current}/DB/department.json`)
 			.then(data => data.json())
@@ -33,10 +36,12 @@ export default function App() {
 			});
 	};
 
+	//순서4- 컴포넌트가 처음 마운트 되었을떄 함수를 호출해서 비동기 데이터를 리듀서에 전달
+	//render1 : 전역 store의 값 빈배열
+	//reunder2 : 그떄 비로서 각 컴포넌트에서 useSelctor에 해당 비동기 데이터를 접근 가능
 	useEffect(() => fetchDepartment(), []);
 
 	return (
-		/* 리액트가 제어할 수 있는 범위 */
 		<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
 			<Header Dark={Dark} setDark={setDark} Toggle={Toggle} setToggle={setToggle} />
 			<Route exact path='/' component={MainWrap} />
