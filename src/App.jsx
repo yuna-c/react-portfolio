@@ -38,7 +38,6 @@ export default function App() {
 			<Route path='/welcome/:id' component={Welcome} />
 			<Footer />
 			{Toggle && <Menu setToggle={setToggle} />}
-			{/* 데스크탑 버전에서도 생김 방지 */}
 		</div>
 	);
 }
