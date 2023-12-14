@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 const initMember = {
 	members: [
 		{
-			name: 'David',
+			name: 'David 갈갈이',
 			position: 'President',
 			pic: 'member1.jpg'
 		},
