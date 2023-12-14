@@ -3,12 +3,14 @@ import Layout from '../../common/layout/Layout';
 import './Members.scss';
 import { useRef, useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+// useHistory를 사용하면, 페이지 방문 기록을 쉽게 관리할 수 있으며 여러가지 내장 함수를 사용해 뒤로가기, 특정 페이지로 이동하기 등을 구현
 
 export default function Members() {
 	const history = useHistory();
 	const initVal = useRef({ userid: '', pwd1: '', pwd2: '', email: '', comments: '', edu: '', gender: '', interest: [] });
 	const [Val, setVal] = useState(initVal.current);
 	//useDebouce 훅의 인수로 특정 state를 전달해서 debouncing이 적용된 새로운 state값 반환받음
+	//useDebouce 특정 시간이 지난 후에 한 번만 이벤트가 실행되도록 하는 것
 	const DebouncedVal = useDebounce(Val);
 	const [Errs, setErrs] = useState({});
 
@@ -35,8 +37,8 @@ export default function Members() {
 		const num = /[0-9]/; //정규 표현식 (조건안의 내용이 true여야 반환)
 		const txt = /[a-zA-Z]/;
 		const spc = /[!@#$%^&*()[\]_.+]/;
-		const [m1, m2] = value.email.split('@');
-		const m3 = m2 && m2.split('.');
+		const [m1, m2] = value.email.split('@'); //예약어
+		const m3 = m2 && m2.split('.'); // m2스플릿을 통해 값이 없으면 입력이 안되게 처리
 
 		if (value.userid.length < 5) errs.userid = '아이디는 최소 5글자 이상 입력하세요';
 		if (value.comments.length < 10) errs.comments = '남기는 말은 최소 10글자 이상 입력하세요';
