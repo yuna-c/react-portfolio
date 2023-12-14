@@ -5,7 +5,7 @@ import emailjs from '@emailjs/browser';
 
 // https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/
 // 위치값 정밀하게 보정 하는 법
-// 기존 구굴지도 위치값 복사한 뒤, 카카오 예제의 클릭한 위치 마커표시 직접해보기에서 해당 코드 붙여넣고, 원하는 지점찍으면 소숫점 12자리뜨는데 그거 붙여넣으면 됨
+// 기존 구글지도 위치값 복사한 뒤, 카카오 예제의 클릭한 위치 마커표시 직접해보기에서 해당 코드 붙여넣고, 원하는 지점찍으면 소숫점 12자리뜨는데 그거 붙여넣으면 됨
 // 1초 동안 60번 이벤트 발생해(리사이즈, 스크롤, 휠) => 이런 것 들 때문에 용량이 커지는걸 막기 위해서 의존성 배열을 통해 데이터를 간소화 시켜야 해
 // https://apis.map.kakao.com/web/sample/addTrafficOverlay/ 교통정보
 // npm install @emailjs/browser --save
@@ -33,7 +33,7 @@ export default function Contact() {
 		const [user, email] = form.current.querySelectorAll('input');
 		const txtArea = form.current.querySelectorAll('textarea');
 
-		if (!user.value || !email.value || !txtArea.value) return alert('이름, 답장을 ㅏㄷ을 이메일 주소 문의 내용을 모두 입력하세요');
+		if (!user.value || !email.value || !txtArea.value) return alert('이름, 이메일 주소, 문의 내용을 모두 입력하세요');
 
 		emailjs.sendForm('service_nytqr3g', 'template_50r2xta', form.current, 'EkR0AJGqHyR3vJV0U').then(
 			result => {
@@ -46,6 +46,7 @@ export default function Contact() {
 			}
 		);
 	};
+
 	// const { kakao } = window;
 	const kakao = useRef(window.kakao);
 
