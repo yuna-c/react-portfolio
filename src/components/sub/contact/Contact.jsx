@@ -31,9 +31,9 @@ export default function Contact() {
 		e.preventDefault();
 
 		const [user, email] = form.current.querySelectorAll('input');
-		const txtArea = form.current.querySelectorAll('textarea');
+		const txtArea = form.current.querySelector('textarea');
 
-		if (!user.value || !email.value || !txtArea.value) return alert('이름, 이메일 주소, 문의 내용을 모두 입력하세요');
+		if (!user.value || !email.value || !txtArea.value) return alert('이름, 답장받을 이메일주소 문의내용을 모두 입력하세요.');
 
 		emailjs.sendForm('service_nytqr3g', 'template_50r2xta', form.current, 'EkR0AJGqHyR3vJV0U').then(
 			result => {
@@ -178,31 +178,32 @@ export default function Contact() {
 					<input type='submit' value='Send' />
 				</form>
 			</div>
-
-			<div className='controlBox'>
-				<nav className='branch'>
-					{/* <li onClick={() => setIndex(0)}>삼성동 코엑스</li>
+			<div id='mapSection'>
+				<div className='controlBox'>
+					<nav className='branch'>
+						{/* <li onClick={() => setIndex(0)}>삼성동 코엑스</li>
 				<li onClick={() => setIndex(1)}>넥슨 본사</li>
 				<li onClick={() => setIndex(2)}>서울 시청</li> */}
 
-					{mapInfo.current.map((el, idx) => (
-						//prettier-ignore 프리티어 규칙에서 해당 코드만 제외시킴
-						<button key={idx} onClick={() => setIndex(idx)} className={idx === Index ? 'on' : ''}>
-							{el.title}
-						</button>
-					))}
-				</nav>
+						{mapInfo.current.map((el, idx) => (
+							//prettier-ignore 프리티어 규칙에서 해당 코드만 제외시킴
+							<button key={idx} onClick={() => setIndex(idx)} className={idx === Index ? 'on' : ''}>
+								{el.title}
+							</button>
+						))}
+					</nav>
 
-				<nav className='info'>
-					<button onClick={() => setTraffic(!Traffic)}>{Traffic ? '교통정보 안보이기' : '교통정보 보이기'}</button>
-					<button onClick={() => setView(!View)}>{View ? 'map' : 'road view'}</button>
-					<button onClick={setCenter}>위치 초기화</button>
-				</nav>
+					<nav className='info'>
+						<button onClick={() => setTraffic(!Traffic)}>{Traffic ? '교통정보 안보이기' : '교통정보 보이기'}</button>
+						<button onClick={() => setView(!View)}>{View ? 'map' : 'road view'}</button>
+						<button onClick={setCenter}>위치 초기화</button>
+					</nav>
+				</div>
+				<section className='tab'>
+					<article className={`mapBox ${View ? '' : 'on'}`} ref={mapFrame}></article>
+					<article className={`viewBox ${View ? 'on' : ''}`} ref={viewFrame}></article>
+				</section>
 			</div>
-			<section className='tab'>
-				<article className={`mapBox ${View ? '' : 'on'}`} ref={mapFrame}></article>
-				<article className={`viewBox ${View ? 'on' : ''}`} ref={viewFrame}></article>
-			</section>
 		</Layout>
 	);
 }
