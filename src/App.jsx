@@ -34,30 +34,41 @@ export default function App() {
 		dispatch({ type: 'SET_MEMBERS', payload: json.members });
 	}, [dispatch]);
 
-	// const fetchHistory = useCallback(async () => {
-	// 	const data = await fetch(`${path.current}/DB/history.json`);
-	// 	const json = await data.json();
-	// 	//2오류 잡을때 히스토리 패칭 문제 없어
-	// 	// console.log(json);
-	// 	dispatch({ type: 'SET_HISTORY', payload: json.history }); 오타좀
-	// }, [dispatch]);
-
 	const fetchHistory = useCallback(async () => {
 		const data = await fetch(`${path.current}/DB/history.json`);
 		const json = await data.json();
-		//2오류 잡을때 히스토리 패칭 문제 없어
+		//2오류 잡을때 히스토리 패칭 문제 없어 오타좀
 		// console.log(json);
 		dispatch({ type: 'SET_HISTORY', payload: json.history });
 	}, [dispatch]);
+
+	// const fetchYoutube = useCallback(async () => {
+	// 	const api_key = process.env.REACT_APP_YOUTUBE_API;
+	// 	const pid = process.env.REACT_APP_YOUTUBE_LIST;
+	// 	const num = 10;
+	// 	const baseURL = `https://www.googleapis.com/youtube/v3/playlistItems?key=${api_key}&part=snippet&playlistId=${pid}&maxResults=${num}`;
+	// 	try {
+	// 		const data = await fetch(baseURL);
+	// 		const json = await data.json();
+	// 		dispatch({ type: 'SET_YOUTUBE', payload: json.items });
+	// 	} catch (err) {
+	// 		dispatch({ type: 'SET_YOUTUBE_ERR', payload: err });
+	// 	}
+	// }, [dispatch]);
 
 	const fetchYoutube = useCallback(async () => {
 		const api_key = process.env.REACT_APP_YOUTUBE_API;
 		const pid = process.env.REACT_APP_YOUTUBE_LIST;
 		const num = 10;
-		const data = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?key=${api_key}&part=snippet&playlistId=${pid}&maxResults=${num}`);
-		const json = await data.json();
-		// console.log(json);
-		dispatch({ type: 'SET_YOUTUBE', payload: json.youtube });
+		const baseURL = `https://www.googleapis.com/youtube/v3/playlistItems?key=${api_key}&part=snippet&playlistId=${pid}&maxResults=${num}`;
+
+		try {
+			const data = await fetch(baseURL);
+			const json = await data.json();
+			dispatch({ type: 'SET_YOUTUBE', payload: json.items });
+		} catch (err) {
+			dispatch({ type: 'SET_YOUTUBE_ERR', payload: err });
+		}
 	}, [dispatch]);
 
 	useEffect(() => {
@@ -77,7 +88,6 @@ export default function App() {
 			<Route path='/contact' component={Contact} />
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/detail/:id' component={Detail} />
-			<Route path='/youtube' component={Youtube} />
 			<Route path='/num' component={Num} />
 			<Route path='/welcome/:id' component={Welcome} />
 			<Footer />
