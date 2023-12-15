@@ -17,6 +17,7 @@ import Welcome from './components/sub/members/Welcome';
 import Menu from './components/common/menu/Menu';
 import Detail from './components/sub/youtube/Detail';
 import Num from './components/sub/num/Num';
+import * as types from './redux/action';
 
 export default function App() {
 	const dispatch = useDispatch();
@@ -31,7 +32,7 @@ export default function App() {
 	const fetchDepartment = useCallback(async () => {
 		const data = await fetch(`${path.current}/DB/department.json`);
 		const json = await data.json();
-		dispatch({ type: 'SET_MEMBERS', payload: json.members });
+		dispatch({ type: types.MEMBER.success, payload: json.members });
 	}, [dispatch]);
 
 	const fetchHistory = useCallback(async () => {
@@ -39,7 +40,7 @@ export default function App() {
 		const json = await data.json();
 		//2오류 잡을때 히스토리 패칭 문제 없어 오타좀
 		// console.log(json);
-		dispatch({ type: 'SET_HISTORY', payload: json.history });
+		dispatch({ type: types.HISTORY.success, payload: json.history });
 	}, [dispatch]);
 
 	// const fetchYoutube = useCallback(async () => {
@@ -65,9 +66,9 @@ export default function App() {
 		try {
 			const data = await fetch(baseURL);
 			const json = await data.json();
-			dispatch({ type: 'SET_YOUTUBE', payload: json.items });
+			dispatch({ type: types.YOUTUBE.success, payload: json.items });
 		} catch (err) {
-			dispatch({ type: 'SET_YOUTUBE_ERR', payload: err });
+			dispatch({ type: types.YOUTUBE.fail, payload: err });
 		}
 	}, [dispatch]);
 
