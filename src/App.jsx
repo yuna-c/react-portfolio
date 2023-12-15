@@ -103,5 +103,5 @@ export default function App() {
 3. action객체가 필요한 이유
 4. 컴포넌트에서 데이터 호출 및 데이터 변경 요청을 위한 useSelector, useDispatch
 5. app에서 fetching후 action객체를 통해 dispatch로 reducer에 데이터 변경 요청 흐름
-6. action type을 따로 객체 형태로 관리하는 이유
+6. action type을 따로 객체 형태로 관리하는 이유 : 파일 하나로만 관리하려고
  */
