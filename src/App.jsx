@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './globalStyles/Reset.scss';
 import './globalStyles/Variables.scss';
 import { Route } from 'react-router-dom';
-import { useMedia } from './hooks/useMidia';
+import { useMedia } from './hooks/useMedia';
 import Header from './components/common/header/Header';
 import Footer from './components/common/footer/Footer';
 import Contact from './components/sub/contact/Contact';
@@ -12,6 +12,7 @@ import Youtube from './components/sub/youtube/Youtube';
 import MainWrap from './components/main/mainWrap/MainWrap';
 import Community from './components/sub/community/Community';
 import Department from './components/sub/department/Department';
+import Welcome from './components/sub/members/Welcome';
 import Menu from './components/common/menu/Menu';
 import Detail from './components/sub/youtube/Detail';
 import Num from './components/sub/num/Num';
@@ -34,7 +35,7 @@ export default function App() {
 			<Route path='/detail/:id' component={Detail} />
 			<Route path='/youtube' component={Youtube} />
 			<Route path='/num' component={Num} />
-			{/* Params = id라는 변수로 받아짐 http://localhost:3000/detail/abc 이케 하면 console data로 id/프로퍼티로 받아져! */}
+			<Route path='/welcome/:id' component={Welcome} />
 			<Footer />
 			{Toggle && <Menu setToggle={setToggle} />}
 			{/* 데스크탑 버전에서도 생김 방지 */}

@@ -4,6 +4,7 @@ import './Num.scss';
 import { ImCancelCircle } from 'react-icons/im';
 import { TfiWrite } from 'react-icons/tfi';
 import { useCustomText } from '../../../hooks/useText';
+import postData from '../community/dummyPosts.json';
 
 // 새로고침하면 버튼 없어지는데? 랜더링 타임 때문이라는데?
 
@@ -12,8 +13,11 @@ export default function Num() {
 	const changeText = useCustomText('combined');
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
+		// if (data) return JSON.parse(data);
+		// else return [];
+
 		if (data) return JSON.parse(data);
-		else return [];
+		return postData.dummyPosts;
 	};
 	const [Post, setPost] = useState(getLocalData());
 	const [CurNum, setCurNum] = useState(0); //페이징 버튼 클릭시 현재 보일 페이지 번호가 담길 state

@@ -1,6 +1,6 @@
-import postData from './dummyPosts.json';
 import { useCustomText } from '../../../hooks/useText';
 import './Info.scss';
+import postData from './dummyPosts.json';
 import { useState } from 'react';
 
 export default function Info() {

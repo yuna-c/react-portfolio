@@ -1,6 +1,6 @@
 //import './Welcome.scss';
 import { useParams } from 'react-router-dom';
-// npm install react-router-dom
+
 import Layout from '../../common/layout/Layout';
 
 export default function Welcome() {
