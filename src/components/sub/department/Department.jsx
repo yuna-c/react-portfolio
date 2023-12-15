@@ -1,37 +1,20 @@
-import Layout from '../../common/layout/Layout';
 import { useEffect, useRef, useState } from 'react';
+import Layout from '../../common/layout/Layout';
 import './Department.scss';
 import { useCustomText } from '../../../hooks/useText';
 import { useSelector } from 'react-redux';
 
 export default function Department() {
-	const memberData = useSelector(store => store.memberReducer.members);
-
-	const [HistoryTit, setHistoryTit] = useState('');
-	const [HistoryData, setHistoryData] = useState([]);
-
-	const path = useRef(process.env.PUBLIC_URL);
-
+	const MemberData = useSelector(store => store.memberReducer.members);
+	const HistoryData = useSelector(store => store.historyReducer.history);
 	const combinedTitle = useCustomText('combined');
-
-	const fetchHistory = () => {
-		fetch(`${path.current}/DB/history.json`)
-			.then(data => data.json())
-			.then(json => {
-				setHistoryTit(Object.keys(json)[0]);
-				setHistoryData(Object.values(json)[0]);
-			});
-	};
-
-	useEffect(() => {
-		fetchHistory();
-	}, []);
+	const path = useRef(process.env.PUBLIC_URL);
+	console.log(HistoryData);
 
 	return (
 		<Layout title={'Department'}>
 			<section className='historyBox'>
-				<h2>{combinedTitle(HistoryTit)}</h2>
-
+				<h2>{combinedTitle('History')}</h2>
 				<div className='con'>
 					{HistoryData.map((history, idx) => {
 						return (
@@ -52,7 +35,7 @@ export default function Department() {
 				<h2>{combinedTitle('Members')}</h2>
 
 				<div className='con'>
-					{memberData.map((member, idx) => {
+					{MemberData.map((member, idx) => {
 						return (
 							<article key={member + idx}>
 								<div className='pic'>

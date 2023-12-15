@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 export default function Footer() {
 	//순서5 - 전역 store값을 useSelector바로 호출 가능
 	const MemberData = useSelector(store => store.memberReducer.members);
-	console.log(MemberData);
+	// console.log(MemberData);
 
 	return (
 		<footer className='footer'>
