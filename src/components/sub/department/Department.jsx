@@ -9,7 +9,7 @@ export default function Department() {
 	const HistoryData = useSelector(store => store.historyReducer.history);
 	const combinedTitle = useCustomText('combined');
 	const path = useRef(process.env.PUBLIC_URL);
-	console.log(HistoryData);
+	// console.log(HistoryData);
 
 	return (
 		<Layout title={'Department'}>

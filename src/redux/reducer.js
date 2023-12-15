@@ -22,6 +22,14 @@ const historyReducer = (state = [], action) => {
 //5
 // console.log(historyReducer);
 
-const reducers = combineReducers({ memberReducer, historyReducer });
+const youtubeReducer = (state = [], action) => {
+	switch (action.type) {
+		case 'SET_YOUTUBE':
+			return { ...state, yutube: action.payload };
+		default:
+			return state;
+	}
+};
+const reducers = combineReducers({ memberReducer, historyReducer, youtubeReducer });
 
 export default reducers;
