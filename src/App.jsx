@@ -39,7 +39,7 @@ export default function App() {
 	// 	const json = await data.json();
 	// 	//2오류 잡을때 히스토리 패칭 문제 없어
 	// 	// console.log(json);
-	// 	dispatch({ type: 'SET_HISTORY', payload: json.history });
+	// 	dispatch({ type: 'SET_HISTORY', payload: json.history }); 오타좀
 	// }, [dispatch]);
 
 	const fetchHistory = useCallback(async () => {
@@ -60,6 +60,7 @@ export default function App() {
 			<Header Dark={Dark} setDark={setDark} Toggle={Toggle} setToggle={setToggle} />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
+			{/* 처음에는 디파트먼트 마운트가 안돼 디파트먼트에서 새로고침 했을때 오류뜨자나 -> 처음 다시 마운트 되자마자로 바뀌기 때문에 모든 서브 컨텐츠에 옵셔널 체이닝을 하는 것 */}
 			<Route path='/gallery' component={Gallery} />
 			<Route path='/community' component={Community} />
 			<Route path='/members' component={Members} />
