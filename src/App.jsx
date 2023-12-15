@@ -39,7 +39,7 @@ export default function App() {
 	// 	const json = await data.json();
 	// 	//2오류 잡을때 히스토리 패칭 문제 없어
 	// 	// console.log(json);
-	// 	dispatch({ type: 'SET_HISTORT', payload: json.history });
+	// 	dispatch({ type: 'SET_HISTORY', payload: json.history });
 	// }, [dispatch]);
 
 	const fetchHistory = useCallback(async () => {

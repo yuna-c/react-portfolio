@@ -16,7 +16,8 @@ export default function Department() {
 			<section className='historyBox'>
 				<h2>{combinedTitle('History')}</h2>
 				<div className='con'>
-					{HistoryData.map((history, idx) => {
+					{HistoryData?.map((history, idx) => {
+						//새로고침시 오류 옵셔널 체이닝으로
 						return (
 							<article key={history + idx}>
 								<h3>{Object.keys(history)[0]}</h3>
@@ -35,7 +36,7 @@ export default function Department() {
 				<h2>{combinedTitle('Members')}</h2>
 
 				<div className='con'>
-					{MemberData.map((member, idx) => {
+					{MemberData?.map((member, idx) => {
 						return (
 							<article key={member + idx}>
 								<div className='pic'>
