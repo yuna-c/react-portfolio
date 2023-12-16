@@ -18,11 +18,10 @@ import Detail from './components/sub/youtube/Detail';
 import Num from './components/sub/num/Num';
 
 export default function App() {
-	const [Dark, setDark] = useState(false); //toggle 은 boolean
+	const [Dark, setDark] = useState(false);
 	const [Toggle, setToggle] = useState(false);
 
 	return (
-		/* 리액트가 제어할 수 있는 범위 */
 		<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
 			<Header Dark={Dark} setDark={setDark} Toggle={Toggle} setToggle={setToggle} />
 			<Route exact path='/' component={MainWrap} />
@@ -38,7 +37,6 @@ export default function App() {
 			<Route path='/welcome/:id' component={Welcome} />
 			<Footer />
 			{Toggle && <Menu setToggle={setToggle} />}
-			{/* 데스크탑 버전에서도 생김 방지 */}
 		</div>
 	);
 }
