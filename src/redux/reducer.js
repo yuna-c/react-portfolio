@@ -35,6 +35,16 @@ const youtubeReducer = (state = [], action) => {
 	}
 };
 
-const reducers = combineReducers({ memberReducer, historyReducer, youtubeReducer });
+const modalReducer = (state = { modal: false }, action) => {
+	// { modal: false } 이고 왜 객체에 받아?
+	switch (action.type) {
+		case types.MODAL.start:
+			return { ...state, modal: action.payload };
+		default:
+			return state;
+	}
+};
+
+const reducers = combineReducers({ memberReducer, historyReducer, youtubeReducer, modalReducer });
 
 export default reducers;

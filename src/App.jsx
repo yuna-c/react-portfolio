@@ -18,6 +18,7 @@ import Menu from './components/common/menu/Menu';
 import Detail from './components/sub/youtube/Detail';
 import Num from './components/sub/num/Num';
 import * as types from './redux/action';
+// npm i redux@4 react-redux@8
 
 export default function App() {
 	const dispatch = useDispatch();
