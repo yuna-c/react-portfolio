@@ -17,8 +17,8 @@ export const YOUTUBE = {
 	fail: 'YOUTUBE_FAIL'
 };
 // 비동기데이터는 요청 보내고 응답 받을 때까지 pandding 상태여야 상태값이 세갠데
-// 클라이언트 데이터는 액션타입이 하나만 있어도 된다
 
 export const MODAL = {
 	start: 'MODAL_START'
+	// 클라이언트 데이터는 액션타입이 하나만 있어도 된다(상수값, 문자, 숫자, 불린)
 };
