@@ -8,7 +8,7 @@
   all (이터러블 객체 비동기적으로 그룹호출 함수)
 */
 
-import { takeLatest, all, put, fork, call } from 'redux-saga/effects';
+import { takeLatest, call, put, fork, all } from 'redux-saga/effects';
 import { fetchDepartment } from './api';
 import * as types from './actionType';
 
@@ -20,17 +20,10 @@ function* callMembers() {
 // 순서 2- 데이터 fetching 후 비동기 데이터 상태(action.type)에 따라 액션객체를 만들어 리듀서로 전달하는 함수 정의
 function* returnMembers() {
 	try {
-		const responce = yield call(fetchDepartment);
-
-		yield put({
-			type: types.MEMBERS.success,
-			payload: responce.payload.members //payload의 배열값 넘어감
-		});
+		const response = yield call(fetchDepartment);
+		yield put({ type: types.MEMBERS.success, payload: response.members });
 	} catch (err) {
-		yield put({
-			type: types.MEMBERS.success,
-			payload: err // err객체 넘어감
-		});
+		yield put({ type: types.MEMBERS.fail, payload: err });
 	}
 }
 

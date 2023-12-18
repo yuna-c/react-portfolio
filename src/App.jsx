@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './globalStyles/Reset.scss';
 import './globalStyles/Variables.scss';
 import { Route } from 'react-router-dom';
@@ -16,8 +16,17 @@ import Welcome from './components/sub/members/Welcome';
 import Menu from './components/common/menu/Menu';
 import Detail from './components/sub/youtube/Detail';
 import Num from './components/sub/num/Num';
+import { useDispatch, useSelector } from 'react-redux';
+import * as types from './redux/actionType';
 
 export default function App() {
+	const dispatch = useDispatch();
+	useSelector(store => console.log(store));
+
+	useEffect(() => {
+		dispatch({ type: types.MEMBERS.start });
+	}, [dispatch]);
+
 	const [Dark, setDark] = useState(false);
 	const [Toggle, setToggle] = useState(false);
 
