@@ -1,7 +1,13 @@
 import './Header.scss';
 import { NavLink, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux'; //useSelector 값 반전 시켜야 되니까
 
-export default function Header({ Dark, setDark, Toggle, setToggle }) {
+import * as types from '../../../redux/action'; //액션 타입 가져오기
+
+export default function Header({ Dark, setDark }) {
+	const dispatch = useDispatch();
+	const Toggle = useSelector(store => store.menuReducer.menu);
+
 	return (
 		<header className='header'>
 			<h1>
@@ -54,8 +60,7 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 			<button
 				className='menuToggle'
 				onClick={() => {
-					setToggle(!Toggle);
-					// toggle은 boolean 이구나
+					dispatch({ type: types.MENU.start, payload: !Toggle });
 				}}>
 				menu
 			</button>

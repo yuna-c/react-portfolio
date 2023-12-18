@@ -20,13 +20,14 @@ import Num from './components/sub/num/Num';
 import * as types from './redux/action';
 // npm i redux@4 react-redux@8
 
+// 1. 이벤트 연결 header 토글 삭제
+
 export default function App() {
 	const dispatch = useDispatch();
 	//6
 	// useSelector(store => console.log(store)); 리덕스는 문제없어
 	const path = useRef(process.env.PUBLIC_URL);
 	const [Dark, setDark] = useState(false);
-	const [Toggle, setToggle] = useState(false);
 
 	//App fetcing 함수 추가
 	//reducer 함수로 action 객체 받아서 처리
@@ -81,7 +82,7 @@ export default function App() {
 
 	return (
 		<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
-			<Header Dark={Dark} setDark={setDark} Toggle={Toggle} setToggle={setToggle} />
+			<Header Dark={Dark} setDark={setDark} />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
 			<Route path='/gallery' component={Gallery} />
@@ -93,7 +94,7 @@ export default function App() {
 			<Route path='/num' component={Num} />
 			<Route path='/welcome/:id' component={Welcome} />
 			<Footer />
-			{Toggle && <Menu setToggle={setToggle} />}
+			<Menu />
 		</div>
 	);
 }

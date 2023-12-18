@@ -22,3 +22,7 @@ export const MODAL = {
 	start: 'MODAL_START'
 	// 클라이언트 데이터는 액션타입이 하나만 있어도 된다(상수값, 문자, 숫자, 불린)
 };
+
+export const MENU = {
+	start: 'MENU_START'
+};
