@@ -34,6 +34,7 @@
         - saga는 자체적으로 redux 시스템에서 위의 모든 과정을 스스로 관리하기 떄문에, 동기적으로 실행되어야 하는 함수들이 많음
         - saga에서는 모든 함수를 generator로 구성해야 saga가 적절한 시점에 내부 함수를 동기적으로 호출 가능
 
+        npm i redux@4 react-redux@8 redux-saga
       */
 
 			function test1() {
@@ -52,6 +53,7 @@
 
 			function test2() {
 				console.log('test2');
+
 				return test2;
 			}
 
