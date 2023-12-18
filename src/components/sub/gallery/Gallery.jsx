@@ -132,9 +132,6 @@ export default function Gallery() {
 				</Modal>
 			)}
 	*/
-	const openModal = e => {
-		setOpen(true);
-	};
 
 	useEffect(() => {
 		//마운트 되면
