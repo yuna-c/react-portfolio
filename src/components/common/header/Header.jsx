@@ -5,7 +5,7 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 	return (
 		<header className='header'>
 			<h1>
-				<Link to='/'>퍼펙트</Link>
+				<Link to='/'>리덕스 사가</Link>
 			</h1>
 
 			<ul>

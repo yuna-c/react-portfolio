@@ -1,18 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>React App</title>
+		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%REACT_APP_KAKAO_API%"></script>
+	</head>
 
-<head>
-  <meta charset="utf-8" />
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>React App</title>
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%REACT_APP_KAKAO_API%"></script>
-  <!--실제 지도를 그리는 Javascript API를 불러오기-->
-</head>
+	<body>
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<div id="root"></div>
 
-<body>
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-</body>
+		<script>
+			/*
+        Generator(생성자 함수) : 해당 함수 안쪽에 자식 함수의 리턴값들을 반복가능한 객체형태로 묶어서 반환(Iterable Object)
+        Iterable Object : next라는 메서드를 호출하여 Generator 안쪽의 함수들을 원하는 시점에 동기적으로 호출
 
+        promise (then, catch, async await)와 더불어 ES7 이후에 나온 동기화 처리 함수
+
+        promise 대비 <Generator> 장점
+        - promise와 달리 특정 코드를 동기화 시킬 때 호출 시점을 지정 가능
+        - 하나의 함수 안에서 리턴 값을 여러개 반환 가능
+
+        <Generator> 단점
+        - 가독성 떨어짐
+
+        <Generator> 써야할 때
+        해야되는게 명확한데 할게 많을 때 (ex. backand(callback hell 방지용))
+
+        redux-saga에서 generator를 쓰는 이유 
+        - 기존 redux 서버 데이터 요청, 응답 성공, 응답 실패에 대한 모든 과정을 개발자가 관리해서 값을 리듀서에 넘겨주는 구조
+        - saga는 자체적으로 redux 시스템에서 위의 모든 과정을 스스로 관리하기 떄문에, 동기적으로 실행되어야 하는 함수들이 많음
+        - saga에서는 모든 함수를 generator로 구성해야 saga가 적절한 시점에 내부 함수를 동기적으로 호출 가능
+
+      */
+
+			function test1() {
+				console.log('test1');
+				const returnedPromise = new Promise((resolve, reject) => {
+					console.log('pending...');
+
+					setTimeout(() => {
+						resolve('해당 위치에서 동기적으로 코드실행');
+					}, 3000);
+				});
+				returnedPromise.then(val => console.log(val));
+				return test1;
+				returnedPromise();
+			}
+
+			function test2() {
+				console.log('test2');
+				return test2;
+			}
+
+			function test3() {
+				console.log('test3');
+				return test3;
+			}
+
+			function* generator() {
+				// 각각의 함수를 객체로 묶어서 반환
+				yield test1();
+				yield test2();
+				yield test3();
+			}
+
+			const result = generator();
+
+			const r1 = result.next();
+			console.log(r1);
+			console.log('중간작업');
+
+			const r2 = result.next();
+			console.log(r2);
+			console.log('중간작업');
+
+			const r3 = result.next();
+			console.log(r3);
+			console.log('없는작업');
+
+			const last = result.next();
+			console.log(last);
+		</script>
+	</body>
 </html>
