@@ -17,6 +17,7 @@ import Menu from './components/common/menu/Menu';
 import Detail from './components/sub/youtube/Detail';
 import Num from './components/sub/num/Num';
 import { useDispatch, useSelector } from 'react-redux';
+//7
 import * as types from './redux/actionType';
 
 export default function App() {
@@ -25,10 +26,15 @@ export default function App() {
 
 	useEffect(() => {
 		dispatch({ type: types.MEMBERS.start });
+		dispatch({ type: types.HISTORY.start });
 	}, [dispatch]);
 
 	const [Dark, setDark] = useState(false);
 	const [Toggle, setToggle] = useState(false);
+
+	// 4개 멤버스데이터 콘솔 뜨는 이유 스테이트 3개 1.store, 2.dark 3,toggle
+	// 스테이트 여러개여도 오토배칭(그룹화 해서) 한번 마운트되면 스테이트 해서 재랜딩해해서 스테이트 한번에 처리
+	// ...?
 
 	return (
 		<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
