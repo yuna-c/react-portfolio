@@ -28,7 +28,7 @@ export default function Department() {
 		<Layout title={'Department'}>
 			<section className='historyBox'>
 				<h2>{combinedTitle(HistoryTit)}</h2>
-				{/* 배열만 비어있고 객체 프로포티느 있어서 에러는 아님 : 빈배열에 접근 */}
+				{/* 배열만 비어있고 객체 프로포티느 있어서 에러는 아님 : 빈배열에 접근 ? null로 선언되어있음 */}
 
 				<div className='con'>
 					{HistoryData.map((history, idx) => {
