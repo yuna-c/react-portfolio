@@ -126,7 +126,7 @@ export default function Contact() {
 	}, [Traffic]);
 
 	useEffect(() => {
-		// 중첩 없앰
+		// 중첩 없앰 뷰값이 바뀔때만 viewFrame 값 비움
 		viewFrame.current.innerHTML = '';
 		// view ture일 때만 동작
 		View && roadview();
