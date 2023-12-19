@@ -56,7 +56,7 @@ export default function Header({ Dark, setDark }) {
 				<div className='ball'></div>
 			</div>
 
-			<button className='menuToggle' onClick={() => dispatch({ type: types.MENU.start, payload: true })}>
+			<button className='menuToggle' onClick={() => dispatch({ type: types.MENU.start, payload: !Open })}>
 				menu
 			</button>
 		</header>
