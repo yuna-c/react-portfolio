@@ -23,6 +23,14 @@ const youtubeReducer = (state = { youtube: [] }, action) => {
 	else return state;
 };
 
-const reducers = combineReducers({ membersReducer, historyReducer, youtubeReducer });
+const flickrReducer = (state = { flickr: [] }, action) => {
+	// console.log(action);
+	if (action.type === types.FLICKR.start) return state;
+	else if (action.type === types.FLICKR.success) return { ...state, flickr: action.payload };
+	else if (action.type === types.FLICKR.fail) return { ...state, flickr: action.payload };
+	else return state;
+};
+
+const reducers = combineReducers({ membersReducer, historyReducer, youtubeReducer, flickrReducer });
 
 export default reducers;
