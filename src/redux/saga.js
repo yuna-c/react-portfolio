@@ -27,17 +27,30 @@ function* returnMembers() {
 		yield put({ type: types.MEMBERS.fail, payload: err });
 	}
 }
+
 // History server data
+// function* callHistory() {
+// 	yield takeLatest(types.HISTORY.start, returnHistory);
+// }
+// function* returnHistory() {
+// 	try {
+// 		const response = yield call(fetchHistory);
+// 		yield put({ type: types.HISTORY.success, payload: response.history });
+// 	} catch (err) {
+// 		yield put({ type: types.HISTORY.fail, payload: err });
+// 	}
+// }
+
+//generater은 화살표 X
 function* callHistory() {
-	yield takeLatest(types.HISTORY.start, returnHistory);
-}
-function* returnHistory() {
-	try {
-		const response = yield call(fetchHistory);
-		yield put({ type: types.HISTORY.success, payload: response.history });
-	} catch (err) {
-		yield put({ type: types.HISTORY.fail, payload: err });
-	}
+	yield takeLatest(types.HISTORY.start, function* returnHistory() {
+		try {
+			const response = yield call(fetchHistory);
+			yield put({ type: types.HISTORY.success, payload: response.history });
+		} catch (err) {
+			yield put({ type: types.HISTORY.fail, payload: err });
+		}
+	});
 }
 
 // 순서 3- saga메서드를 비동기적으로 호출해누는 함수로 정의 후 rootSaga객체로 묶어서 export(추후 미들웨어로 reducer에 적용)
