@@ -19,7 +19,6 @@ export default function Gallery() {
 
 	const gap = useRef(30);
 
-	const [Open, setOpen] = useState(false);
 	const [Index, setIndex] = useState(0);
 
 	const activateBtn = e => {
@@ -64,10 +63,6 @@ export default function Gallery() {
 		searched.current = true;
 	};
 
-	const openModal = e => {
-		setOpen(true);
-	};
-
 	useEffect(() => {
 		refFrameWrap.current.style.setProperty('--gap', gap.current + 'px');
 	}, []);
@@ -102,7 +97,7 @@ export default function Gallery() {
 										<div
 											className='pic'
 											onClick={() => {
-												setOpen(true);
+												dispatch({ type: types.MODAL.start, payload: true });
 												setIndex(idx);
 											}}>
 											<img src={`https://live.staticflickr.com/${pic.server}/${pic.id}_${pic.secret}_m.jpg`} alt={Pics.title} />
@@ -125,7 +120,7 @@ export default function Gallery() {
 				</section>
 			</Layout>
 
-			<Modal Open={Open} setOpen={setOpen}>
+			<Modal>
 				{Pics.length !== 0 && (
 					<img src={`https://live.staticflickr.com/${Pics[Index].server}/${Pics[Index].id}_${Pics[Index].secret}_b.jpg`} alt={Pics[Index].title} />
 				)}
