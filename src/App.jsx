@@ -32,7 +32,6 @@ export default function App() {
 	}, [dispatch]);
 
 	const [Dark, setDark] = useState(false);
-	const [Toggle, setToggle] = useState(false);
 
 	// 4개 멤버스데이터 콘솔 뜨는 이유 스테이트 3개 1.store, 2.dark 3,toggle
 	// 스테이트 여러개여도 오토배칭(그룹화 해서) 한번 마운트되면 스테이트 해서 재랜딩해해서 스테이트 한번에 처리
@@ -40,7 +39,7 @@ export default function App() {
 
 	return (
 		<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
-			<Header Dark={Dark} setDark={setDark} Toggle={Toggle} setToggle={setToggle} />
+			<Header Dark={Dark} setDark={setDark} />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
 			<Route path='/gallery' component={Gallery} />
@@ -53,7 +52,7 @@ export default function App() {
 			<Route path='/num' component={Num} />
 			<Route path='/welcome/:id' component={Welcome} />
 			<Footer />
-			{Toggle && <Menu setToggle={setToggle} />}
+			<Menu />
 		</div>
 	);
 }
