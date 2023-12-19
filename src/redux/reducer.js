@@ -1,7 +1,7 @@
 //2
 import { combineReducers } from 'redux';
 import * as types from './actionType';
-
+// 클라이언트 데이터
 const membersReducer = (state = { members: [] }, action) => {
 	if (action.type === types.MEMBERS.start) return state;
 	else if (action.type === types.MEMBERS.success) return { ...state, members: action.payload };
@@ -31,6 +31,7 @@ const flickrReducer = (state = { flickr: [] }, action) => {
 	else return state;
 };
 
+// 서버 데이터
 const modalReducer = (state = { modal: false }, action) => {
 	if (action.type === types.MODAL.start) return { ...state, modal: action.payload };
 	else return state;
