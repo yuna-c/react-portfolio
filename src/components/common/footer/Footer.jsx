@@ -1,5 +1,7 @@
 import './Footer.scss';
 import { FaFacebookF, FaTwitter, FaYoutube, FaGrinStars } from 'react-icons/fa';
+import { NavLink, Link } from 'react-router-dom';
+
 //npm i react-icons 아이콘 설치
 //https://react-icons.github.io/react-icons/
 
@@ -11,9 +13,11 @@ export default function Footer() {
 
 			<ul>
 				<li>
-					<FaFacebookF
-					/*color={'hotpink'} size={'30'}*/
-					/>
+					<Link to={{ pathname: 'https://www.naver.com' }} target='_blank'>
+						<FaFacebookF
+						/*color={'hotpink'} size={'30'}*/
+						/>
+					</Link>
 				</li>
 
 				<li>

@@ -1,46 +1,34 @@
 import Layout from '../../common/layout/Layout';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import './Department.scss';
 import { useCustomText } from '../../../hooks/useText';
+import { useSelector } from 'react-redux';
 
 export default function Department() {
-	const [memberTit, setmemberTit] = useState('');
-	const [memberData, setmemberData] = useState([]);
-	const [HistoryTit, setHistoryTit] = useState('');
-	const [HistoryData, setHistoryData] = useState([]);
-
+	const combinedTitle = useCustomText('combined');
 	const path = useRef(process.env.PUBLIC_URL);
 
-	const shortenText = useCustomText('shorten');
-	const combinedTitle = useCustomText('combined');
+	// const members = useSelector(store => store.membersReducer);
+	// const history = useSelector(store => store.historyReducer);
 
-	const fetchDepartment = () => {
-		fetch(`${path.current}/DB/department.json`)
-			.then((data) => data.json())
-			.then((json) => {
-				setmemberTit(Object.keys(json)[0]);
-				setmemberData(Object.values(json)[0]);
-			});
-	};
+	const { historyReducer, membersReducer } = useSelector(store => store);
+	console.log(historyReducer, membersReducer); //객체
 
-	const fetchHistory = () => {
-		fetch(`${path.current}/DB/history.json`)
-			.then((data) => data.json())
-			.then((json) => {
-				setHistoryTit(Object.keys(json)[0]);
-				setHistoryData(Object.values(json)[0]);
-			});
-	};
+	// const [MemberTit, setMemberTit] = useState('');
+	// const [MemberData, setMemberData] = useState([]);
+	// const [HistoryTit, setHistoryTit] = useState('');
+	// const [HistoryData, setHistoryData] = useState([]);
 
-	useEffect(() => {
-		fetchDepartment();
-		fetchHistory();
-	}, []);
+	const HistoryTit = Object.keys(historyReducer)[0];
+	const HistoryData = Object.values(historyReducer)[0];
+	const MemberTit = Object.keys(membersReducer)[0];
+	const MemberData = Object.values(membersReducer)[0];
 
 	return (
 		<Layout title={'Department'}>
 			<section className='historyBox'>
 				<h2>{combinedTitle(HistoryTit)}</h2>
+				{/* 배열만 비어있고 객체 프로포티느 있어서 에러는 아님 : 빈배열에 접근 */}
 
 				<div className='con'>
 					{HistoryData.map((history, idx) => {
@@ -59,10 +47,10 @@ export default function Department() {
 			</section>
 
 			<section className='memberBox'>
-				<h2>{combinedTitle(memberTit)}</h2>
+				<h2>{combinedTitle(MemberTit)}</h2>
 
 				<div className='con'>
-					{memberData.map((member, idx) => {
+					{MemberData.map((member, idx) => {
 						return (
 							<article key={member + idx}>
 								<div className='pic'>
