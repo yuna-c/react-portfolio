@@ -9,7 +9,7 @@
 */
 
 import { takeLatest, call, put, fork, all } from 'redux-saga/effects';
-import { fetchDepartment, fetchHistory } from './api';
+import { fetchDepartment, fetchHistory, fetchYoutube } from './api';
 import * as types from './actionType';
 
 // 순서 1- 초기 앤션 타입을 인지해서 fetching관련 메서드를 대신 호출해 주는 함수 정의
@@ -53,7 +53,18 @@ function* callHistory() {
 	});
 }
 
+// youtube
+function* callYoutube() {
+	yield takeLatest(types.YOUTUBE.start, function* () {
+		try {
+			const response = yield call(fetchYoutube);
+			yield put({ type: types.YOUTUBE.success, payload: response.items });
+		} catch (err) {
+			yield put({ type: types.YOUTUBE.fail, payload: err });
+		}
+	});
+}
 // 순서 3- saga메서드를 비동기적으로 호출해누는 함수로 정의 후 rootSaga객체로 묶어서 export(추후 미들웨어로 reducer에 적용)
 export default function* rootSaga() {
-	yield all([fork(callMembers), fork(callHistory)]);
+	yield all([fork(callMembers), fork(callHistory), fork(callYoutube)]);
 }
