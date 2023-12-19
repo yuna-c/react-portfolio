@@ -22,8 +22,8 @@ import * as types from './redux/actionType';
 
 export default function App() {
 	const dispatch = useDispatch();
-	// useSelector(store => console.log(store));
 	const Dark = useSelector(store => store.darkReducer.dark);
+	// useSelector(store => console.log(store));
 
 	useEffect(() => {
 		dispatch({ type: types.MEMBERS.start });
@@ -38,7 +38,7 @@ export default function App() {
 
 	return (
 		<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
-			<Header Dark={Dark} onClick={() => dispatch({ type: types.DARK.start, payload: !Dark })} />
+			<Header />
 			<Route exact path='/' component={MainWrap} />
 			<Route path='/department' component={Department} />
 			<Route path='/gallery' component={Gallery} />
