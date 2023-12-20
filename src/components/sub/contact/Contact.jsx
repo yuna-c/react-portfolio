@@ -75,10 +75,11 @@ export default function Contact() {
 		image: new kakao.current.maps.MarkerImage(mapInfo.current[Index].imgSrc, mapInfo.current[Index].imgSize, mapInfo.current[Index].imgOpt)
 	});
 
-	// 로드뷰
+	// 로드뷰 츨력 함수
 	//useRef 간단(기억한다음에 안바꿈)
 	//useCallback 의존성함수 바뀔때마다 풀고 메모이제이션 변경
 	const roadview = useCallback(() => {
+		console.log('roadview');
 		new kakao.current.maps.RoadviewClient().getNearestPanoId(mapInfo.current[Index].latlng, 50, panoId => {
 			new kakao.current.maps.Roadview(viewFrame.current).setPanoId(panoId, mapInfo.current[Index].latlng);
 		});
@@ -91,12 +92,17 @@ export default function Contact() {
 		// roadview.current();
 	}, [Index]);
 
+	// Index값 변경시마다 지도 정보 갱신해서 화면 재랜더링 useEffect
 	useEffect(() => {
+		// 인덱스가 바뀔때마다 맵 프레임의 이너에치티엠엘과 뷰프레임의 이너에치티엠엘 정보값을 비워준다
+		// INDEX 값이 변경되는 것은 출력할 맵 정보가 변경된다는 의미이므로 기존 프레임 안쪽의 정보를 지워서 초기화
 		mapFrame.current.innerHTML = '';
+		viewFrame.current.innerHTML = '';
 		mapInstance.current = new kakao.current.maps.Map(mapFrame.current, {
 			center: mapInfo.current[Index].latlng,
 			level: 3
 		});
+
 		marker.current.setMap(mapInstance.current);
 		setTraffic(false);
 		setView(false);
@@ -119,17 +125,23 @@ export default function Contact() {
 	// 1. 리솔트
 	// 2. 로드뷰 출력 안되게하다가 버튼 클릭할때 로드뷰 출력되게(now)
 
+	// Traffic 토글시마다 화면 재랜더링 useEffect
 	useEffect(() => {
 		Traffic
 			? mapInstance.current.addOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC) //true
 			: mapInstance.current.removeOverlayMapTypeId(kakao.current.maps.MapTypeId.TRAFFIC); //false
 	}, [Traffic]);
 
+	// view 토글시마다 화면 재랜더링 useEffect
 	useEffect(() => {
 		// 중첩 없앰 뷰값이 바뀔때만 viewFrame 값 비움
-		viewFrame.current.innerHTML = '';
-		// view ture일 때만 동작
-		View && roadview();
+		// viewFrame.current.innerHTML = '';
+		// view ture일 때,  viewFrame안에 아무런 내용이 없을때만 로드뷰 함수를 호출한다
+		// 근데 ..
+
+		// view토글시에 무조건 로드뷰 정보를 호출하는 것이 아닌 viewFrame 안의 내용이 없을때만 호출하고
+		// 값이 있을때는 기존 데이터를 재활용하여 불필요한 로드뷰 중복호출을 막음으로써 고용량의 이미지 refetching 방지
+		View && viewFrame.current.childre.length === 0 && roadview(); //지점 정보는 그대로 있는데 일반지도와 토글하는건데..
 	}, [View, roadview]);
 
 	return (
