@@ -7,8 +7,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import youtubeReducer from './redux/youtubeSlice';
 import memberReducer from './redux/memberSlice';
 import historyReducer from './redux/historySlice';
+// import promisArr = useRef([])
 
 const store = configureStore({
+	// Promise.all([p1, p2, p3]).then(result -> 프로미스 실행 완료 값 배열로 받음)
 	reducer: {
 		youtube: youtubeReducer,
 		member: memberReducer,
