@@ -2,6 +2,7 @@ import './Contact.scss';
 import Layout from '../../common/layout/Layout';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import { useThrottle } from '../../../hooks/useThrottle';
 
 export default function Contact() {
 	const form = useRef();
@@ -34,6 +35,7 @@ export default function Contact() {
 			}
 		);
 	};
+
 	const kakao = useRef(window.kakao);
 	const [Index, setIndex] = useState(0);
 	const [Traffic, setTraffic] = useState(false);
@@ -87,10 +89,14 @@ export default function Contact() {
 
 	// 지도 중심 좌표 (지도 이동시키기)
 	const setCenter = useCallback(() => {
+		console.log('setCenter');
 		mapInstance.current.setCenter(mapInfo.current[Index].latlng);
 		// 로드뷰 함수 느림
 		// roadview.current();
 	}, [Index]);
+
+	//useThrottle로 cetCenter함수를 인수러 넣어서 thottling적용된 새로운 함수로 반환 (hof)
+	const throttledSetCenter = useThrottle(setCenter, 100); // 인수값으로 받아오고 싶은 함수 가져오기
 
 	// Index값 변경시마다 지도 정보 갱신해서 화면 재랜더링 useEffect
 	useEffect(() => {
@@ -117,9 +123,10 @@ export default function Contact() {
 		// 휠의 맴 줌 기능 비활성화
 		mapInstance.current.setZoomable(false);
 
-		window.addEventListener('resize', setCenter);
-		return () => window.removeEventListener('resize', setCenter);
-	}, [Index, setCenter]);
+		//resize이벤트에 throttle적용된 함수를 등록 (이벤트자체는 1초에 60번 발생하지만 핸들러함수는 1초에 2번만 실행됨)
+		window.addEventListener('resize', throttledSetCenter);
+		return () => window.removeEventListener('resize', throttledSetCenter);
+	}, [Index, throttledSetCenter]);
 
 	// 느릴때 data fetching(사진) => network tab and addEventListener(window객체 : 1초에 60번 이벤트 발생) : 로드뷰
 	// 1. 리솔트
@@ -141,7 +148,7 @@ export default function Contact() {
 
 		// view토글시에 무조건 로드뷰 정보를 호출하는 것이 아닌 viewFrame 안의 내용이 없을때만 호출하고
 		// 값이 있을때는 기존 데이터를 재활용하여 불필요한 로드뷰 중복호출을 막음으로써 고용량의 이미지 refetching 방지
-		View && viewFrame.current.childre.length === 0 && roadview(); //지점 정보는 그대로 있는데 일반지도와 토글하는건데..
+		View && viewFrame.current.children.length === 0 && roadview(); //지점 정보는 그대로 있는데 일반지도와 토글하는건데..
 	}, [View, roadview]);
 
 	return (
