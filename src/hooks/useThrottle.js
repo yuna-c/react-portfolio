@@ -8,13 +8,15 @@ import { useRef } from 'react';
 
 export const useThrottle = (func, gap = 500) => {
 	//함수를인수로 받아서 내보내는 고차함수
-	const evetBlocker = useRef(null); // false
+	const evetBlocker = useRef(null); // false일 떄 실행이 한번 호출됨
+	// 바로 리턴으로 받고나서 유즈레프에 값을 담음
+	// 값을 받은다음 딜레이값이 끝날 때까지 셋타임아웃을 다시 실행시키지 않으면서 유지시킴
 
 	return () => {
-		if (evetBlocker.current) return;
+		if (evetBlocker.current) return; // false = 무시
 		evetBlocker.current = setTimeout(() => {
 			func();
-			evetBlocker.current = null;
+			evetBlocker.current = null; //전역에 있는 값을 유지시킴
 		}, gap /*500*/); // 0.5초 =>1초에 2번 이후에만 한꺼번에 이벤트 처리하는 숫자를 gap이라는 인수로 줘서 값을 내보낼 때, 해당 컴포넌트에서 gap 값을 조정할 수 있게
 		// 화면 주사율이 1초에 60hz
 	};
