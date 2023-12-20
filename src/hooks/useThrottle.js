@@ -6,18 +6,24 @@
 // Throttle 적용 대표 사례 : window event(scroll, resize) 발생시마다 불필요하게 ㅁ낳이 호출되는 함수의 호출 횟수를 줄일 때
 import { useRef } from 'react';
 
+// setTimeout이 호출되면 delay뒤에 리턴 값이 반환이 아니라 호출 즉시 return 반환
+// setTimeout의 delay값이 끝나기 전에 중복 호출 되면 기준 함수 무시하고 다시 초기화해서 setTimeout이 또 호출
+
 export const useThrottle = (func, gap = 500) => {
-	//함수를인수로 받아서 내보내는 고차함수
-	const evetBlocker = useRef(null); // false일 떄 실행이 한번 호출됨
-	// 바로 리턴으로 받고나서 유즈레프에 값을 담음
-	// 값을 받은다음 딜레이값이 끝날 때까지 셋타임아웃을 다시 실행시키지 않으면서 유지시킴
+	// 이를 막기 위해, 초기값을 null값을 eventBlocker에 담아서 초기 한번은 온전히 setTimeout이 호출되게 처리
+	const eventBlocker = useRef(null); // false일 떄 실행이 한번 호출됨
 
 	return () => {
-		if (evetBlocker.current) return; // false = 무시
-		evetBlocker.current = setTimeout(() => {
+		// eventBlocker이 담겨있으면 리턴으로 강제 중지함으로써 setTimeout을 중복 호출하지 않음
+		if (eventBlocker.current) return;
+
+		// setTimeout이 실행됨과 동시에 리턴값을 eventBlocker에 담아서 중복호출을 막으면서 gap 시간 이후에 호출되는 특정 로직을 보장
+		eventBlocker.current = setTimeout(() => {
+			// gap시간 이후에 인수로 전달된 함수를 호출하고
 			func();
-			evetBlocker.current = null; //전역에 있는 값을 유지시킴
-		}, gap /*500*/); // 0.5초 =>1초에 2번 이후에만 한꺼번에 이벤트 처리하는 숫자를 gap이라는 인수로 줘서 값을 내보낼 때, 해당 컴포넌트에서 gap 값을 조정할 수 있게
-		// 화면 주사율이 1초에 60hz
+			// eventBlocker을 다시 비움
+			eventBlocker.current = null;
+			// gap시간 이후에 다시 setTimeout을 호출할 수 있게 됨
+		}, gap /*500*/);
 	};
 };
