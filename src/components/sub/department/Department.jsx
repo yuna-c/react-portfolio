@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import Layout from '../../common/layout/Layout';
 import './Department.scss';
 import { useCustomText } from '../../../hooks/useText';
@@ -9,7 +9,6 @@ export default function Department() {
 	const HistoryData = useSelector(store => store.historyReducer.history);
 	const combinedTitle = useCustomText('combined');
 	const path = useRef(process.env.PUBLIC_URL);
-	// console.log(HistoryData);
 
 	return (
 		<Layout title={'Department'}>
@@ -17,7 +16,6 @@ export default function Department() {
 				<h2>{combinedTitle('History')}</h2>
 				<div className='con'>
 					{HistoryData?.map((history, idx) => {
-						//새로고침시 오류 옵셔널 체이닝으로
 						return (
 							<article key={history + idx}>
 								<h3>{Object.keys(history)[0]}</h3>
