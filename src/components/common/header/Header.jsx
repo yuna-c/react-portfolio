@@ -1,15 +1,14 @@
 import './Header.scss';
 import { NavLink, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux'; //useSelector 값 반전 시켜야 되니까
+import { useDispatch, useSelector } from 'react-redux';
+import * as types from '../../../redux/action';
 
-import * as types from '../../../redux/action'; //액션 타입 가져오기
-
-export default function Header({ Dark, setDark }) {
+export default function Header() {
 	const dispatch = useDispatch();
 	const Toggle = useSelector(store => store.menuReducer.menu);
-
+	const Dark = useSelector(store => store.darkReducer.dark);
 	return (
-		<header className='header'>
+		<header className='Header'>
 			<h1>
 				<Link to='/'>퍼펙트</Link>
 			</h1>
@@ -27,17 +26,12 @@ export default function Header({ Dark, setDark }) {
 				</li>
 				<li>
 					<NavLink to='/gallery' activeClassName={'on'}>
-						Gallay
+						Gallery
 					</NavLink>
 				</li>
 				<li>
 					<NavLink to='/community' activeClassName={'on'}>
 						Community
-					</NavLink>
-				</li>
-				<li>
-					<NavLink to='/num' activeClassName={'on'}>
-						num
 					</NavLink>
 				</li>
 				<li>
@@ -47,21 +41,16 @@ export default function Header({ Dark, setDark }) {
 				</li>
 				<li>
 					<NavLink to='/contact' activeClassName={'on'}>
-						Contant
+						Contact
 					</NavLink>
 				</li>
 			</ul>
 
-			{/* <button onClick={() => setDark(!Dark)}>Theme</button> */}
-			<div className={`themeBox ${Dark && 'dark'}`} onClick={() => setDark(!Dark)}>
+			<div className={`themeBox ${Dark && 'dark'}`} onClick={() => dispatch({ type: types.DARK.start, payload: !Dark })}>
 				<div className='ball'></div>
 			</div>
 
-			<button
-				className='menuToggle'
-				onClick={() => {
-					dispatch({ type: types.MENU.start, payload: !Toggle });
-				}}>
+			<button className='menuToggle' onClick={() => dispatch({ type: types.MENU.start, payload: !Toggle })}>
 				menu
 			</button>
 		</header>
