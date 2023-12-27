@@ -5,7 +5,7 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 	return (
 		<header className='header'>
 			<h1>
-				<Link to='/'>퍼펙트</Link>
+				<Link to='/'>리액트쿼리</Link>
 			</h1>
 
 			<ul>
@@ -27,11 +27,6 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 				<li>
 					<NavLink to='/community' activeClassName={'on'}>
 						Community
-					</NavLink>
-				</li>
-				<li>
-					<NavLink to='/num' activeClassName={'on'}>
-						num
 					</NavLink>
 				</li>
 				<li>
