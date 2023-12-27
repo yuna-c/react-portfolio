@@ -26,10 +26,11 @@ export default function App() {
 	// useSelector(store => console.log(store));
 
 	useEffect(() => {
-		dispatch({ type: types.MEMBERS.start });
-		dispatch({ type: types.HISTORY.start });
-		dispatch({ type: types.YOUTUBE.start });
-		dispatch({ type: types.FLICKR.start, opt: { type: 'user', id: '199645532@N06' } });
+		// dispatch({ type: types.MEMBERS.start });
+		// dispatch({ type: types.HISTORY.start });
+		// dispatch({ type: types.YOUTUBE.start });
+		// dispatch({ type: types.FLICKR.start });
+		['MEMBERS', 'HISTORY', 'YOUTUBE', 'FLICKR'].forEach(typeName => dispatch({ type: types[typeName].start }));
 	}, [dispatch]);
 
 	// 4개 멤버스데이터 콘솔 뜨는 이유 스테이트 3개 1.store, 2.dark 3,toggle

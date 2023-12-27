@@ -1,4 +1,3 @@
-//1 비동기데이터 : 서버사이드 데이터 : pendding상태 : 대응 3개
 export const MEMBERS = {
 	start: 'MEMBERS_START',
 	success: 'MEMBERS_SUCCESS',
