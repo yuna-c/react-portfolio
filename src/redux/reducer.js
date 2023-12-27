@@ -1,7 +1,6 @@
-//2
 import { combineReducers } from 'redux';
 import * as types from './actionType';
-// 클라이언트 데이터
+
 const membersReducer = (state = { members: [] }, action) => {
 	if (action.type === types.MEMBERS.start) return state;
 	else if (action.type === types.MEMBERS.success) return { ...state, members: action.payload };
@@ -24,14 +23,12 @@ const youtubeReducer = (state = { youtube: [] }, action) => {
 };
 
 const flickrReducer = (state = { flickr: [] }, action) => {
-	// console.log(action);
 	if (action.type === types.FLICKR.start) return state;
 	else if (action.type === types.FLICKR.success) return { ...state, flickr: action.payload };
 	else if (action.type === types.FLICKR.fail) return { ...state, flickr: action.payload };
 	else return state;
 };
 
-// 서버 데이터
 const modalReducer = (state = { modal: false }, action) => {
 	if (action.type === types.MODAL.start) return { ...state, modal: action.payload };
 	else return state;
@@ -46,6 +43,6 @@ const darkReducer = (state = { dark: false }, action) => {
 	if (action.type === types.DARK.start) return { ...state, dark: action.payload };
 	else return state;
 };
-const reducers = combineReducers({ membersReducer, historyReducer, youtubeReducer, flickrReducer, modalReducer, menuReducer, darkReducer });
 
+const reducers = combineReducers({ membersReducer, historyReducer, youtubeReducer, flickrReducer, modalReducer, menuReducer, darkReducer });
 export default reducers;

@@ -54,12 +54,12 @@ export default function Gallery() {
 	};
 
 	useEffect(() => {
-		// refFrameWrap.current.style.setProperty('--gap', gap.current + 'px');
+		refFrameWrap.current.style.setProperty('--gap', gap.current + 'px');
 	}, []);
 
 	return (
 		<>
-			{/* <Layout title={'Gallery'}>
+			<Layout title={'Gallery'}>
 				<article className='controls'>
 					<nav className='btnSet' ref={refNav}>
 						<button onClick={handleInterest}>Interest Gallery</button>
@@ -115,7 +115,7 @@ export default function Gallery() {
 				{Pics.length !== 0 && (
 					<img src={`https://live.staticflickr.com/${Pics[Index].server}/${Pics[Index].id}_${Pics[Index].secret}_b.jpg`} alt={Pics[Index].title} />
 				)}
-			</Modal> */}
+			</Modal>
 		</>
 	);
 }

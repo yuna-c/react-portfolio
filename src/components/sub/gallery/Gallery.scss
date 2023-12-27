@@ -3,7 +3,6 @@
 
 	.controls {
 		width: 100%;
-		margin-bottom: 20px;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
@@ -52,12 +51,13 @@
 
 			input {
 				width: 120px;
-				padding: 5px 10px;
 				border: none;
 				background-color: transparent;
 				border-bottom: 1px solid rgba(var(--baseColor-code), 0.5);
-				outline: 0; //접근성이 떨어지긴 해..
+				padding: 6px 10px;
+				outline: 0;
 			}
+
 			.btnSearch {
 				border: none;
 				background-color: transparent;
@@ -69,8 +69,7 @@
 	}
 
 	.frameWrap {
-		// --gap: 20px; 해당 값은 리액트에서 처음 userEffect가 실행시 동적으로 생성되는 변수값
-
+		//--gap: 20px; 해당값은 리액트에서 처음 useEffect실행시 동적으로 생성되는 변수값
 		.frame {
 			width: 100%;
 			display: flex;
@@ -86,7 +85,6 @@
 				.pic {
 					width: 100%;
 					margin-bottom: 10px;
-					cursor: point;
 
 					img {
 						width: 100%;
