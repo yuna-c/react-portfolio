@@ -14,7 +14,6 @@ import MainWrap from './components/main/mainWrap/MainWrap';
 import Community from './components/sub/community/Community';
 import Department from './components/sub/department/Department';
 
-import { useState } from 'react';
 import { Route } from 'react-router-dom';
 import { useMedia } from './hooks/useMedia';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
