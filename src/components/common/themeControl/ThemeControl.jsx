@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useCookie } from '../../../hooks/useCookie';
 import './ThemeControl.scss';
 
@@ -8,6 +8,7 @@ import './ThemeControl.scss';
 export default function ThemeControl() {
 	const { isCookie, setCookie } = useCookie();
 	const inputEl = useRef(null);
+	// const [Change, setChange] = useState();
 
 	// 컴포넌트 마운트시 theme라는 이름의 쿠키값이 있으면
 	if (isCookie('theme')) {
@@ -19,10 +20,17 @@ export default function ThemeControl() {
 
 	const changeThemeColor = () => {
 		const color = inputEl.current.value;
+		console.log(getComputedStyle(document.body).getPropertyValue('--pointColor'));
+		console.log('-----------------------------------');
 		console.log(color);
 		setCookie('theme', color, 40);
-		console.log(getComputedStyle(document.body).getPropertyValue('--pointColor'));
 		document.body.style.setProperty('--pointColor', color);
+	};
+
+	const returnThemeColor = () => {
+		// const color = inputEl.current.value;
+		const getColor = getComputedStyle(document.body).getPropertyValue('--pointColor');
+		console.log('❤', inputEl, getColor);
 	};
 
 	console.log('Cookie', isCookie);
@@ -30,7 +38,7 @@ export default function ThemeControl() {
 	return (
 		<nav className='ThemeControl'>
 			<input type='color' ref={inputEl} onChange={changeThemeColor} />
-			<button>reset</button>
+			<input type='button' onClick={returnThemeColor} value={'reset'} />
 		</nav>
 	);
 }
