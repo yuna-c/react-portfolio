@@ -1,32 +1,35 @@
-import { useState } from 'react';
-import './globalStyles/Reset.scss';
 import './globalStyles/Variables.scss';
-import { Route } from 'react-router-dom';
-import { useMedia } from './hooks/useMedia';
+import './globalStyles/Reset.scss';
+
+import Menu from './components/common/menu/Menu';
+import Detail from './components/sub/youtube/Detail';
+import Welcome from './components/sub/members/Welcome';
 import Header from './components/common/header/Header';
 import Footer from './components/common/footer/Footer';
+import Members from './components/sub/members/Members';
 import Contact from './components/sub/contact/Contact';
 import Gallery from './components/sub/gallery/Gallery';
-import Members from './components/sub/members/Members';
 import Youtube from './components/sub/youtube/Youtube';
 import MainWrap from './components/main/mainWrap/MainWrap';
 import Community from './components/sub/community/Community';
 import Department from './components/sub/department/Department';
-import Welcome from './components/sub/members/Welcome';
-import Menu from './components/common/menu/Menu';
-import Detail from './components/sub/youtube/Detail';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+import { useState } from 'react';
+import { Route } from 'react-router-dom';
+import { useMedia } from './hooks/useMedia';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { useGlobalData } from './hooks/useGlobalData';
+
+//비동기 데이터 : 디파트먼트, 히스토리, 유튜브, 플리커
 export default function App() {
-	const [Dark, setDark] = useState(false);
-	const [Toggle, setToggle] = useState(false);
+	const { Dark } = useGlobalData();
 	const queryClient = new QueryClient();
 
 	return (
 		<QueryClientProvider client={queryClient}>
 			<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
-				<Header Dark={Dark} setDark={setDark} Toggle={Toggle} setToggle={setToggle} />
+				<Header />
 				<Route exact path='/' component={MainWrap} />
 				<Route path='/department' component={Department} />
 				<Route path='/gallery' component={Gallery} />
@@ -37,7 +40,7 @@ export default function App() {
 				<Route path='/detail/:id' component={Detail} />
 				<Route path='/welcome/:id' component={Welcome} />
 				<Footer />
-				{Toggle && <Menu setToggle={setToggle} />}
+				<Menu />
 			</div>
 			<ReactQueryDevtools />
 		</QueryClientProvider>
