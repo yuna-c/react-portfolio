@@ -1,6 +1,6 @@
 import './Footer.scss';
 import { FaFacebookF, FaTwitter, FaYoutube, FaGrinStars } from 'react-icons/fa';
-import { useCookie } from './hooks/useCookie';
+import { useCookie } from '../../../hooks/useCookie';
 
 export default function Footer() {
 	const setCookie = useCookie();
@@ -28,6 +28,8 @@ export default function Footer() {
 					<FaGrinStars color={'red'} size={'16'} />
 				</li>
 			</ul>
+
+			<button onClick={createCookie}>쿠키생성</button>
 		</footer>
 	);
 }
