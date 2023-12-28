@@ -6,6 +6,7 @@ import { useHistoryQuery } from '../../../hooks/useHistoryQuery';
 import { useDepartmentQuery } from '../../../hooks/useDepartmentQuery';
 
 export default function Department() {
+	console.log(document.cookie);
 	const combinedTitle = useCustomText('combined');
 	const path = useRef(process.env.PUBLIC_URL);
 

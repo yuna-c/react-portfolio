@@ -26,7 +26,7 @@ export default function App() {
 	const { Dark } = useGlobalData();
 	const queryClient = new QueryClient();
 	useCookie('today', 'done', 20);
-
+	console.log(document.cookie);
 	return (
 		<QueryClientProvider client={queryClient}>
 			<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
