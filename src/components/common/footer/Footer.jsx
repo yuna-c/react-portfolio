@@ -1,9 +1,14 @@
 import './Footer.scss';
 import { FaFacebookF, FaTwitter, FaYoutube, FaGrinStars } from 'react-icons/fa';
-//npm i react-icons 아이콘 설치
-//https://react-icons.github.io/react-icons/
+import { useCookie } from './hooks/useCookie';
 
 export default function Footer() {
+	const setCookie = useCookie();
+	const createCookie = () => {
+		setCookie('today', 'done', 20);
+	};
+	console.log(document.cookie);
+
 	return (
 		<footer className='footer'>
 			<h1>LOGO</h1>
@@ -11,19 +16,16 @@ export default function Footer() {
 
 			<ul>
 				<li>
-					<FaFacebookF
-					/*color={'hotpink'} size={'30'}*/
-					/>
-				</li>
-
-				<li>
-					<FaTwitter />
+					<FaFacebookF color={'hotpink'} size={'16'} />
 				</li>
 				<li>
-					<FaYoutube />
+					<FaTwitter color={'orange'} size={'16'} />
 				</li>
 				<li>
-					<FaGrinStars />
+					<FaYoutube color={'green'} size={'16'} />
+				</li>
+				<li>
+					<FaGrinStars color={'red'} size={'16'} />
 				</li>
 			</ul>
 		</footer>

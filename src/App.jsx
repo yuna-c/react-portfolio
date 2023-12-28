@@ -19,14 +19,15 @@ import { useMedia } from './hooks/useMedia';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useGlobalData } from './hooks/useGlobalData';
-import { useCookie } from './hooks/useCookie';
+// import { useCookie } from './hooks/useCookie';
 
 //비동기 데이터 : 디파트먼트, 히스토리, 유튜브, 플리커
 export default function App() {
 	const { Dark } = useGlobalData();
 	const queryClient = new QueryClient();
-	useCookie('today', 'done', 20);
-	console.log(document.cookie);
+	// useCookie('today', 'done', 20);
+	// console.log(document.cookie);
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
