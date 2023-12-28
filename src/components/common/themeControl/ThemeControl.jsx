@@ -2,6 +2,9 @@ import { useRef } from 'react';
 import { useCookie } from '../../../hooks/useCookie';
 import './ThemeControl.scss';
 
+// 미션1 - 테마 초기화 버튼 생성한 뒤 해당 벼튼 클릭시 Css 변수에 등록되어 있는 색상 값으로 초기화
+// 미션2 - Dark모드의 값도 쿠키에 등록 해서 한번 설정된 값으로 유지되도록 처리
+
 export default function ThemeControl() {
 	const { isCookie, setCookie } = useCookie();
 	const inputEl = useRef(null);
@@ -27,12 +30,7 @@ export default function ThemeControl() {
 	return (
 		<nav className='ThemeControl'>
 			<input type='color' ref={inputEl} onChange={changeThemeColor} />
-			{/* <button onClick={changeThemeColor}>Theme Color</button> 접근성은 버튼 필수*/}
+			<button>reset</button>
 		</nav>
 	);
 }
-
-/*
-1. 클릭 이벤트 발생시 컬러 팔레트에서 선택한 색상 코드값을 쿠키로 저장
-2. App 마운트시 --pointColor에 등록된 value 값을 쿠키에 있는 값으로 변경 처리
-*/
