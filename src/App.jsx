@@ -24,14 +24,14 @@ import { useGlobalData } from './hooks/useGlobalData';
 
 //비동기 데이터 : 디파트먼트, 히스토리, 유튜브, 플리커
 export default function App() {
-	const { Dark } = useGlobalData();
+	const { Mode } = useGlobalData();
 	const queryClient = new QueryClient();
 	// useCookie('today', 'done', 20);
 	// console.log(document.cookie);
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<div className={`wrap ${Dark ? 'dark' : ''} ${useMedia()}`}>
+			<div className={`wrap ${Mode === 'light' ? 'light' : 'dark'} ${useMedia()}`}>
 				<Header />
 				<Route exact path='/' component={MainWrap} />
 				<Route path='/department' component={Department} />

@@ -8,9 +8,9 @@ export const GlobalContext = createContext();
 export function GlobalProvider({ children }) {
 	const [MenuOpen, setMenuOpen] = useState(false);
 	const [ModalOpen, setModalOpen] = useState(false);
-	const [Dark, setDark] = useState(false);
+	const [Mode, setMode] = useState('light');
 
-	return <GlobalContext.Provider value={{ MenuOpen, setMenuOpen, ModalOpen, setModalOpen, Dark, setDark }}>{children}</GlobalContext.Provider>;
+	return <GlobalContext.Provider value={{ MenuOpen, setMenuOpen, ModalOpen, setModalOpen, Mode, setMode }}>{children}</GlobalContext.Provider>;
 	// {객체}
 }
 
