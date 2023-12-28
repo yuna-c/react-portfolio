@@ -1,10 +1,23 @@
+import { useRef } from 'react';
+import { useCookie } from '../../../hooks/useCookie';
 import './ThemeControl.scss';
 
 export default function ThemeControl() {
+	const { setCookie } = useCookie();
+	const inputEl = useRef(null);
+
+	const changeThemeColor = () => {
+		const color = inputEl.current.value;
+		console.log(color);
+		setCookie('theme', color, 20);
+		console.log(getComputedStyle(document.body).getPropertyValue('--pointColor'));
+		document.body.style.setProperty('--pointColor', color);
+	};
+
 	return (
 		<nav className='ThemeControl'>
-			<input type='color' />
-			<button>Theme Color</button>
+			<input type='color' ref={inputEl} />
+			<button onClick={changeThemeColor}>Theme Color</button>
 		</nav>
 	);
 }
