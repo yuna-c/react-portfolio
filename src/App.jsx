@@ -13,6 +13,7 @@ import Youtube from './components/sub/youtube/Youtube';
 import MainWrap from './components/main/mainWrap/MainWrap';
 import Community from './components/sub/community/Community';
 import Department from './components/sub/department/Department';
+import CookieModal from './components/common/cookieModal/CookieModal';
 
 import { Route } from 'react-router-dom';
 import { useMedia } from './hooks/useMedia';
@@ -43,6 +44,9 @@ export default function App() {
 				<Route path='/welcome/:id' component={Welcome} />
 				<Footer />
 				<Menu />
+				<CookieModal wid={300} ht={200}>
+					<h1>쿠키팝업</h1>
+				</CookieModal>
 			</div>
 			<ReactQueryDevtools />
 		</QueryClientProvider>

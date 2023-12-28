@@ -1,0 +1,49 @@
+.CookieModal {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	background-color: rgba(var(--bgColor-code), 1);
+	border: 1px solid rgba(var(--baseColor-code), 0.8);
+	color: var(--baseColor);
+	z-index: 5;
+
+	* {
+		color: inherit;
+	}
+
+	.content {
+		width: 100%;
+		padding: 10px;
+	}
+
+	.controls {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		border-top: 1px solid rgba(var(--baseColor-code), 0.8);
+
+		nav {
+			height: 30px;
+			display: flex;
+			align-items: center;
+
+			&:first-child {
+				width: 65%;
+				border-right: 1px solid rgba(var(--baseColor-code), 0.8);
+			}
+			&:nth-child(2) {
+				width: 35%;
+			}
+			span {
+				width: 100%;
+				font-size: 0.9rem;
+				text-align: center;
+				cursor: pointer;
+			}
+		}
+	}
+}
