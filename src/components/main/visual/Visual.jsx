@@ -5,6 +5,7 @@ import { Pagination, Autoplay } from 'swiper';
 import './Visual.scss';
 import { useSelector } from 'react-redux';
 // npm i swiper@8
+// swiper 8 docs
 // https://v8.swiperjs.com/get-started
 
 function Btns() {
