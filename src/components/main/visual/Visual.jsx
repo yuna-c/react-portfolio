@@ -21,6 +21,7 @@ function Btns() {
 		swiper.autoplay.start();
 		swiper.init(0);
 		swiper.slideTo(1);
+		swiper.autoplay.start();
 		// swiper.initialSlide(0);
 	}, [swiper]);
 
@@ -52,6 +53,11 @@ export default function Visual() {
 				loop={true}
 				initialSlide={0}
 				slidesPerView={1}
+				autoplay={{
+					delay: 2000,
+					disableOnInteraction: true,
+					pauseOnMouseEnter: true
+				}}
 				pagination={{
 					clickable: true,
 					renderBullet: (index, className) => {
@@ -59,11 +65,6 @@ export default function Visual() {
 						// <span className={className}>${index +1}</span>
 						// '<span class="' + className + '">' + (index + 1) + '</span>'
 					}
-				}}
-				autoplay={{
-					delay: 2000,
-					disableOnInteraction: true,
-					pauseOnMouseEnter: true
 				}}>
 				{youtube.map((vid, idx) => {
 					if (idx >= 5) return null;
