@@ -1,6 +1,7 @@
 import './ThemeControl.scss';
 import { useCookie } from '../../../hooks/useCookie';
 import { useCallback, useEffect, useRef } from 'react';
+import { useThrottle } from '../../../hooks/useThrottle';
 
 export default function ThemeControl() {
 	const inputEl = useRef(null);
@@ -21,11 +22,15 @@ export default function ThemeControl() {
 	//현재 input요소에 선택된 value값으로 쿠키에 저장하고 css변수값에도 재할당
 	//그리고 input요소의 초기값도 다시 변경처리
 	const changeThemeColor = () => {
+		console.log('changeTheme');
 		const color = inputEl.current.value;
 		document.body.style.setProperty('--pointColor', color);
 		setCookie('theme', color, 60 * 60 * 24);
 		inputEl.current.value = color;
 	};
+
+	const throttleChangeTheme = useThrottle(changeThemeColor, 300);
+	//함수를 인수로 받아서 hof 처리
 
 	//초기 마운트시에 컬러테마 쿠키값 유무에 따라 변수값 처리
 	useEffect(() => {
@@ -34,7 +39,7 @@ export default function ThemeControl() {
 
 	return (
 		<nav className='ThemeControl'>
-			<input type='color' ref={inputEl} onChange={changeThemeColor} />
+			<input type='color' ref={inputEl} onChange={throttleChangeTheme} />
 		</nav>
 	);
 }
