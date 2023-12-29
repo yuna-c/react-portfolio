@@ -3,8 +3,10 @@ import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper';
 import './Visual.scss';
+import { useCustomText } from '../../../hooks/useText';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 // npm i swiper@8
 // swiper 8 docs
 // https://v8.swiperjs.com/get-started
@@ -15,8 +17,13 @@ function Btns() {
 	const swiper = useSwiper();
 
 	useEffect(() => {
+		swiper.init(0);
 		swiper.slideNext(300);
+		swiper.autoplay.start();
+
+		// return () => swiper && swiper.autoplay.stop();
 	}, [swiper]);
+
 	return (
 		<nav className='swiperContriller'>
 			<button
@@ -35,6 +42,8 @@ function Btns() {
 export default function Visual() {
 	const { youtube } = useSelector(store => store.youtubeReducer);
 	console.log(youtube);
+	const shortenText = useCustomText('shorten');
+	console.log(shortenText);
 
 	return (
 		<figure className='Visual'>
@@ -59,9 +68,20 @@ export default function Visual() {
 					return (
 						<SwiperSlide key={vid.id}>
 							<div className='inner'>
-								<h3>
-									{idx}.{vid.snippet.title}
-								</h3>
+								<div className='picBox'>
+									<p>
+										<img src={vid.snippet.thumbnails.standard.url} alt={vid.snippet.title} />
+									</p>
+									<p>
+										<img src={vid.snippet.thumbnails.standard.url} alt={vid.snippet.title} />
+									</p>
+								</div>
+								<div className='txtBox'>
+									<h3>
+										{idx + 1}. {shortenText(vid.snippet.title, 50)}
+									</h3>
+									<Link to={`/detail/${vid.id}`}>View Detail</Link>
+								</div>
 							</div>
 						</SwiperSlide>
 					);
