@@ -22,11 +22,13 @@
 					flex-wrap: wrap;
 					color: var(--bgColor);
 					background-color: rgba(var(--pointColor-code), 0.3);
+					z-index: 4;
 				}
 			}
 		}
 		.swiper-pagination {
 			width: 80%;
+			height: 30px;
 			margin: 0 auto;
 			top: 30px;
 			left: 0;

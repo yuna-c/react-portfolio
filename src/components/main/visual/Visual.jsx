@@ -4,6 +4,7 @@ import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper';
 import './Visual.scss';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 // npm i swiper@8
 // swiper 8 docs
 // https://v8.swiperjs.com/get-started
@@ -12,6 +13,10 @@ function Btns() {
 	// Swiper컴포넌트 안쪽에 있는 또 다른 자식 컴포넌트 안쪽에서만 useSwiper hook 사용 가능
 	// hook으로부터 생성된 객체 (인스턴스)에는 다양한 prototype메서드와 property값 활용 가능
 	const swiper = useSwiper();
+
+	useEffect(() => {
+		swiper.slideNext(300);
+	}, [swiper]);
 	return (
 		<nav className='swiperContriller'>
 			<button
