@@ -17,11 +17,11 @@ function Btns() {
 	const swiper = useSwiper();
 
 	useEffect(() => {
-		swiper.init(0);
 		swiper.slideNext(300);
 		swiper.autoplay.start();
-
-		// return () => swiper && swiper.autoplay.stop();
+		swiper.init(0);
+		swiper.slideTo(1);
+		// swiper.initialSlide(0);
 	}, [swiper]);
 
 	return (
@@ -41,15 +41,17 @@ function Btns() {
 
 export default function Visual() {
 	const { youtube } = useSelector(store => store.youtubeReducer);
-	console.log(youtube);
+	// console.log(youtube);
 	const shortenText = useCustomText('shorten');
-	console.log(shortenText);
+	// console.log(shortenText);
 
 	return (
 		<figure className='Visual'>
 			<Swiper
 				modules={[Pagination, Autoplay]}
 				loop={true}
+				initialSlide={0}
+				slidesPerView={1}
 				pagination={{
 					clickable: true,
 					renderBullet: (index, className) => {
@@ -59,8 +61,9 @@ export default function Visual() {
 					}
 				}}
 				autoplay={{
-					delay: 5000,
-					disableOnInteraction: true
+					delay: 2000,
+					disableOnInteraction: true,
+					pauseOnMouseEnter: true
 				}}>
 				{youtube.map((vid, idx) => {
 					if (idx >= 5) return null;
@@ -80,7 +83,9 @@ export default function Visual() {
 									<h3>
 										{idx + 1}. {shortenText(vid.snippet.title, 50)}
 									</h3>
-									<Link to={`/detail/${vid.id}`}>View Detail</Link>
+									<Link to={`/detail/${vid.id}`}>
+										<span></span>View Detail
+									</Link>
 								</div>
 							</div>
 						</SwiperSlide>
