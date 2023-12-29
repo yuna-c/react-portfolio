@@ -7,6 +7,25 @@ import { useSelector } from 'react-redux';
 // npm i swiper@8
 // https://v8.swiperjs.com/get-started
 
+function Btns() {
+	// Swiper컴포넌트 안쪽에 있는 또 다른 자식 컴포넌트 안쪽에서만 useSwiper hook 사용 가능
+	// hook으로부터 생성된 객체 (인스턴스)에는 다양한 prototype메서드와 property값 활용 가능
+	const swiper = useSwiper();
+	return (
+		<nav className='swiperContriller'>
+			<button
+				onClick={() => {
+					//다시 롤링시작 버튼 클릭시 delay에 바로 slide 넘기기 위해 일단은 다음 슬라이드 넘기고 동시에 롤링 재시작
+					swiper.slideNext(300);
+					swiper.autoplay.start();
+				}}>
+				start
+			</button>
+			<button onClick={() => swiper.autoplay.stop()}>stop</button>
+		</nav>
+	);
+}
+
 export default function Visual() {
 	const { youtube } = useSelector(store => store.youtubeReducer);
 	console.log(youtube);
@@ -25,7 +44,7 @@ export default function Visual() {
 					}
 				}}
 				autoplay={{
-					delay: 3000,
+					delay: 5000,
 					disableOnInteraction: true
 				}}>
 				{youtube.map((vid, idx) => {
@@ -44,18 +63,6 @@ export default function Visual() {
 				<Btns />
 			</Swiper>
 		</figure>
-	);
-}
-
-function Btns() {
-	// Swiper컴포넌트 안쪽에 있는 또 다른 자식 컴포넌트 안쪽에서만 useSwiper hook 사용 가능
-	// hook으로부터 생성된 객체 (인스턴스)에는 다양한 prototype메서드와 property값 활용 가능
-	const swiper = useSwiper();
-	return (
-		<nav className='swiperContriller'>
-			<button onClick={() => swiper.autoplay.stop()}>stop</button>
-			<button onClick={() => swiper.autoplay.start()}>start</button>
-		</nav>
 	);
 }
 
