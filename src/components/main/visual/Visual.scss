@@ -11,7 +11,7 @@
 		padding-left: 15vw;
 		position: absolute;
 		top: 0;
-		left: 0;
+		left: -100px;
 		z-index: 2;
 
 		ul {
@@ -64,6 +64,7 @@
 
 		.swiper-wrapper {
 			height: inherit;
+			transition-timing-function: linear;
 
 			.swiper-slide {
 				width: 100%;
@@ -86,6 +87,14 @@
 						overflow: hidden;
 
 						&:nth-of-type(1) {
+							position: absolute;
+							top: -30px;
+							left: -30px;
+							font-size: 3rem;
+							font-weight: 900;
+							z-index: 3;
+						}
+						&:nth-of-type(2) {
 							filter: blur(30px) saturate(1.2);
 							transform: translate(30px, 30px);
 							opacity: 0.7;
@@ -122,6 +131,11 @@
 					opacity: 0.7;
 				}
 			}
+		}
+
+		.swiper-button-prev,
+		.swiper-button-next {
+			top: 80%;
 		}
 	}
 

@@ -1,10 +1,11 @@
 import { useYoutubeQuery } from '../../../hooks/useYoutubeQuery';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper';
+import { Autoplay, Navigation } from 'swiper';
 import './Visual.scss';
 import 'swiper/css';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import 'swiper/css/navigation';
 // https://v8.swiperjs.com/swiper-api#methods-and-properties
 
 export default function Visual() {
@@ -20,8 +21,8 @@ export default function Visual() {
 	const [NextIndex, setNextIndex] = useState(1);
 
 	const swiperOpt = useRef({
-		modules: [Autoplay],
-		autoplay: { delay: 2000, disableOnInteraction: true },
+		modules: [Autoplay, Navigation],
+		autoplay: { delay: 4000, disableOnInteraction: true },
 		loop: true,
 		// loop: true, (swiper.realIndex)
 		// loop: false, (swiper.activeIndex)
@@ -39,7 +40,13 @@ export default function Visual() {
 			console.log(swiper.realIndex, 'loop true');
 			setIndex(swiper.realIndex);
 			// console.log(swiper.activeIndex, 'non loop');
-		}
+		},
+		navigation: true
+
+		// init: swiper => {
+		// 	console.log('swiper 초기화 될때 실행');
+		// 	// swiper.slideNext(-1);
+		// }
 	});
 
 	useEffect(() => {
@@ -78,6 +85,7 @@ export default function Visual() {
 						return (
 							<SwiperSlide key={el.id}>
 								<div className='pic'>
+									<p>{idx + 1}.</p>
 									<p>
 										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
