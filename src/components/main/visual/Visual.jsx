@@ -3,15 +3,21 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper';
 import './Visual.scss';
 import 'swiper/css';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 // https://v8.swiperjs.com/swiper-api#methods-and-properties
 
 export default function Visual() {
+	const num = useRef(5);
 	const { isSuccess, data } = useYoutubeQuery();
 	// console.log(data);
 	const [Index, setIndex] = useState(0);
 	// console.log(Index);
+	// 이거 안대
+	// let prevIndex = useRef(4);
+	// let nextIndex = useRef(1);
+	const [PrevIndex, setPrevIndex] = useState(4);
+	const [NextIndex, setNextIndex] = useState(1);
 
 	const swiperOpt = useRef({
 		modules: [Autoplay],
@@ -36,6 +42,16 @@ export default function Visual() {
 		}
 	});
 
+	useEffect(() => {
+		// Index === 0 ? (prevIndex.current = 4) : (prevIndex.current = Index - 1);
+		// Index === 4 ? (nextIndex.current = 0) : (nextIndex.current = Index + 1);
+		// console.log('prev', prevIndex.current);
+		// console.log('next', nextIndex.current);
+
+		Index === 0 ? setPrevIndex(num.current - 1) : setPrevIndex(Index - 1);
+		Index === num.current - 1 ? setNextIndex(0) : setNextIndex(Index + 1);
+	}, [Index]);
+
 	return (
 		<figure className='Visual'>
 			<div className='txtBox'>
@@ -58,7 +74,7 @@ export default function Visual() {
 			<Swiper {...swiperOpt.current}>
 				{isSuccess &&
 					data.map((el, idx) => {
-						if (idx >= 5) return null;
+						if (idx >= num.current - 1) return null;
 						return (
 							<SwiperSlide key={el.id}>
 								<div className='pic'>
@@ -69,13 +85,23 @@ export default function Visual() {
 										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
 								</div>
-								{/* <div>
-									<Link to={`/detail/${el.id}`}>{el.snippet.title}</Link>
-								</div> */}
 							</SwiperSlide>
 						);
 					})}
 			</Swiper>
+
+			<nav className='preivew'>
+				{isSuccess && (
+					<>
+						<p className='prevBox'>
+							<img src={data[PrevIndex].snippet.thumbnails.default.url} alt={data[PrevIndex].snippet.title} />
+						</p>
+						<p className='nextBox'>
+							<img src={data[NextIndex].snippet.thumbnails.default.url} alt={data[NextIndex].snippet.title} />
+						</p>
+					</>
+				)}
+			</nav>
 		</figure>
 	);
 }
