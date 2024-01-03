@@ -7,11 +7,29 @@
 		width: 100%;
 		height: 100%;
 		padding: 10vh 0px;
-		overflow: hidden;
-		position: relative;
 
 		.swiper-wrapper {
-			display: flex;
+			width: 100%;
+			height: 100%;
+
+			.swiper-slide {
+				> .inner {
+					width: 100%;
+					height: 100%;
+
+					.picBox {
+						width: 100%;
+						height: 100%;
+						overflow: hidden;
+
+						img {
+							width: 100%;
+							height: 100%;
+							object-fit: cover;
+						}
+					}
+				}
+			}
 		}
 	}
 }
