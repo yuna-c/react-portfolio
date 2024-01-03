@@ -2,15 +2,22 @@ import './Visual.scss';
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper';
 import 'swiper/css';
 
 export default function Visual() {
 	const Vids = useSelector(store => store.youtube.data);
+
 	const swiperOpt = useRef({
-		spaceBetween: 50,
+		modules: [Autoplay],
+		autoplay: { delay: 4000, disableOnInteraction: true },
+		spaceBetween: 70,
 		loop: true,
 		slidesPerView: 3,
-		centeredSlides: true
+		centeredSlides: true,
+		onSwiper: swiper => {
+			swiper.slideNext(300);
+		}
 	});
 
 	return (
