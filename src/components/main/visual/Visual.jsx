@@ -5,17 +5,20 @@ import './Visual.scss';
 import 'swiper/css';
 import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+// https://v8.swiperjs.com/swiper-api#methods-and-properties
 
 export default function Visual() {
 	const { isSuccess, data } = useYoutubeQuery();
 	// console.log(data);
 	const [Index, setIndex] = useState(0);
-	console.log(Index);
+	// console.log(Index);
 
 	const swiperOpt = useRef({
 		modules: [Autoplay],
 		autoplay: { delay: 2000, disableOnInteraction: true },
 		loop: true,
+		// loop: true, (swiper.realIndex)
+		// loop: false, (swiper.activeIndex)
 		slidesPerView: 1,
 		spaceBetween: 50,
 		centeredSlides: true,
@@ -29,7 +32,7 @@ export default function Visual() {
 		onSlideChange: swiper => {
 			console.log(swiper.realIndex, 'loop true');
 			setIndex(swiper.realIndex);
-			console.log(swiper.activeIndex, 'non loop');
+			// console.log(swiper.activeIndex, 'non loop');
 		}
 	});
 	return (
