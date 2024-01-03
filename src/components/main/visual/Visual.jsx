@@ -8,20 +8,27 @@ import { Link } from 'react-router-dom';
 
 export default function Visual() {
 	const { isSuccess, data } = useYoutubeQuery();
-	console.log(data);
+	// console.log(data);
+	const [Index, setIndex] = useState(0);
+
 	const swiperOpt = useRef({
 		modules: [Autoplay],
 		autoplay: { delay: 2000, disableOnInteraction: true },
 		loop: true,
 		slidesPerView: 1,
-		spaceBetween: 0,
+		spaceBetween: 50,
 		centeredSlides: true,
 		onSwiper: swiper => {
 			swiper.slideNext(300);
 		},
 		breakpoints: {
-			1000: { slidesPerView: 2, spaceBetween: 50 },
-			1400: { slidesPerView: 3, spaceBetween: 50 }
+			1000: { slidesPerView: 2 },
+			1400: { slidesPerView: 3 }
+		},
+		onSlideChange: swiper => {
+			console.log(swiper.realIndex, 'loop true');
+			setIndex(swiper.realIndex);
+			console.log(swiper.activeIndex, 'non loop');
 		}
 	});
 	return (
@@ -41,7 +48,7 @@ export default function Visual() {
 										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
 								</div>
-								<div>
+								<div className='txt'>
 									<Link to={`/detail/${data.id}`}>{el.snippet.title}</Link>
 								</div>
 							</SwiperSlide>
