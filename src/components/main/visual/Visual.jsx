@@ -13,8 +13,15 @@ export default function Visual() {
 		autoplay: { delay: 4000, disableOnInteraction: true },
 		// spaceBetween: 70,
 		loop: true,
-		slidesPerView: 3,
+		slidesPerView: 1,
 		centeredSlides: true,
+		breakpoints: {
+			// when window width is >= 320px(minWidth)
+			1000: {
+				slidesPerView: 3
+				// spaceBetween: 20
+			}
+		},
 		onSwiper: swiper => {
 			swiper.slideNext(300);
 		}
@@ -29,7 +36,12 @@ export default function Visual() {
 						<SwiperSlide key={data.id}>
 							<div className='inner'>
 								<div className='picBox'>
-									<img src={data.snippet.thumbnails.standard.url} alt={data.snippet.title} />
+									<p>
+										<img src={data.snippet.thumbnails.standard.url} alt={data.snippet.title} />
+									</p>
+									<p>
+										<img src={data.snippet.thumbnails.standard.url} alt={data.snippet.title} />
+									</p>
 								</div>
 								<div className='txtBox'>
 									<h2>{data.snippet.title}</h2>
