@@ -4,29 +4,27 @@ import './Community.scss';
 import { ImCancelCircle } from 'react-icons/im';
 import { TfiWrite } from 'react-icons/tfi';
 import { useCustomText } from '../../../hooks/useText';
-import postData from '../../main/info/dummyPosts.json';
 
 export default function Community() {
 	const changeText = useCustomText('combined');
 	const getLocalData = () => {
 		const data = localStorage.getItem('post');
-		// return JSON.parse(data);
-		if (data) JSON.parse(data);
-		return postData.dummyPosts;
+		if (data) return JSON.parse(data);
+		else return [];
 	};
-
 	const [Post, setPost] = useState(getLocalData());
-
 	const refTit = useRef(null);
 	const refCon = useRef(null);
 	const refEditTit = useRef(null);
 	const refEditCon = useRef(null);
 	const editMode = useRef(false);
+
 	//input 초기화 함수
 	const resetPost = () => {
 		refTit.current.value = '';
 		refCon.current.value = '';
 	};
+
 	//글 저장 함수
 	const createPost = () => {
 		if (!refTit.current.value.trim() || !refCon.current.value.trim()) {
@@ -44,6 +42,7 @@ export default function Community() {
 			return alert('수정할 글의 제목과  본문을 모두 입력하세요.');
 		}
 		editMode.current = false;
+
 		setPost(
 			Post.map((el, idx) => {
 				if (updateIndex === idx) {
@@ -88,19 +87,11 @@ export default function Community() {
 		);
 	};
 
-	const filtering = txt => {
-		const abc = Post.filter(el => el.title.indexOf(txt) >= 0 || el.content.indexOf(txt) >= 0);
-		console.log(abc);
-	};
-
 	useEffect(() => {
 		//Post데이터가 변경되면 수정모드를 강제로 false처리하면서 로컬저장소에 저장하고 컴포넌트 재실행
 		Post.map(el => (el.enableUpdate = false));
 		localStorage.setItem('post', JSON.stringify(Post));
 	}, [Post]);
-	// 커뮤니티의 의존성 배열 등록하니 업데이트 불가
-
-	console.log(localStorage);
 
 	return (
 		<Layout title={'Community'}>
@@ -108,6 +99,7 @@ export default function Community() {
 				<div className='inputBox'>
 					<input type='text' placeholder='title' ref={refTit} />
 					<textarea cols='30' rows='3' placeholder='content' ref={refCon}></textarea>
+
 					<nav>
 						<button onClick={resetPost}>
 							<ImCancelCircle />
@@ -122,6 +114,7 @@ export default function Community() {
 					{Post.map((el, idx) => {
 						const date = JSON.stringify(el.date);
 						const strDate = changeText(date.split('T')[0].slice(1), '.');
+
 						if (el.enableUpdate) {
 							//수정모드
 							return (
@@ -160,6 +153,7 @@ export default function Community() {
 		</Layout>
 	);
 }
+
 /*
 	1.글입력 박스, 글 출력박스를 생성
 	2.전체글을 관리할 배열 state를 생성 [{글정보1}, {글정보2}, {글정보3}]

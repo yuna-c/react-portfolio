@@ -17,16 +17,9 @@ export default function Members() {
 	};
 
 	const handleChange = e => {
-		// console.log('name', e.target.name);
-		// console.log('value', e.target.value);
-		// const key = e.target.name; // userid
-		// const value = e.target.value; //현재 입력하고 있는 인풋값
 		const { name, value } = e.target;
 		setVal({ ...Val, [name]: value });
 	};
-
-	// 동작 안되는 이유 .. ? key는 문자가 아니어야 하는데 문자로 할당되니까 변수치환 못하니까.. 대괄호[]로 감싸면 돼
-	// 이거는 많이 쓰일 것 같아
 
 	const handleCheck = e => {
 		const { name } = e.target;
@@ -37,13 +30,12 @@ export default function Members() {
 	};
 
 	const check = value => {
-		console.log('check');
 		const errs = {};
-		const num = /[0-9]/; //정규 표현식 (조건안의 내용이 true여야 반환)
+		const num = /[0-9]/;
 		const txt = /[a-zA-Z]/;
 		const spc = /[!@#$%^&*()[\]_.+]/;
-		const [m1, m2] = value.email.split('@'); //예약어
-		const m3 = m2 && m2.split('.'); // m2스플릿을 통해 값이 없으면 입력이 안되게 처리
+		const [m1, m2] = value.email.split('@');
+		const m3 = m2 && m2.split('.');
 
 		if (value.userid.length < 5) errs.userid = '아이디는 최소 5글자 이상 입력하세요';
 		if (value.comments.length < 10) errs.comments = '남기는 말은 최소 10글자 이상 입력하세요';
