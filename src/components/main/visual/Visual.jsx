@@ -26,7 +26,6 @@ export default function Visual() {
 
 	return (
 		<figure className='Visual'>
-			{/* <Swiper modules={[Pagination, Autoplay]} pagination={pagination.current} autoplay={autoplay.current} loop={true}> */}
 			<Swiper {...swiperOption.current}>
 				{youtube.map((vid, idx) => {
 					if (idx >= 5) return null;
