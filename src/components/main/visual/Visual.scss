@@ -176,8 +176,8 @@
 
 			span {
 				display: inline-block;
-				width: 5px;
-				height: 5px;
+				width: 10px;
+				height: 10px;
 				margin: 0px 5px;
 				border-radius: 5px;
 				background-color: var(--baseColor);
@@ -199,6 +199,35 @@
 			bottom: 50px;
 			right: 100px;
 			z-index: 4;
+		}
+	}
+}
+
+.tablet,
+.mobile {
+	.Visual {
+		.swiper {
+			.swiper-wrapper {
+				.swiper-slide {
+					> .inner {
+						width: 80%;
+
+						.picBox {
+							width: 100%;
+							height: 60%;
+							margin-bottom: 60px;
+						}
+						.txtBox {
+							width: 100%;
+							height: 40%;
+
+							h2 {
+								margin-bottom: 40px;
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 }
