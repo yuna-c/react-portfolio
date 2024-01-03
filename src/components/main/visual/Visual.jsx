@@ -11,7 +11,7 @@ export default function Visual() {
 	const swiperOpt = useRef({
 		modules: [Autoplay],
 		autoplay: { delay: 4000, disableOnInteraction: true },
-		spaceBetween: 70,
+		// spaceBetween: 70,
 		loop: true,
 		slidesPerView: 3,
 		centeredSlides: true,
@@ -30,6 +30,9 @@ export default function Visual() {
 							<div className='inner'>
 								<div className='picBox'>
 									<img src={data.snippet.thumbnails.standard.url} alt={data.snippet.title} />
+								</div>
+								<div className='txtBox'>
+									<h2>{data.snippet.title}</h2>
 								</div>
 							</div>
 						</SwiperSlide>
