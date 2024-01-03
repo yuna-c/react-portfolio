@@ -3,6 +3,18 @@ import Layout from '../../common/layout/Layout';
 import './Contact.scss';
 import emailjs from '@emailjs/browser';
 
+// https://apis.map.kakao.com/web/sample/addMapClickEventWithMarker/
+// 위치값 정밀하게 보정 하는 법
+// 기존 구글지도 위치값 복사한 뒤, 카카오 예제의 클릭한 위치 마커표시 직접해보기에서 해당 코드 붙여넣고, 원하는 지점찍으면 소숫점 12자리뜨는데 그거 붙여넣으면 됨
+// 1초 동안 60번 이벤트 발생해(리사이즈, 스크롤, 휠) => 이런 것 들 때문에 용량이 커지는걸 막기 위해서 의존성 배열을 통해 데이터를 간소화 시켜야 해
+// https://apis.map.kakao.com/web/sample/addTrafficOverlay/ 교통정보
+// npm install @emailjs/browser --save
+// add new 서빗 3개까지 https://www.emailjs.com/docs/sdk/send-form/
+
+// useMemo 는 특정 결과값을 재사용 할 때 사용하는 반면, useCallback 은 특정 함수를 새로 만들지 않고 재사용하고 싶을때 사용
+// 패칭 함수 한번 컴포넌트 랜더링 되는데 자식이 짜잘하게 디바운싱 안되면 재랜덜링시 문제 생김(패칭함수 다시 호출되니까) 프롭서 전달 안되면 재호출이 되긴하는데 메모리에 등록된 값을 가져와서 갠차나 or 함수에 유즈메모를 통해 받아오는 반환값을 메모라이징해옴 (useCallback or useMemo or memo)
+// 등가교환 : 메모리 늘려서 강제로 가비지 컬렉터에 제외시키니까 좀 용량 커질 수 이께찌?
+
 export default function Contact() {
 	const form = useRef();
 
@@ -27,7 +39,7 @@ export default function Contact() {
 
 		if (!user.value || !email.value || !txtArea.value) return alert('이름, 답장받을 이메일주소 문의내용을 모두 입력하세요.');
 
-		emailjs.sendForm('service_ag7z96s', 'template_oh9ajns', form.current, '23g8RepczesqKPoIX').then(
+		emailjs.sendForm('service_nytqr3g', 'template_50r2xta', form.current, 'EkR0AJGqHyR3vJV0U').then(
 			result => {
 				alert('문의 내용이 성공적으로 전송되었습니다.');
 				resetForm();
