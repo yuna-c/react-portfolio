@@ -7,7 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import youtubeReducer, { fetchYoutube } from './redux/youtubeSlice';
 import memberReducer, { fetchMember } from './redux/memberSlice';
 import historyReducer, { fetchHistory } from './redux/historySlice';
-import flickrReducer, { fetchFlickr } from './redux/flickrSlice';
+import flickrReducer, { fetchFlickr } from './redux/flickrSlice.js';
 import modalReducer from './redux/modalSlice';
 import menuReducer from './redux/menuSlice';
 import darkReducer from './redux/darkSlice';

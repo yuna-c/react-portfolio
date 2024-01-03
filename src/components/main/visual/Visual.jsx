@@ -1,34 +1,31 @@
 import './Visual.scss';
+import { useRef } from 'react';
 import { useSelector } from 'react-redux';
-// import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function Visual() {
 	const Vids = useSelector(store => store.youtube.data);
-	useSelector(store => console.log(store.youtube.data));
-	console.log('❤❤❤❤❤');
+	const swiperOpt = useRef({
+		spaceBetween: 50,
+		loop: true,
+		slidesPerView: 3
+	});
 
 	return (
 		<figure className='Visual'>
-			<Swiper>
-				{Vids.length !== 0 &&
-					Vids.map((data, idx) => {
-						if (idx >= 5) return null;
-						return (
-							<SwiperSlide key={data.id}>
-								<div className='inner'>
-									<div className='picBox'>
-										{/* <Link to={`/detail/${data.id}`}> */}
-										<img
-											src={data.snippet.thumbnails.standard ? data.snippet.thumbnails.standard.url : '/img/member1.jpg'}
-											alt={data.snippet.title}
-										/>
-										{/* </Link> */}
-									</div>
+			<Swiper {...swiperOpt}>
+				{Vids.map((data, idx) => {
+					if (idx >= 5) return null;
+					return (
+						<SwiperSlide key={data.id}>
+							<div className='inner'>
+								<div className='picBox'>
+									<img src={data.snippet.thumbnails.standard.url} alt={data.snippet.title} />
 								</div>
-							</SwiperSlide>
-						);
-					})}
+							</div>
+						</SwiperSlide>
+					);
+				})}
 			</Swiper>
 		</figure>
 	);
