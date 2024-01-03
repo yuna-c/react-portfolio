@@ -6,10 +6,13 @@
 	justify-content: flex-end;
 
 	.txtBox {
-		width: 60%;
+		width: 40%;
 		height: 100%;
 		padding-left: 15vw;
-		position: relative;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 2;
 
 		ul {
 			width: 100%;
@@ -52,9 +55,12 @@
 
 	.swiper {
 		display: inline-block;
-		width: 100%;
+		width: 80%;
 		height: 100%;
 		padding: 10vw 0px;
+		position: absolute;
+		top: 0;
+		right: 0;
 
 		.swiper-wrapper {
 			height: inherit;

@@ -35,6 +35,7 @@ export default function Visual() {
 			// console.log(swiper.activeIndex, 'non loop');
 		}
 	});
+
 	return (
 		<figure className='Visual'>
 			<div className='txtBox'>
@@ -45,7 +46,7 @@ export default function Visual() {
 
 							return (
 								<li key={el.id} className={idx === Index ? 'on' : ''}>
-									<Link to={`/detail/${data.id}`}>
+									<Link to={`/detail/${el.id}`}>
 										<h3>{el.snippet.title}</h3>
 									</Link>
 								</li>
@@ -68,6 +69,9 @@ export default function Visual() {
 										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
 								</div>
+								{/* <div>
+									<Link to={`/detail/${el.id}`}>{el.snippet.title}</Link>
+								</div> */}
 							</SwiperSlide>
 						);
 					})}
