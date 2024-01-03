@@ -16,12 +16,14 @@ export default function Visual() {
 		slidesPerView: 1,
 		spaceBetween: 0,
 		centeredSlides: true,
+		onSwiper: swiper => {
+			swiper.slideNext(300);
+		},
 		breakpoints: {
 			1000: { slidesPerView: 2, spaceBetween: 50 },
 			1400: { slidesPerView: 3, spaceBetween: 50 }
 		}
 	});
-
 	return (
 		<figure className='Visual'>
 			<div className='txtBox'></div>
@@ -31,7 +33,7 @@ export default function Visual() {
 						if (idx >= 5) return null;
 						return (
 							<SwiperSlide key={el.id}>
-								<div className='picBox'>
+								<div className='pic'>
 									<p>
 										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
