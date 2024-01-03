@@ -10,6 +10,7 @@ export default function Visual() {
 	const { isSuccess, data } = useYoutubeQuery();
 	// console.log(data);
 	const [Index, setIndex] = useState(0);
+	console.log(Index);
 
 	const swiperOpt = useRef({
 		modules: [Autoplay],
