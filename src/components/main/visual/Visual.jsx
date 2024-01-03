@@ -37,7 +37,23 @@ export default function Visual() {
 	});
 	return (
 		<figure className='Visual'>
-			<div className='txtBox'></div>
+			<div className='txtBox'>
+				<ul>
+					{isSuccess &&
+						data.map((el, idx) => {
+							if (idx >= 5) return null;
+
+							return (
+								<li key={el.id} className={idx === Index ? 'on' : ''}>
+									<Link to={`/detail/${data.id}`}>
+										<h3>{el.snippet.title}</h3>
+									</Link>
+								</li>
+							);
+						})}
+				</ul>
+			</div>
+
 			<Swiper {...swiperOpt.current}>
 				{isSuccess &&
 					data.map((el, idx) => {
@@ -51,9 +67,6 @@ export default function Visual() {
 									<p>
 										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
-								</div>
-								<div className='txt'>
-									<Link to={`/detail/${data.id}`}>{el.snippet.title}</Link>
 								</div>
 							</SwiperSlide>
 						);
