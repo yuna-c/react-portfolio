@@ -1,11 +1,17 @@
 import './Header.scss';
 import { NavLink, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { menuToggle } from '../../../redux/menuSlice';
+import { darkToggle } from '../../../redux/darkSlice';
 
-export default function Header({ Dark, setDark, Toggle, setToggle }) {
+export default function Header() {
+	const dispatch = useDispatch();
+	const Dark = useSelector(store => store.dark.isDark);
+
 	return (
-		<header className='header'>
+		<header className='Header'>
 			<h1>
-				<Link to='/'>리덕스툴킷</Link>
+				<Link to='/'>리덕스 툴킷</Link>
 			</h1>
 
 			<ul>
@@ -21,17 +27,12 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 				</li>
 				<li>
 					<NavLink to='/gallery' activeClassName={'on'}>
-						Gallay
+						Gallery
 					</NavLink>
 				</li>
 				<li>
 					<NavLink to='/community' activeClassName={'on'}>
 						Community
-					</NavLink>
-				</li>
-				<li>
-					<NavLink to='/num' activeClassName={'on'}>
-						num
 					</NavLink>
 				</li>
 				<li>
@@ -41,22 +42,16 @@ export default function Header({ Dark, setDark, Toggle, setToggle }) {
 				</li>
 				<li>
 					<NavLink to='/contact' activeClassName={'on'}>
-						Contant
+						Contact
 					</NavLink>
 				</li>
 			</ul>
 
-			{/* <button onClick={() => setDark(!Dark)}>Theme</button> */}
-			<div className={`themeBox ${Dark && 'dark'}`} onClick={() => setDark(!Dark)}>
+			<div className={`themeBox ${Dark && 'dark'}`} onClick={() => dispatch(darkToggle())}>
 				<div className='ball'></div>
 			</div>
 
-			<button
-				className='menuToggle'
-				onClick={() => {
-					setToggle(!Toggle);
-					// toggle은 boolean 이구나
-				}}>
+			<button className='menuToggle' onClick={() => dispatch(menuToggle())}>
 				menu
 			</button>
 		</header>
