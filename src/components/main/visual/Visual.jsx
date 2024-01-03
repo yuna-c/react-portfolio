@@ -4,7 +4,7 @@ import { Autoplay } from 'swiper';
 import './Visual.scss';
 import 'swiper/css';
 import { useRef, useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Visual() {
 	const { isSuccess, data } = useYoutubeQuery();
@@ -24,13 +24,14 @@ export default function Visual() {
 
 	return (
 		<figure className='Visual'>
+			<div className='txtBox'></div>
 			<Swiper {...swiperOpt.current}>
 				{isSuccess &&
 					data.map((el, idx) => {
 						if (idx >= 5) return null;
 						return (
 							<SwiperSlide key={el.id}>
-								<div className='pic'>
+								<div className='picBox'>
 									<p>
 										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
@@ -38,7 +39,9 @@ export default function Visual() {
 										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
 								</div>
-								{/* <Link to={`/detail/${data.id}`}></Link> */}
+								<div>
+									<Link to={`/detail/${data.id}`}>{el.snippet.title}</Link>
+								</div>
 							</SwiperSlide>
 						);
 					})}
