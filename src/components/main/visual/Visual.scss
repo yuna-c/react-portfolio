@@ -23,6 +23,7 @@
 					opacity: 0;
 					transform: scale(0.5) rotateY(0deg);
 					transition: opacity 0.5s, transform 0.5s;
+					cursor: pointer;
 
 					.picBox {
 						width: 100%;

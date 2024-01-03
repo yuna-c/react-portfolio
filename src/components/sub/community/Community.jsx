@@ -114,7 +114,8 @@ export default function Community() {
 					{Post.map((el, idx) => {
 						const date = JSON.stringify(el.date);
 						const strDate = changeText(date.split('T')[0].slice(1), '.');
-
+						const strTime = changeText(date.split('Z')[0].slice(12), '.');
+						console.log(strTime);
 						if (el.enableUpdate) {
 							//수정모드
 							return (
