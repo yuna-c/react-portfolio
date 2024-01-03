@@ -12,13 +12,13 @@ export default function Visual() {
 	const num = useRef(5);
 	const { isSuccess, data } = useYoutubeQuery();
 	// console.log(data);
-	const [Index, setIndex] = useState(0);
+	const [Index, setIndex] = useState(1);
 	// console.log(Index);
 	// 이거 안대
 	// let prevIndex = useRef(4);
 	// let nextIndex = useRef(1);
-	const [PrevIndex, setPrevIndex] = useState(4);
-	const [NextIndex, setNextIndex] = useState(1);
+	const [PrevIndex, setPrevIndex] = useState(0);
+	const [NextIndex, setNextIndex] = useState(2);
 
 	const swiperOpt = useRef({
 		modules: [Autoplay, Navigation],
@@ -28,13 +28,12 @@ export default function Visual() {
 		// loop: false, (swiper.activeIndex)
 		slidesPerView: 1,
 		spaceBetween: 50,
-		centeredSlides: true,
-		onSwiper: swiper => {
-			swiper.slideNext(300);
-		},
 		breakpoints: {
 			1000: { slidesPerView: 2 },
 			1400: { slidesPerView: 3 }
+		},
+		onSwiper: swiper => {
+			swiper.slideNext(300);
 		},
 		onSlideChange: swiper => {
 			console.log(swiper.realIndex, 'loop true');
@@ -81,7 +80,7 @@ export default function Visual() {
 			<Swiper {...swiperOpt.current}>
 				{isSuccess &&
 					data.map((el, idx) => {
-						if (idx >= num.current - 1) return null;
+						if (idx >= num.current) return null;
 						return (
 							<SwiperSlide key={el.id}>
 								<div className='pic'>
