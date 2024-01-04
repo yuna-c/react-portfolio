@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import './Btns.scss';
 import Anime from '../../../asset/anime';
+import { useThrottle } from '../../../hooks/useThrottle';
 
 // window.scrollY : 브라우저를 스크롤할 때마다 스크롤되고 있는 거리값(정적)
 // DOM.scrollTop : DOM요소 안쪽에서 스크롤할 때마다 스크롤되고 있는 거리값(정적)
 // Dom.offsetTop : 문서에서 해당 돔 요소의 세로 위치값(정적)
-
+// mouseMove, scroll, resize 확인
 export default function Btns() {
+	console.log('re-render');
 	const [Num, setNum] = useState(0);
 	const [Index, setIndex] = useState(0);
 
@@ -16,6 +18,7 @@ export default function Btns() {
 	// console.log(btns, '❤');
 
 	const activation = () => {
+		console.log('activation');
 		const scroll = wrap.current.scrollTop;
 		// console.log(scroll);
 
@@ -41,6 +44,8 @@ export default function Btns() {
 		// }
 	};
 
+	const throttledActivation = useThrottle(activation);
+
 	useEffect(() => {
 		// setTimeout(() => {
 		// num.current = document.body.querySelectorAll('.myScroll').length;
@@ -60,9 +65,9 @@ export default function Btns() {
 		// console.log(secs.current.length);
 		setNum(secs.current.length);
 
-		wrap.current.addEventListener('scroll', activation);
-		return () => wrap.current.removeEventListener('scroll', activation);
-	}, []);
+		wrap.current.addEventListener('scroll', throttledActivation);
+		return () => wrap.current.removeEventListener('scroll', throttledActivation);
+	}, [throttledActivation]);
 
 	return (
 		<ul className='Btns' ref={btns}>
