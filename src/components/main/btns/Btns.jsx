@@ -8,13 +8,13 @@ import { useThrottle } from '../../../hooks/useThrottle';
 // Dom.offsetTop : 문서에서 해당 돔 요소의 세로 위치값(정적)
 // mouseMove, scroll, resize 확인
 export default function Btns() {
-	console.log('re-render');
+	// console.log('re-render');
 	const [Num, setNum] = useState(0);
-	const [Index, setIndex] = useState(0);
-
+	// const [Index, setIndex] = useState(0);
 	const secs = useRef(null);
 	const btns = useRef(null);
 	const wrap = useRef(null);
+	const baseLine = useRef(-window.innerHeight / 2); //현재 섹션의 컨텐츠가 절반 이상 보여야 활성화 처리
 	// console.log(btns, '❤');
 
 	const activation = () => {
@@ -23,7 +23,7 @@ export default function Btns() {
 		// console.log(scroll);
 
 		secs.current.forEach((sec, idx) => {
-			if (scroll >= /*secs.current[idx]*/ sec.offsetTop) {
+			if (scroll >= /*secs.current[idx]*/ sec.offsetTop + baseLine.current) {
 				Array.from(btns.current.children).forEach(btn => btn.classList.remove('on'));
 				btns.current.children[idx].classList.add('on');
 			}
@@ -77,7 +77,7 @@ export default function Btns() {
 					return (
 						<li
 							key={idx}
-							className={idx === Index ? 'on' : ''}
+							className={idx === 0 ? 'on' : ''}
 							onClick={() => {
 								// setIndex(idx);
 								// new Anime(선택자, {속성명1: 속성값1, 속성명2: 속성값2}, {duration:속도, saseType:가속도, callback:컴플릿함수});
