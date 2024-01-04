@@ -70,7 +70,10 @@ export default function Visual() {
 						return (
 							<SwiperSlide key={el.id}>
 								<div className='pic'>
-									<span>{idx + 1}.</span>
+									<strong
+										style={{ position: 'absolute', top: '-20px', left: '-20px', fontSize: '3rem', fontWeight: 900, zIndex: 3, color: 'hotpink' }}>
+										{idx + 1}.
+									</strong>
 									<p>
 										<Link to={`/detail/${el.id}`}>
 											<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
