@@ -26,7 +26,7 @@ export default function Visual() {
 		centeredSlides: true,
 		onSwiper: swiper => (swipeRef.current = swiper),
 		onSlideChange: swiper => setIndex(swiper.realIndex),
-		//autoplay: { delay: 2000, disableOnInteraction: true },
+		autoplay: { delay: 2000, disableOnInteraction: true },
 		breakpoints: {
 			1000: { slidesPerView: 2 },
 			1400: { slidesPerView: 3 }
