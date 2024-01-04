@@ -2,7 +2,7 @@ import './Visual.scss';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Link } from 'react-router-dom';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper';
 import { useSelector } from 'react-redux';
 import { useRef, useState, useEffect } from 'react';
@@ -10,6 +10,7 @@ import { useCustomText } from '../../../hooks/useText';
 
 //Visual parent component
 export default function Visual() {
+	const [Rolling, setRolling] = useState(true);
 	const { youtube } = useSelector(store => store.youtubeReducer);
 	const shortenText = useCustomText('shorten');
 	const swiperRef = useRef(null);
@@ -21,7 +22,13 @@ export default function Visual() {
 			renderBullet: (index, className) => `<span class=${className}>${index + 1}</span>`
 		},
 		autoplay: { delay: 2000, disableOnInteraction: true },
-		loop: true
+		loop: true,
+		onSwiper: swiper => {
+			swiperRef.current = swiper;
+			swiperRef.current.pagination.el.addEventListener('click', () => {
+				swiperRef.current.autoplay.running ? setRolling(true) : setRolling(false);
+			});
+		}
 	});
 
 	return (
@@ -44,7 +51,7 @@ export default function Visual() {
 								<div className='txtBox'>
 									<h2>{shortenText(vid.snippet.title, 50)}</h2>
 
-									<Link to={`/detail/${vid.id}`} onMouseEnter={swiperRef.current?.autoplay?.stop} onMouseLeave={swiperRef.current?.autoplay?.start}>
+									<Link to={`/detail/${vid.id}`} onMouseEnter={swiperRef.current?.autoplay.stop} onMouseLeave={swiperRef.current?.autoplay.start}>
 										<span></span>View Detail
 									</Link>
 								</div>
@@ -53,17 +60,14 @@ export default function Visual() {
 					);
 				})}
 
-				<Btns swiperRef={swiperRef} />
+				<Btns swiperRef={swiperRef} Rolling={Rolling} setRolling={setRolling} />
 			</Swiper>
 		</figure>
 	);
 }
 
-//Swiper control child component
-function Btns({ swiperRef }) {
-	swiperRef.current = useSwiper();
-	const [Rolling, setRolling] = useState(true);
-
+//Swiper control child componen
+function Btns({ swiperRef, Rolling, setRolling }) {
 	const startRolling = () => {
 		swiperRef.current.slideNext(300);
 		swiperRef.current.autoplay.start();
@@ -75,19 +79,8 @@ function Btns({ swiperRef }) {
 		setRolling(false);
 	};
 
-	//Btns컴포넌트에서 인스턴스의 이벤트문을 활용해서
-	useEffect(() => {
-		//slide가 바뀔때마다 현재 롤링유무에 따라 Rolling state값 변경
-		swiperRef.current.on('slideChange', () => {
-			swiperRef.current.autoplay.running ? setRolling(true) : setRolling(false);
-		});
-	}, [swiperRef]);
-
 	return (
-		<nav className='swiperController'>
-			{/* Rolling state값에 따라서 버튼 활성화 처리 */}
-			{Rolling ? <button onClick={stopRolling}>stop</button> : <button onClick={startRolling}>start</button>}
-		</nav>
+		<nav className='swiperController'>{Rolling ? <button onClick={stopRolling}>stop</button> : <button onClick={startRolling}>start</button>}</nav>
 	);
 }
 
