@@ -71,7 +71,15 @@ export default function Visual() {
 							<SwiperSlide key={el.id}>
 								<div className='pic'>
 									<strong
-										style={{ position: 'absolute', top: '-20px', left: '-20px', fontSize: '3rem', fontWeight: 900, zIndex: 3, color: 'hotpink' }}>
+										style={{
+											position: 'absolute',
+											top: '-20px',
+											left: '-20px',
+											fontSize: '3rem',
+											fontWeight: 900,
+											zIndex: 3,
+											color: 'var(--pointColor)'
+										}}>
 										{idx + 1}.
 									</strong>
 									<p>
