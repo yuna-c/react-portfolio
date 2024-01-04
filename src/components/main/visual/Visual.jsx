@@ -8,6 +8,7 @@ export default function Visual() {
 	return (
 		<figure className='Visual'>
 			{
+				// 아
 				//Vids의 유무로 에러처리를 할 수 없는 이유
 				//설사 데이터 반환에 실패하더라도 Vids에는 undefined라는 값이 들어가 있기때문에
 				//데이터반환에 실패해서 분기처리 하기 위해서는 err객체에만 있는 message라는 property로 분기처리
