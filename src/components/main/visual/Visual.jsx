@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper';
 import './Visual.scss';
 import 'swiper/css';
+import { Link } from 'react-router-dom';
 import { useRef, useState, useEffect } from 'react';
 
 export default function Visual() {
@@ -69,11 +70,16 @@ export default function Visual() {
 						return (
 							<SwiperSlide key={el.id}>
 								<div className='pic'>
+									<span>{idx + 1}.</span>
 									<p>
-										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
+										<Link to={`/detail/${el.id}`}>
+											<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
+										</Link>
 									</p>
 									<p>
-										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
+										<Link to={`/detail/${el.id}`}>
+											<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
+										</Link>
 									</p>
 								</div>
 							</SwiperSlide>
