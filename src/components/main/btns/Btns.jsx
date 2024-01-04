@@ -15,7 +15,7 @@ export default function Btns() {
 
 	const activation = () => {
 		const scroll = wrap.current.scrollTop;
-		console.log(scroll);
+		// console.log(scroll);
 
 		secs.current.forEach((sec, idx) => {
 			if (scroll >= /*secs.current[idx]*/ sec.offsetTop) {
