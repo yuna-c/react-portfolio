@@ -12,6 +12,8 @@ export default function Visual() {
 	const num = useRef(5);
 	const { isSuccess, data } = useYoutubeQuery();
 	// console.log(data);
+	const swiperRef = useRef(null);
+
 	const [Index, setIndex] = useState(1);
 	// console.log(Index);
 	// 이거 안대
@@ -34,6 +36,7 @@ export default function Visual() {
 		},
 		onSwiper: swiper => {
 			swiper.slideNext(300);
+			// swiper.swiperRef.qurrent
 		},
 		onSlideChange: swiper => {
 			console.log(swiper.realIndex, 'loop true');
@@ -100,10 +103,10 @@ export default function Visual() {
 			<nav className='preivew'>
 				{isSuccess && (
 					<>
-						<p className='prevBox'>
+						<p className='prevBox' onClick={() => swiperRef.current.slidesPrev(400)}>
 							<img src={data[PrevIndex].snippet.thumbnails.default.url} alt={data[PrevIndex].snippet.title} />
 						</p>
-						<p className='nextBox'>
+						<p className='nextBox' onClick={() => swiperRef.current.slidesNext(400)}>
 							<img src={data[NextIndex].snippet.thumbnails.default.url} alt={data[NextIndex].snippet.title} />
 						</p>
 					</>
