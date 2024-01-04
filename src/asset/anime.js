@@ -1,13 +1,12 @@
 import BezierEasing from 'bezier-easing';
-// npm i bezier-easing@2
-// 가속도 수치값
+//npm i bezier-easing
 
 export default class Anime {
-	#defOpt = { duration: 500, callback: null, easeType: 'linear', ease: [0, 0, 1, 1] };
+	#defOpt = { duration: 500, callback: null, easeType: 'linear', ease: null };
 
 	//인스턴스 생성시 옵션값 전달 및 속성값 보정함수 반복 호출
 	constructor(selector, props, opt) {
-		// console.log(selector);
+		console.log(selector);
 		this.selector = selector;
 		this.defOpt = { ...this.#defOpt, ...opt };
 		this.keys = Object.keys(props);
@@ -15,7 +14,7 @@ export default class Anime {
 		this.duration = this.defOpt.duration;
 		this.callback = this.defOpt.callback;
 		this.easeType = this.defOpt.easeType;
-		this.ease = this.defOpt.ease;
+		this.ease = this.defOpt.ease; //option으로 받은 ease값이 있으면 인스턴스 객체에 넘김
 		this.startTime = performance.now();
 		this.isBg = null;
 		this.keys.forEach((key, idx) => {
@@ -85,13 +84,13 @@ export default class Anime {
 			ease2: [0, 1.82, 0.94, -0.73]
 		};
 
-		// if (!this.ease) {
-		// 	Object.keys(easingPresets).map(key => this.easeType === key && (easingProgress = BezierEasing(...easingPresets[key])(progress)));
-		// } else {
-		// 	easingProgress = BezierEasing(this.ease);
-		// }
-
-		Object.keys(easingPresets).map(key => this.easeType === key && (easingProgress = BezierEasing(...easingPresets[key])(progress)));
+		//인스턴스 호출시 ease로 넘긴 배열값이 있으면 해당 값을 활용
+		if (this.ease) {
+			easingProgress = BezierEasing(...this.ease)(progress);
+			//그렇지 않으면 기존 easeType값을 활용
+		} else {
+			Object.keys(easingPresets).map(key => this.easeType === key && (easingProgress = BezierEasing(...easingPresets[key])(progress)));
+		}
 
 		return [
 			progress,

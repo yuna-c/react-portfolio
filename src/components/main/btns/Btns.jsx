@@ -79,8 +79,10 @@ export default function Btns() {
 								new Anime(
 									wrap.current,
 									{ scroll: secs.current[idx].offsetTop },
-									{ duration: 600, eseyType: 'ease1' },
 									{
+										duration: 1000,
+										ease: [0.12, 1.61, 1, -0.06],
+										//easeType: 'ease1',
 										callback: () => {
 											console.log('motion complite ❤');
 											// new Anime(wrap.current, { scroll: 2 });
