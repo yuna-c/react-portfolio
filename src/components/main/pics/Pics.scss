@@ -15,7 +15,48 @@
 		color: var(--bgColor);
 	}
 	.tit3 {
-		font-size: 4rem;
-		color: var(--pointColor);
+		width: 0;
+		height: 1px;
+		background: var(--pointColor);
 	}
+}
+
+#header .nav-area dl {
+	flex-grow: 1;
+}
+#header .nav-area dl dt {
+	margin-bottom: 20px;
+	border-bottom: 1px solid #e5e5e5;
+	padding: 30px 0 15px 0;
+}
+#header .nav-area dl dd {
+	margin-bottom: 5px;
+}
+#header .nav-area dl dd a {
+	line-height: 22px;
+	display: block;
+}
+#header .nav-area dl dd a span {
+	display: inline-block;
+	position: relative;
+	color: #191111;
+	transform: perspective(1px) translateZ(0);
+	-webkit-transform: perspective(1px) translateZ(0);
+	overflow: hidden;
+}
+#header .nav-area dl dd a span:after {
+	content: '';
+	height: 1px;
+	display: block;
+	position: absolute;
+	left: 0;
+	right: 100%;
+	bottom: 0;
+	background-color: #191111;
+	z-index: -1;
+	transition: right 0.3s ease-out;
+	-webkit-transition: right 0.3s ease-out;
+}
+#header .nav-area dl dd a:hover span:after {
+	right: 0;
 }

@@ -15,6 +15,15 @@ export default function Pics() {
 			titEl2.current.style.transform = ` scale(${1 + scroll / 400}) translateX(${scroll}px)`;
 			titEl2.current.style.opacity = 1 - scroll / 500;
 			titEl3.current.style.transform = ` scale(${1 + scroll / 200}) translateX(${scroll}px)`;
+			titEl3.current.style.width = `400px`;
+			titEl3.current.style.opacity = 1 - scroll / 300;
+		} else {
+			titEl.current.style.transform = `translateX(0px)`;
+			titEl.current.style.opacity = 1 - scroll / 800;
+			titEl2.current.style.transform = ` scale(1) translateX(0px)`;
+			titEl2.current.style.opacity = 1 - scroll / 500;
+			titEl3.current.style.transform = ` scale(1) translateX(0px)`;
+			titEl3.current.style.width = `400px`;
 			titEl3.current.style.opacity = 1 - scroll / 300;
 		}
 	};
@@ -29,9 +38,7 @@ export default function Pics() {
 			<h4 className='tit2' ref={titEl2}>
 				PREIVIEW
 			</h4>
-			<h1 className='tit3' ref={titEl3}>
-				Line
-			</h1>
+			<div className='tit3' ref={titEl3}></div>
 		</section>
 	);
 }
