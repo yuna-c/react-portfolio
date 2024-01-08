@@ -17,7 +17,7 @@ export default function Pics() {
 			titEl2.current.style.opacity = 1 - scroll / 500;
 
 			titEl3.current.style.transform = ` translateX(${0}px)`;
-			titEl3.current.style.width = `100%`;
+			titEl3.current.style.width = `calc(100% + 20vw)`;
 			titEl3.current.style.opacity = 1;
 		} else {
 			titEl.current.style.transform = `translateX(0px)`;
