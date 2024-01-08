@@ -20,18 +20,39 @@ import { useMedia } from './hooks/useMedia';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useGlobalData } from './hooks/useGlobalData';
+import { useState } from 'react';
 // import { useCookie } from './hooks/useCookie';
 
 //비동기 데이터 : 디파트먼트, 히스토리, 유튜브, 플리커
 export default function App() {
+	console.log('re-rander');
 	const { Mode } = useGlobalData();
 	const queryClient = new QueryClient();
 	// useCookie('today', 'done', 20);
 	// console.log(document.cookie);
+	const [Count1, setCount1] = useState(1);
+	const [Count2, setCount2] = useState(2);
+	const [Count3, setCount3] = useState(3);
+
+	const returnPromise = () => {
+		return new Promise(res => setTimeout(res, 500));
+	};
+
+	const changeState = () => {
+		//promise가 반환되는 핸들러안쪽에서 복수개의 state가 변경된다면
+		//Batching기능이 풀리면서
+		//state의 갯수만큼 재랜더링 발생 --> 해당 기능을 개선한것이 react18에서의 auto Batching
+		returnPromise().then(() => {
+			setCount1(Count1 + 1);
+			setCount2(Count2 + 1);
+			setCount3(Count3 + 1);
+		});
+	};
 
 	return (
 		<QueryClientProvider client={queryClient}>
 			<div className={`wrap ${Mode === 'light' ? 'light' : 'dark'} ${useMedia()}`}>
+				<button onClick={changeState}>변경</button>
 				<Header />
 				<Route exact path='/' component={MainWrap} />
 				<Route path='/department' component={Department} />
