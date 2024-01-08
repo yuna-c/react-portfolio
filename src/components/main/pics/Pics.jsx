@@ -8,12 +8,15 @@ export default function Pics() {
 	const titEl3 = useRef(null);
 
 	const handleCustomScroll = scroll => {
-		titEl.current.style.transform = `translateX(${scroll}px)`;
-		titEl.current.style.opacity = 1 - scroll / 800;
-		titEl2.current.style.transform = ` scale(${1 + scroll / 400}) translateX(${scroll}px)`;
-		titEl2.current.style.opacity = 1 - scroll / 500;
-		titEl3.current.style.transform = ` scale(${1 + scroll / 200}) translateX(${scroll}px)`;
-		titEl3.current.style.opacity = 1 - scroll / 300;
+		console.log(scroll);
+		if (scroll >= 0) {
+			titEl.current.style.transform = `translateX(${scroll}px)`;
+			titEl.current.style.opacity = 1 - scroll / 800;
+			titEl2.current.style.transform = ` scale(${1 + scroll / 400}) translateX(${scroll}px)`;
+			titEl2.current.style.opacity = 1 - scroll / 500;
+			titEl3.current.style.transform = ` scale(${1 + scroll / 200}) translateX(${scroll}px)`;
+			titEl3.current.style.opacity = 1 - scroll / 300;
+		}
 	};
 
 	const { refEl } = useScroll(handleCustomScroll);

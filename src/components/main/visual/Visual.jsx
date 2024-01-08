@@ -65,6 +65,7 @@ export default function Visual() {
 						return (
 							<SwiperSlide key={el.id}>
 								<div className='pic'>
+									<div style={{ display: 'block', color: 'black' }}>{idx + 1}</div>
 									<p>
 										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
