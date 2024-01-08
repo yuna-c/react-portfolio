@@ -1,46 +1,63 @@
-.layout {
-	width: 80vw;
+.Layout {
+	width: 70vw;
 	margin: 100px auto;
 	min-height: 60vh;
 	opacity: 0;
-	transform-origin: left top;
-	transform: translateY(200px);
-	transition: opacity 1s, transform 1s;
-	/*
-	transition-property: opacity 1s, transform 1s;
-	tansition-property:opactiy;
-	transition-duration:1s;
-	transition-delay:0s;
-	*/
+	top: 200px;
+	transition: opacity 1s, top 1s;
+	position: relative;
 
 	h1 {
 		font-size: 0;
 		font-weight: normal;
-		margin-bottom: 5px;
-		opacity: 0.7;
+		opacity: 0.5;
+		margin-bottom: 10px;
 
 		span {
-			font-size: var(--titSize0);
+			font-size: 5rem;
 			transform: scale(4);
 			opacity: 0;
-			letter-spacing: -0.05em;
-			// display: inline-block; // 디자이너가 못건들게
-			// transition: opacity 0.7s, transform 0.7s;
 			transition-property: opacity, transform;
 		}
 	}
-
 	.bar {
 		width: 50px;
 		height: 1px;
 		background: var(--baseColor);
 		opacity: 0.7;
-		margin-bottom: 100px;
+		margin-bottom: 150px;
+	}
+
+	.btnTop {
+		cursor: pointer;
+		width: 50px;
+		height: 50px;
+		background: var(--baseColor);
+		color: var(--bgColor);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: none;
+		position: fixed;
+		bottom: 50px;
+		right: 50px;
+		z-index: 6;
+		opacity: 0;
+		transform: scale(1.4);
+		transition: opacity 0.5s, transform 0.5s, background-color 0.5s;
+
+		&.on {
+			opacity: 1;
+			transform: scale(1);
+		}
+		&:hover {
+			background-color: var(--pointColor);
+		}
 	}
 
 	&.on {
 		opacity: 1;
-		transform: translateY(0px);
+		top: 0px;
 
 		h1 {
 			span {
@@ -48,47 +65,18 @@
 				transform: scale(1);
 			}
 		}
-
-		.bar {
-			width: 45px;
-			opacity: 0.7;
-		}
 	}
 }
 
-//tablet
-.tablet,
-.mobile {
-	.layout {
+.tablet {
+	.Layout {
 		width: 80vw;
-		margin: 60px auto;
-
-		.bar {
-			margin-bottom: 60px;
-		}
-	}
-}
-
-//mobile
-.mobile {
-	.layout {
-		width: 85vw;
-		margin: 50px auto;
-
-		h1 {
-			span {
-				font-size: 10vw;
-			}
-		}
-
-		.bar {
-			margin-bottom: 50px;
-		}
+		margin: 80px auto;
 	}
 }
 
 /*
-css: css는 외부 도움없이 브라우저의 기능만으로 처리가능 (스타일만 제어가능)
+	css: css는 외부 도움없이 브라우저의 기능만으로 처리가능 (스타일만 제어가능)
 	css변수: 스타일 관련값만 담을 수 있음 (미디어쿼리의 폭 같은 브라우저가 제어해야 되는 값들은 할당 불가)
 	scss: css내부기능뿐만 아니라 브라우저기능까지 활용한 문법 (일반 css로 컴파일 필요)
 	scss변수: 브라우저가 인식해야되는 미디어쿼리 폭 조차도 변수에 담을 수 있음
