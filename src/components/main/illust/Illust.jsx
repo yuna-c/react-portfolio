@@ -9,11 +9,18 @@ export default function Illust() {
 		const pathLen = 1510;
 		pathEl.current.style.strokeDashoffset = pathLen;
 
+		//섹션기준점에 도달하기 전까지는 기존 값 고수
+		if (scroll < 0) {
+			pathEl.current.style.strokeDashoffset = pathLen;
+		}
+		//섹션에 도달하는 순간부터 스크롤값 연동
 		if (scroll >= 0) {
 			let resultScroll = 0;
 			pathLen - scroll * 4 < 0 ? (resultScroll = 0) : (resultScroll = pathLen - scroll * 4);
 			pathEl.current.style.strokeDashoffset = resultScroll;
-		} else {
+		}
+		//섹션을 벗어나는 순간부터는 0값을 고수
+		if (scroll >= scroll + refEl.current.offsetHeight) {
 			pathEl.current.style.strokeDashoffset = 0;
 		}
 	};
