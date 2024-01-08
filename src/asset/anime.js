@@ -2,11 +2,10 @@ import BezierEasing from 'bezier-easing';
 //npm i bezier-easing
 
 export default class Anime {
-	#defOpt = { duration: 500, callback: null, easeType: 'linear', ease: null };
+	#defOpt = { duration: 500, callback: null, easeType: 'linear' };
 
 	//인스턴스 생성시 옵션값 전달 및 속성값 보정함수 반복 호출
 	constructor(selector, props, opt) {
-		// console.log(selector);
 		this.selector = selector;
 		this.defOpt = { ...this.#defOpt, ...opt };
 		this.keys = Object.keys(props);

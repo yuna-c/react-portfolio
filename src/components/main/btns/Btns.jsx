@@ -1,103 +1,86 @@
-import { useEffect, useRef, useState } from 'react';
-import './Btns.scss';
 import Anime from '../../../asset/anime';
+import './Btns.scss';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { useThrottle } from '../../../hooks/useThrottle';
 
-// window.scrollY : 브라우저를 스크롤할 때마다 스크롤되고 있는 거리값(정적)
-// DOM.scrollTop : DOM요소 안쪽에서 스크롤할 때마다 스크롤되고 있는 거리값(정적)
-// Dom.offsetTop : 문서에서 해당 돔 요소의 세로 위치값(정적)
-// mouseMove, scroll, resize 확인
-export default function Btns() {
-	// console.log('re-render');
+export default function Btns(opt) {
+	const defOpt = useRef({ frame: '.wrap', items: '.myScroll', base: -window.innerHeight / 2, isAuto: false });
+	const resultOpt = useRef({ ...defOpt.current, ...opt });
 	const [Num, setNum] = useState(0);
-	// const [Index, setIndex] = useState(0);
+	//const [Mounted, setMounted] = useState(true);
+
+	const isAutoScroll = useRef(resultOpt.current.isAuto);
+	const wrap = useRef(null);
 	const secs = useRef(null);
 	const btns = useRef(null);
-	const wrap = useRef(null);
-	const baseLine = useRef(-window.innerHeight / 2); //현재 섹션의 컨텐츠가 절반 이상 보여야 활성화 처리
-	// console.log(btns, '❤');
+	const baseLine = useRef(resultOpt.current.base);
+	const isMotion = useRef(false);
 
 	const activation = () => {
-		console.log('activation');
-		const scroll = wrap.current.scrollTop;
-		// console.log(scroll);
+		const scroll = wrap.current?.scrollTop;
 
-		secs.current.forEach((sec, idx) => {
-			if (scroll >= /*secs.current[idx]*/ sec.offsetTop + baseLine.current) {
-				Array.from(btns.current.children).forEach(btn => btn.classList.remove('on'));
-				btns.current.children[idx].classList.add('on');
+		secs.current.forEach((_, idx) => {
+			if (scroll >= secs.current[idx].offsetTop + baseLine.current) {
+				const btnsArr = btns.current?.querySelectorAll('li');
+				btnsArr?.forEach(btn => btn.classList.remove('on'));
+				btns.current?.querySelectorAll('li')[idx]?.classList.add('on');
 			}
 		});
+	};
 
-		// if (scroll >= secs.current[0].offsetTop) {
-		// 	Array.from(btns.current.chlidren).forEach(btn => btn.classList.remove('on'));
-		// 	btns.current[0].classList.add('on');
-		// }
-		// if (scroll >= secs.current[1].offsetTop) {
-		// 	btns.current[1].classList.add('on');
-		// }
-		// if (scroll >= secs.current[2].offsetTop) {
-		// 	btns.current[2].classList.add('on');
-		// }
-		// if (scroll >= secs.current[3].offsetTop) {
-		// 	btns.current[3].classList.add('on');
-		// }
+	const moveScroll = idx => {
+		if (isMotion.current) return;
+		isMotion.current = true;
+		new Anime(wrap.current, { scroll: secs.current[idx].offsetTop }, { callback: () => (isMotion.current = false) });
+	};
+
+	const autoScroll = useCallback(
+		e => {
+			const btnsArr = Array.from(btns.current.children);
+			const activeEl = btns.current.querySelector('li.on');
+			const activeIndex = btnsArr.indexOf(activeEl);
+
+			if (e.deltaY > 0) {
+				activeIndex !== Num - 1 && moveScroll(activeIndex + 1);
+			} else {
+				activeIndex !== 0 && moveScroll(activeIndex - 1);
+			}
+		},
+		[Num]
+	);
+
+	const modifyPos = () => {
+		const btnsArr = Array.from(btns.current.children);
+		const activeEl = btns.current.querySelector('li.on');
+		const activeIndex = btnsArr.indexOf(activeEl);
+		wrap.current.scrollTop = secs.current[activeIndex].offsetTop;
 	};
 
 	const throttledActivation = useThrottle(activation);
+	const throttledModifyPos = useThrottle(modifyPos, 200);
 
 	useEffect(() => {
-		// setTimeout(() => {
-		// num.current = document.body.querySelectorAll('.myScroll').length;
-		// }, 500);
-
-		// querySelectorAll 현재 랜더링 된 최신 Dom을 찾는게 아니고 과거 있었던 Dom을 찾음
-		// useRef를 권장
-
-		// num.current = secs.current.lenght;
-
-		// wrap.current.addEventListener('scroll', e => {
-		// 	// console.log('scroll', e.target.scrollTop);
-		// 	// console.log('offset', secs.current[1].offsetTop);
-		// });
-		wrap.current = document.querySelector('.wrap');
-		secs.current = document.querySelectorAll('.myScroll');
-		// console.log(secs.current.length);
+		wrap.current = document.querySelector(resultOpt.current.frame);
+		secs.current = wrap.current.querySelectorAll(resultOpt.current.items);
 		setNum(secs.current.length);
 
+		window.addEventListener('resize', throttledModifyPos);
 		wrap.current.addEventListener('scroll', throttledActivation);
-		return () => wrap.current.removeEventListener('scroll', throttledActivation);
-	}, [throttledActivation]);
+		isAutoScroll.current && wrap.current.addEventListener('mousewheel', autoScroll);
+
+		return () => {
+			window.removeEventListener('resize', throttledModifyPos);
+			wrap.current.removeEventListener('scroll', throttledActivation);
+			wrap.current.removeEventListener('mousewheel', autoScroll);
+		};
+	}, [autoScroll, throttledActivation, throttledModifyPos, resultOpt.current.frame, resultOpt.current.items]);
 
 	return (
 		<ul className='Btns' ref={btns}>
 			{Array(Num)
 				.fill()
 				.map((_, idx) => {
-					return (
-						<li
-							key={idx}
-							className={idx === 0 ? 'on' : ''}
-							onClick={() => {
-								// setIndex(idx);
-								// new Anime(선택자, {속성명1: 속성값1, 속성명2: 속성값2}, {duration:속도, saseType:가속도, callback:컴플릿함수});
-								new Anime(
-									wrap.current,
-									{ scroll: secs.current[idx].offsetTop },
-									{
-										duration: 1000,
-										ease: [0.12, 1.61, 1, -0.06],
-										//easeType: 'ease1',
-										callback: () => {
-											console.log('motion complite ❤');
-											// new Anime(wrap.current, { scroll: 2 });
-										}
-									}
-								);
-							}}>
-							{/* onClick={() => { setIndex(idx); }}> 이렇게 하면 안되는 이유 (활성화가 안됨)*/}
-						</li>
-					);
+					return <li key={idx} className={idx === 0 ? 'on' : ''} onClick={() => moveScroll(idx)}></li>;
 				})}
 		</ul>
 	);
