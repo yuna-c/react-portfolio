@@ -3,20 +3,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper';
 import './Visual.scss';
 import 'swiper/css';
+import { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useRef, useState, useEffect } from 'react';
 
 export default function Visual() {
-	const num = useRef(5);
+	const num = useRef(8);
 	const swipeRef = useRef(null);
 	const { isSuccess, data } = useYoutubeQuery();
-
-	//loop값이 true시 초기 Index값을 0,1을 주면 안됨
-	//onSwipe 이벤트 발생시 자동적으로 realIndex값이 기존 Index값에 1을 뺀값으로 적용되므로
-	//useEffect에 의해서 prevIndex값이 0혹은 마지막 순번으로 변경되므로 기존 realIndex값과 중첩되서 버그발생
-	const [PrevIndex, setPrevIndex] = useState(1);
-	const [Index, setIndex] = useState(2);
-	const [NextIndex, setNextIndex] = useState(3);
+	const [PrevIndex, setPrevIndex] = useState(0);
+	const [Index, setIndex] = useState(0);
+	const [NextIndex, setNextIndex] = useState(0);
 
 	const swiperOpt = useRef({
 		modules: [Autoplay],
@@ -24,12 +20,14 @@ export default function Visual() {
 		slidesPerView: 1,
 		spaceBetween: 50,
 		centeredSlides: true,
-		onSwiper: swiper => (swipeRef.current = swiper),
-		onSlideChange: swiper => setIndex(swiper.realIndex),
+		loopedSlides: num.current,
 		autoplay: { delay: 2000, disableOnInteraction: true },
-		breakpoints: {
-			1000: { slidesPerView: 2 },
-			1400: { slidesPerView: 3 }
+		breakpoints: { 1000: { slidesPerView: 2 }, 1400: { slidesPerView: 3 } },
+		onSwiper: swiper => (swipeRef.current = swiper),
+		onSlideChange: swiper => {
+			setIndex(swiper.realIndex);
+			swiper.realIndex === 0 ? setPrevIndex(num.current - 1) : setPrevIndex(swiper.realIndex - 1);
+			swiper.realIndex === num.current - 1 ? setNextIndex(0) : setNextIndex(swiper.realIndex + 1);
 		}
 	});
 
@@ -41,22 +39,19 @@ export default function Visual() {
 		return resultTit;
 	};
 
-	useEffect(() => {
-		Index === 0 ? setPrevIndex(num.current - 1) : setPrevIndex(Index - 1);
-		Index === num.current - 1 ? setNextIndex(0) : setNextIndex(Index + 1);
-	}, [Index]);
-
 	return (
-		<figure className='Visual myScroll'>
+		<figure className='Visual'>
 			<div className='txtBox'>
 				<ul>
 					{isSuccess &&
 						data.map((el, idx) => {
-							if (idx >= 5) return null;
+							if (idx >= num.current) return null;
 
 							return (
 								<li key={el.id} className={idx === Index ? 'on' : ''}>
 									<h3>{trimTitle(el.snippet.title)}</h3>
+
+									<Link to={`/detail/${el.id}`}>View Detail</Link>
 								</li>
 							);
 						})}
@@ -70,27 +65,11 @@ export default function Visual() {
 						return (
 							<SwiperSlide key={el.id}>
 								<div className='pic'>
-									<strong
-										style={{
-											position: 'absolute',
-											top: '-20px',
-											left: '-20px',
-											fontSize: '3rem',
-											fontWeight: 900,
-											zIndex: 3,
-											color: 'var(--pointColor)'
-										}}>
-										{idx + 1}.
-									</strong>
 									<p>
-										<Link to={`/detail/${el.id}`}>
-											<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
-										</Link>
+										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
 									<p>
-										<Link to={`/detail/${el.id}`}>
-											<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
-										</Link>
+										<img src={el.snippet.thumbnails.standard.url} alt={el.snippet.title} />
 									</p>
 								</div>
 							</SwiperSlide>
@@ -110,6 +89,22 @@ export default function Visual() {
 					</>
 				)}
 			</nav>
+
+			<ul className='pagination'>
+				{Array(num.current)
+					.fill()
+					.map((_, idx) => {
+						return <li key={idx} className={idx === Index ? 'on' : ''} onClick={() => swipeRef.current.slideToLoop(idx, 400)}></li>;
+					})}
+			</ul>
+
+			<div className='barFrame'>
+				<p className='bar' style={{ width: (100 / num.current) * (Index + 1) + '%' }}></p>
+			</div>
+
+			<div className='counter'>
+				<strong>0{Index + 1}</strong>/<span>0{num.current}</span>
+			</div>
 		</figure>
 	);
 }
